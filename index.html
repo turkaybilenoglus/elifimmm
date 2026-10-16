@@ -1,583 +1,1379 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="tr" class="dark">
 <head>
     <meta charset="UTF-8">
-    <title>SONSUZA KADAR❤️ ELİİFİİİM ❤️</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elif & Türkay Sonsuza Kadar 💖</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        roseGold: '#e0a899',
+                        deepWine: '#170817',
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,800;1,400&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
     <style>
-        /* CSS Kısmı: Premium Gece Mürdümü & Tozlu Gül Estetiği */
-        
         body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #2c1a32 0%, #9f5069 100%);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: radial-gradient(circle at 50% 20%, #2e1026 0%, #170817 50%, #0c040d 100%);
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
             color: white;
             overflow-x: hidden;
-            background-attachment: fixed;
-            /* Özel Kedi Patisi İmleci */
-            cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' style='font-size:24px'><text y='24'>🐾</text></svg>"), auto;
         }
-
-        /* Tıklanabilir Alanlarda Kalp İmleci */
-        button, input, .mektup-sec-btn, .surpriz-kutu, .galeri img, .mektup-kapat, .close, .nav-btn {
-            cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' style='font-size:24px'><text y='24'>❤️</text></svg>"), pointer !important;
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 182, 217, 0.15);
         }
-
-        /* Fare Arkasından Dökülen Kalplerin Stili */
-        .cursor-iz {
-            position: fixed;
-            pointer-events: none;
-            z-index: 999999;
-            transform: translate(-50%, -50%);
-            animation: kalpurucma 1s forwards linear;
-        }
-
-        @keyframes kalpurucma {
-            0% { transform: translate(-50%, -50%) translateY(0) scale(1); opacity: 1; }
-            100% { transform: translate(-50%, -50%) translateY(-40px) scale(0.4); opacity: 0; }
-        }
-
-        /* Kalp Yağmuru Animasyonu */
-        .kalp {
-            position: fixed;
-            font-size: 30px;
-            z-index: 99999;
-            animation: yagis linear infinite;
-            pointer-events: none;
-        }
-
-        @keyframes yagis {
-            0% { transform: translateY(-50px) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(105vh) rotate(360deg); opacity: 0.5; }
-        }
-
-        /* Giriş Ekranı Konteynırı */
-        .login-box {
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(25px);
-            padding: 60px;
-            border-radius: 40px;
-            margin-top: 15vh;
-            text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            box-shadow: 0 25px 60px rgba(0,0,0,0.4);
-            z-index: 10;
-        }
-
-        .login-box h1 { font-size: 3rem; margin-bottom: 30px; text-shadow: 0 2px 10px rgba(0,0,0,0.2); }
-
-        input#sifre {
-            padding: 20px;
-            width: 300px;
-            border-radius: 25px;
-            border: none;
-            font-size: 1.2rem;
-            text-align: center;
-            margin-bottom: 20px;
-            background: rgba(255, 255, 255, 0.9);
-            color: #2c1a32;
-        }
-
-        button.giris-btn {
-            padding: 20px 50px;
-            border-radius: 25px;
-            border: none;
-            background: #5c2c44;
-            color: white;
-            font-size: 1.2rem;
-            transition: 0.3s;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-
-        button.giris-btn:hover { background: #7a3659; transform: scale(1.05); }
-
-        /* Ana İçerik */
-        #site-icerigi {
-            display: none;
-            width: 90%;
-            max-width: 1000px;
-            margin-top: 30px;
-            text-align: center;
-            z-index: 5;
-            padding-bottom: 50px;
-        }
-
-        /* Birliktelik Sayacı Alanı */
-        .sayac-kutusu {
-            background: rgba(255, 255, 255, 0.07);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 25px;
-            border-radius: 30px;
-            margin-bottom: 30px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
-        }
-
-        .sayac-kutusu h2 { margin: 0 0 15px 0; font-size: 1.8rem; color: #fff; text-shadow: 0 2px 5px rgba(0,0,0,0.2); }
-
-        .sayac-zaman {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            font-size: 1.2rem;
-        }
-
-        .sayac-parca {
-            background: rgba(92, 44, 68, 0.5);
-            padding: 10px 20px;
-            border-radius: 15px;
-            min-width: 60px;
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .sayac-rakam { font-size: 2rem; font-weight: bold; block-size: auto; display: block; color: #ffebee; }
-
-        /* Mektup Butonları Alanı */
-        .mektup-butonlari-container {
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-            flex-wrap: wrap;
-            margin-bottom: 40px;
-        }
-
-        .mektup-sec-btn {
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 14px 22px;
-            border-radius: 20px;
-            color: white;
-            font-size: 0.95rem;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-
-        /* Öne Çıkan Özel Buton */
-        .mektup-sec-btn.ozel-vurgu {
-            background: rgba(159, 80, 105, 0.4);
-            border-color: rgba(255, 255, 255, 0.4);
-        }
-
-        .mektup-sec-btn:hover {
-            background: #5c2c44;
-            transform: translateY(-4px);
-            border-color: rgba(255, 255, 255, 0.6);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-        }
-
-        /* Fotoğraf Galerisi */
-        .galeri {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            gap: 20px;
-            margin-top: 30px;
-        }
-
-        .galeri img {
-            width: 100%;
-            height: 150px;
-            object-fit: cover;
-            border-radius: 20px;
-            border: 3px solid rgba(255,255,255,0.25);
-            transition: 0.4s;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-        }
-
-        .galeri img:hover { transform: scale(1.08); border-color: rgba(255,255,255,0.8); box-shadow: 0 12px 30px rgba(0,0,0,0.3); }
-
-        /* Sürpriz Kutu Alanı */
-        .surpriz-kutu-container {
-            margin-top: 60px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .surpriz-kutu {
-            font-size: 70px;
-            transition: transform 0.3s ease;
-            animation: titreme 2s infinite;
-            display: inline-block;
-        }
-
-        .surpriz-kutu:hover { transform: scale(1.2) rotate(10deg); }
-
-        @keyframes titreme {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-
-        .surpriz-yazi { font-size: 1.3rem; margin-top: 10px; font-weight: bold; color: #ffebee; }
-
-        /* Ortak Mektup ve Pop-up Ekranı */
-        #mektup-overlay {
-            display: none;
-            position: fixed;
-            z-index: 200000;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(15, 6, 18, 0.97);
-            align-items: center;
-            justify-content: center;
-        }
-
-        .mektup-zarf {
+        .glass-card {
             background: rgba(255, 255, 255, 0.06);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            padding: 40px;
-            border-radius: 30px;
-            max-width: 600px;
-            width: 85%;
-            max-height: 80vh;
-            overflow-y: auto;
-            text-align: left;
-            box-shadow: 0 25px 60px rgba(0,0,0,0.6);
-            position: relative;
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 182, 217, 0.2);
         }
-
-        #mektup-metni {
-            font-size: 1.3rem;
-            line-height: 1.8;
-            color: #ffebee;
-            white-space: pre-wrap;
-            font-family: 'Courier New', Courier, monospace;
+        .romantic-font {
+            font-family: 'Playfair Display', serif;
         }
-
-        .mektup-kapat {
-            position: absolute;
-            top: 15px; right: 25px;
-            font-size: 40px;
-            color: white;
+        .handwriting-font {
+            font-family: 'Caveat', cursive;
         }
-
-        /* Lightbox - Büyütme Alanı */
-        #lightbox {
-            display: none;
-            position: fixed;
-            z-index: 100000;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(0,0,0,0.98);
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
+        .perspective-1000 {
+            perspective: 1000px;
         }
-
-        #lightbox img {
-            max-width: 90%;
-            max-height: 70%;
-            object-fit: contain;
-            border-radius: 20px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        .transform-style-3d {
+            transform-style: preserve-3d;
         }
-
-        #foto-notu {
-            margin-top: 30px;
-            font-size: 1.8rem;
-            color: #ffcc80;
-            font-weight: bold;
-            max-width: 80%;
-            padding: 20px;
-            text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+        .backface-hidden {
+            backface-visibility: hidden;
         }
-
-        .nav-btn { position: absolute; top: 50%; font-size: 80px; color: white; padding: 30px; user-select: none; }
-        #prev { left: 5%; } #next { right: 5%; }
-        .close { position: absolute; top: 30px; right: 50px; font-size: 60px; }
+        .rotate-y-180 {
+            transform: rotateY(180deg);
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #170817;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(244, 63, 94, 0.3);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(244, 63, 94, 0.6);
+        }
     </style>
 </head>
-<body>
+<body class="selection:bg-rose-500 selection:text-white pb-20">
 
-    <button id="music-btn" style="display:none; position:fixed; top:20px; right:20px; padding:20px; border-radius:50%; border:none; z-index:9999; background: rgba(255,255,255,0.2); color:white;" onclick="muzikCal()">🎵</button>
-    <audio id="audio" src="madrigal.mp3" loop></audio>
+    <!-- Arka plan Atmosferik Işıklar -->
+    <div class="fixed top-[-10%] left-[-10%] w-[500px] h-[500px] bg-rose-600/20 rounded-full blur-[120px] pointer-events-none"></div>
+    <div class="fixed bottom-[-10%] right-[-10%] w-[500px] h-[500px] bg-pink-600/15 rounded-full blur-[120px] pointer-events-none"></div>
 
-    <div class="login-box" id="login-ekrani">
-        <h1>Elifime Özel❤️</h1>
-        <input type="password" id="sifre" placeholder="Şifre buraya yaparsııınn...">
-        <br>
-        <button class="giris-btn" onclick="kontrolEt()">Giriş Yap</button>
+    <!-- Müzik Çalar / Sabit Oynatıcı -->
+    <div class="fixed bottom-4 right-4 z-40 glass-panel p-3 rounded-2xl flex items-center gap-3 border border-rose-500/30 shadow-2xl">
+        <audio id="bgMusic" loop>
+            <source src="madrigal.mp3" type="audio/mpeg">
+            Tarayıcınız müzik çaları desteklemiyor.
+        </audio>
+        <button onclick="muzikToggle()" id="musicToggleBtn" class="w-10 h-10 bg-gradient-to-tr from-rose-600 to-pink-500 rounded-xl flex items-center justify-center text-white text-lg shadow-lg hover:scale-105 transition-all">
+            🎵
+        </button>
+        <div class="text-xs hidden sm:block">
+            <span class="block font-bold text-rose-200">Aşk Şarkımız</span>
+            <span id="musicStatusText" class="text-[10px] text-pink-300/70">Çalmak için tıkla</span>
+        </div>
     </div>
 
-    <div id="site-icerigi">
+    <!-- Giriş Ekranı -->
+    <div id="loginScreen" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#0c040d]/95 backdrop-blur-xl">
+        <div class="glass-panel p-8 md:p-10 rounded-3xl max-w-md w-full text-center relative border border-rose-500/30 shadow-[0_0_50px_rgba(244,63,94,0.3)]">
+            <div class="absolute -top-12 left-1/2 transform -translate-x-1/2 w-20 h-20 bg-gradient-to-tr from-rose-600 to-pink-500 rounded-2xl flex items-center justify-center text-4xl shadow-lg border border-white/25 animate-bounce">
+                💖
+            </div>
+            <h1 class="romantic-font text-3xl font-extrabold text-rose-200 mt-6 mb-2">Elif & Türkay</h1>
+            <p class="text-pink-300/80 text-sm mb-6">Sonsuza kadar sürecek aşk sığınağımıza hoş geldiniz. Devam etmek için şifreyi girrr:</p>
+            
+            <div class="space-y-4">
+                <input type="password" id="loginPass" placeholder="Örn: Özel Tarih veya Şifre" class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-center text-rose-100 placeholder-rose-300/40 focus:outline-none focus:border-rose-500 transition-all font-mono tracking-widest">
+                <button onclick="girisYap()" class="w-full py-3.5 bg-gradient-to-r from-rose-600 to-pink-600 hover:from-rose-500 hover:to-pink-500 text-white font-bold rounded-xl shadow-[0_0_20px_rgba(244,63,94,0.4)] transition-all transform hover:scale-[1.02]">
+                    Kapıyı Aç ✨
+                </button>
+                <p id="loginError" class="text-rose-400 text-xs mt-2 hidden">Şifre yanlış sevgilim, tekrar dene! 🥺</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ana Uygulama -->
+    <div id="mainApp" class="hidden max-w-5xl mx-auto px-4 pt-8">
         
-        <!-- Birliktelik Sayacı -->
-        <div class="sayac-kutusu">
-            <h2>İyi Ki Karşıma Çıktın Sol Yanım... 🥰</h2>
-            <div class="sayac-zaman">
-                <div class="sayac-parca"><span class="sayac-rakam" id="sayac-gun">0</span>Gün</div>
-                <div class="sayac-parca"><span class="sayac-rakam" id="sayac-saat">0</span>Saat</div>
-                <div class="sayac-parca"><span class="sayac-rakam" id="sayac-dakika">0</span>Dakika</div>
-                <div class="sayac-parca"><span class="sayac-rakam" id="sayac-saniye">0</span>Saniye</div>
+        <!-- Header Banner -->
+        <header class="glass-panel p-6 md:p-8 rounded-3xl text-center relative mb-8 overflow-hidden shadow-2xl border border-rose-500/20">
+            <div class="absolute inset-0 bg-gradient-to-r from-rose-900/20 via-transparent to-pink-900/25 pointer-events-none"></div>
+            <div class="relative z-10">
+                <span class="px-4 py-1.5 rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/30 text-xs font-bold tracking-wider uppercase mb-3 inline-block">Sonsuzluk Yolculuğumuz</span>
+                <h1 class="romantic-font text-4xl md:text-5xl font-black text-white mb-2 drop-shadow-md">Elif & Türkay</h1>
+                <p class="text-pink-200/90 text-sm md:text-base font-medium max-w-lg mx-auto mb-6">Kalplerimizin birlikte attığı her an, hayatımın en güzel hediyesi.</p>
+                
+                <!-- Live Counter -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-2xl mx-auto">
+                    <div class="glass-card p-3 rounded-2xl text-center border border-white/10">
+                        <span id="daysCount" class="block text-2xl md:text-3xl font-black text-rose-300 font-mono">0</span>
+                        <span class="text-[11px] text-pink-300/70 font-semibold uppercase tracking-wider">Gün</span>
+                    </div>
+                    <div class="glass-card p-3 rounded-2xl text-center border border-white/10">
+                        <span id="hoursCount" class="block text-2xl md:text-3xl font-black text-rose-300 font-mono">0</span>
+                        <span class="text-[11px] text-pink-300/70 font-semibold uppercase tracking-wider">Saat</span>
+                    </div>
+                    <div class="glass-card p-3 rounded-2xl text-center border border-white/10">
+                        <span id="minsCount" class="block text-2xl md:text-3xl font-black text-rose-300 font-mono">0</span>
+                        <span class="text-[11px] text-pink-300/70 font-semibold uppercase tracking-wider">Dakika</span>
+                    </div>
+                    <div class="glass-card p-3 rounded-2xl text-center border border-white/10">
+                        <span id="secsCount" class="block text-2xl md:text-3xl font-black text-rose-300 font-mono">0</span>
+                        <span class="text-[11px] text-pink-300/70 font-semibold uppercase tracking-wider">Saniye</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Navigation Tabs -->
+        <nav class="flex flex-wrap justify-center gap-2 mb-8 bg-black/30 p-2 rounded-2xl backdrop-blur-md border border-white/10">
+            <button onclick="sekmeDegis('garden')" id="btn-garden" class="px-4 py-2.5 rounded-xl text-sm font-bold transition-all bg-gradient-to-r from-amber-500 to-rose-600 text-white shadow-lg">🌼 Nergis Serası</button>
+            <button onclick="sekmeDegis('ritual')" id="btn-ritual" class="px-4 py-2.5 rounded-xl text-sm font-bold transition-all text-pink-200/70 hover:text-white hover:bg-white/5">💬 30 Günlük Sorular</button>
+            <button onclick="sekmeDegis('vulnerable')" id="btn-vulnerable" class="px-4 py-2.5 rounded-xl text-sm font-bold transition-all text-pink-200/70 hover:text-white hover:bg-white/5">💌 Kendimi Açma Kutum</button>
+            <button onclick="sekmeDegis('bottles')" id="btn-bottles" class="px-4 py-2.5 rounded-xl text-sm font-bold transition-all text-pink-200/70 hover:text-white hover:bg-white/5">🍾 Zaman Şişeleri</button>
+            <button onclick="sekmeDegis('dictionary')" id="btn-dictionary" class="px-4 py-2.5 rounded-xl text-sm font-bold transition-all text-pink-200/70 hover:text-white hover:bg-white/5">📖 Ortak Sözlük</button>
+            <button onclick="sekmeDegis('story')" id="btn-story" class="px-4 py-2.5 rounded-xl text-sm font-bold transition-all text-pink-200/70 hover:text-white hover:bg-white/5">✨ Hikayemiz</button>
+            <button onclick="sekmeDegis('photos')" id="btn-photos" class="px-4 py-2.5 rounded-xl text-sm font-bold transition-all text-pink-200/70 hover:text-white hover:bg-white/5">📸 Polaroid Albüm</button>
+            <button onclick="sekmeDegis('bucket')" id="btn-bucket" class="px-4 py-2.5 rounded-xl text-sm font-bold transition-all text-pink-200/70 hover:text-white hover:bg-white/5">🎯 Hayallerimiz</button>
+        </nav>
+
+        <!-- SEKME 1: Nergis Serası -->
+        <div id="tab-garden" class="space-y-6">
+            <div class="glass-panel p-6 md:p-10 rounded-3xl relative overflow-hidden border border-amber-500/30 shadow-2xl">
+                <div class="absolute inset-0 bg-gradient-to-br from-amber-500/10 via-transparent to-rose-600/10 pointer-events-none"></div>
+                
+                <div class="flex flex-col lg:flex-row items-center justify-between gap-8 relative z-10">
+                    <div class="space-y-4 text-center lg:text-left flex-1">
+                        <div class="flex flex-wrap items-center justify-center lg:justify-start gap-2">
+                            <span class="px-3.5 py-1 bg-amber-500/20 text-amber-300 border border-amber-500/30 text-xs font-bold rounded-full">🌼 30 Kademeli RPG Aşk Serası</span>
+                            <span id="gardenerBadge" class="px-3.5 py-1 bg-rose-500/20 text-rose-300 border border-rose-500/30 text-xs font-bold rounded-full">🌱 Çırak Bahçıvan</span>
+                        </div>
+                        <h2 class="romantic-font text-3xl md:text-4xl font-extrabold text-white">Elif & Türkay'ın Sihirli Nergis Serası</h2>
+                        <p class="text-pink-200/80 text-sm md:text-base max-w-lg">Çiçeğini sula, gübre ver, mini oyunlarla XP kas ve nergis bahçeni efsanevi boyutlara taşı!</p>
+                        
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                            <div class="bg-black/40 p-3 rounded-2xl border border-white/10 text-center">
+                                <span class="block text-[10px] text-amber-300/80 uppercase font-bold">💧 Nem Oranı</span>
+                                <span id="plantMoistureText" class="text-sm font-bold text-cyan-300 font-mono">50%</span>
+                            </div>
+                            <div class="bg-black/40 p-3 rounded-2xl border border-white/10 text-center">
+                                <span class="block text-[10px] text-purple-300/80 uppercase font-bold">💎 Aşk Puanı</span>
+                                <span id="loveCoinsText" class="text-sm font-bold text-purple-300 font-mono">50 🪙</span>
+                            </div>
+                            <div class="bg-black/40 p-3 rounded-2xl border border-white/10 text-center">
+                                <span class="block text-[10px] text-emerald-300/80 uppercase font-bold">🌱 Durum</span>
+                                <span class="text-sm font-bold text-emerald-300">Huzurlu ✔</span>
+                            </div>
+                        </div>
+
+                        <div class="bg-black/40 p-4 rounded-2xl border border-white/10 space-y-3">
+                            <div class="flex justify-between text-xs font-bold text-amber-200">
+                                <span id="treeLevelText">Seviye 1: Minik Tohum</span>
+                                <span id="treeXpText">0 / 50 XP</span>
+                            </div>
+                            <div class="w-full bg-black/60 h-4 rounded-full overflow-hidden border border-white/10 p-0.5">
+                                <div id="treeXpBar" class="bg-gradient-to-r from-amber-400 via-rose-500 to-pink-500 h-full w-[0%] rounded-full transition-all duration-700"></div>
+                            </div>
+                            <div class="grid grid-cols-3 gap-2 text-center pt-1">
+                                <div class="bg-white/5 p-2 rounded-xl border border-white/5">
+                                    <span class="block text-[10px] text-pink-300/70">ÇİÇEK BOYU</span>
+                                    <span id="treeHeightText" class="text-xs text-amber-300 font-mono font-bold">5.0 cm</span>
+                                </div>
+                                <div class="bg-white/5 p-2 rounded-xl border border-white/5">
+                                    <span class="block text-[10px] text-pink-300/70">SERİ GÜNÜ</span>
+                                    <span id="streakText" class="text-xs text-rose-300 font-bold">🔥 1 Gün</span>
+                                </div>
+                                <div class="bg-white/5 p-2 rounded-xl border border-white/5">
+                                    <span class="block text-[10px] text-pink-300/70">SON SULAYAN</span>
+                                    <span id="lastWateredByText" class="text-xs text-cyan-300 font-bold">-</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                            <button onclick="acMiniOyunModal(true)" id="memoryGameBtn" class="p-3 bg-gradient-to-r from-rose-600 to-amber-600 hover:opacity-90 text-white text-xs font-bold rounded-xl shadow flex items-center justify-center gap-2">
+                                <span>🧩 Aşk Eşleştirme (+40 XP)</span>
+                            </button>
+                            <button onclick="acYaprakTohumOyunu(true)" id="cleanGameBtn" class="p-3 bg-gradient-to-r from-purple-600 to-pink-600 hover:opacity-90 text-white text-xs font-bold rounded-xl shadow flex items-center justify-center gap-2">
+                                <span>🍃 Bahçe Yaprak Toplama (+35 XP)</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col items-center justify-center bg-black/50 p-6 md:p-8 rounded-3xl border border-amber-500/20 min-w-[320px] relative shadow-2xl">
+                        <div id="gardenStageBox" class="w-64 h-64 rounded-3xl bg-gradient-to-b from-[#220d20] via-[#150715] to-[#0c040d] border border-amber-500/30 flex flex-col items-center justify-center relative overflow-hidden mb-4 shadow-inner">
+                            <canvas id="gardenCanvas" width="240" height="240" class="absolute inset-0 pointer-events-none"></canvas>
+                            <div id="treeVisual" class="text-6xl mb-2 z-10 filter drop-shadow-[0_0_15px_rgba(244,63,94,0.6)] animate-pulse">🌱</div>
+                            <div id="treeStageName" class="text-xs font-bold text-amber-200 z-10 bg-black/80 px-3 py-1 rounded-full border border-amber-500/30 shadow-md">Minik Tohum</div>
+                            <div class="absolute bottom-2 text-[9px] text-amber-300/60 z-10">🌸 Elif & Türkay Serası 🌸</div>
+                        </div>
+                        
+                        <div id="treeStatus" class="text-xs font-bold text-amber-200 mb-4 text-center">Bugün seranız henüz sulanmadı 💧 Sevgini göster!</div>
+                        
+                        <div class="w-full space-y-2">
+                            <div class="flex items-center justify-between bg-black/40 p-2 rounded-xl border border-white/10 mb-1">
+                                <span class="text-[11px] text-pink-300 font-bold">Aktif Sevgili:</span>
+                                <div class="flex gap-1">
+                                    <button onclick="setGardenAuthor('Elif')" id="gardenAuthorElif" class="px-3 py-1 rounded-lg text-xs font-bold transition-all bg-pink-600 text-white shadow">🌸 Elif</button>
+                                    <button onclick="setGardenAuthor('Türkay')" id="gardenAuthorTurkay" class="px-3 py-1 rounded-lg text-xs font-bold transition-all bg-black/40 text-pink-300 border border-white/10">💙 Türkay</button>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-2">
+                                <button onclick="sulamaYap()" id="waterBtn" class="py-3 bg-gradient-to-r from-amber-500 to-rose-600 hover:opacity-90 text-white font-bold rounded-xl shadow transition-all text-xs flex items-center justify-center gap-1">
+                                    <span>💧 Sula (+25 XP)</span>
+                                </button>
+                                <button onclick="ikramVer()" id="bonusBtn" class="py-3 bg-white/10 hover:bg-white/20 text-amber-300 font-bold rounded-xl text-xs transition-all border border-amber-500/30 flex items-center justify-center gap-1">
+                                    <span>✨ Gübre (+50 XP)</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-8 pt-6 border-t border-white/10">
+                    <div class="flex items-center justify-between mb-3">
+                        <h3 class="text-sm font-bold text-amber-200">🌿 30 Kademeli Nergis Gelişim Basamakları</h3>
+                        <span id="unlockedLevelsCount" class="text-xs text-pink-300 font-mono">Açılan: 1 / 30</span>
+                    </div>
+                    <div id="treeLevelsGrid" class="grid grid-cols-3 sm:grid-cols-6 md:grid-cols-10 gap-2 max-h-48 overflow-y-auto pr-1"></div>
+                </div>
             </div>
         </div>
 
-        <!-- Sevgimetre Alanı -->
-        <div class="sayac-kutusu">
-            <h2>Seni Ne Kadar Seviyorum? 🙄</h2>
-            <button class="mektup-sec-btn ozel-vurgu" id="sevgimetre-btn" onclick="sevgimetreHesapla()">Sorgula... ❤️</button>
-            <div id="sevgimetre-sonuc" style="display:none; margin-top:15px;">
-                <span id="sevgimetre-yuzde" style="font-size: 3rem; font-weight: bold; color: #ffebee; display:block;">%0</span>
-                <p id="sevgimetre-mesaj" style="font-size: 1.4rem; color: #ffcc80; margin-top: 15px; opacity: 0; transition: opacity 1s; font-weight: bold; text-shadow: 0 2px 5px rgba(0,0,0,0.3);"></p>
+        <!-- SEKME 2: 30 Günlük Otomatik Sorular -->
+        <div id="tab-ritual" class="hidden space-y-6">
+            <div class="glass-panel p-6 md:p-8 rounded-3xl border border-rose-500/20 max-w-2xl mx-auto">
+                <div class="flex items-center justify-between mb-4">
+                    <span id="questionDayBadge" class="px-3 py-1 bg-pink-500/20 text-pink-300 border border-pink-500/30 text-xs font-bold rounded-full">💬 Günün Sorusu (Gün 1 / 30)</span>
+                    <span id="questionDateText" class="text-xs text-pink-300/60 font-mono">16.10.2026</span>
+                </div>
+                <h3 id="dailyQuestionTitle" class="text-xl font-bold text-white mb-6 text-center">Bugün beni düşünürken aklına gelen ilk kelime ve duygu neydi?</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div class="glass-card p-5 rounded-2xl border border-pink-500/30 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-xs font-bold text-pink-300 flex items-center gap-1">🌸 Elif'in Cevabı</span>
+                                <span id="elifStatusBadge" class="text-[10px] px-2 py-0.5 rounded-full bg-pink-500/20 text-pink-300">Bekleniyor...</span>
+                            </div>
+                            <div id="answerElif" class="p-3 rounded-xl bg-black/40 border border-white/10 text-sm text-pink-100 min-h-[110px] max-h-[350px] overflow-y-auto italic flex items-center justify-center text-center">
+                                Elif henüz cevap yazmadı...
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card p-5 rounded-2xl border border-cyan-500/30 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-xs font-bold text-cyan-300 flex items-center gap-1">💙 Türkay'ın Cevabı</span>
+                                <span id="turkayStatusBadge" class="text-[10px] px-2 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300">Bekleniyor...</span>
+                            </div>
+                            <div id="answerTurkay" class="p-3 rounded-xl bg-black/40 border border-white/10 text-sm text-cyan-100 min-h-[110px] max-h-[350px] overflow-y-auto italic flex items-center justify-center text-center">
+                                Türkay henüz cevap yazmadı...
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card p-5 rounded-2xl border border-white/10 space-y-4">
+                    <div class="flex flex-col sm:flex-row items-center justify-between gap-3">
+                        <span class="text-xs font-bold text-pink-200">Kim olarak uzun uzun cevap yazıyorsun sevgilim?</span>
+                        <div class="flex gap-2 w-full sm:w-auto">
+                            <button onclick="setAuthor('Elif')" id="authorBtnElif" class="flex-1 sm:flex-none px-4 py-2 rounded-xl text-xs font-bold transition-all bg-pink-600 text-white shadow-md">🌸 Elif</button>
+                            <button onclick="setAuthor('Türkay')" id="authorBtnTurkay" class="flex-1 sm:flex-none px-4 py-2 rounded-xl text-xs font-bold transition-all bg-black/40 text-pink-300 border border-white/10">💙 Türkay</button>
+                        </div>
+                    </div>
+
+                    <div class="space-y-2">
+                        <textarea id="myAnswerInput" rows="4" placeholder="İçinden geçenleri, hissettiklerini buraya dök sevgilim... 💖" class="w-full bg-black/40 border border-white/10 rounded-xl p-3 text-sm text-white placeholder-pink-300/40 focus:outline-none focus:border-rose-500 resize-y"></textarea>
+                        <button onclick="cevapGonder()" class="w-full py-3 bg-gradient-to-r from-rose-600 to-pink-600 hover:from-rose-500 hover:to-pink-500 text-white font-bold rounded-xl text-sm transition-all shadow-md">Kalpten Gelen Cevabı Gönder ✨</button>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <!-- Mektup Butonları Alanı -->
-        <div class="mektup-butonlari-container">
-            <button class="mektup-sec-btn ozel-vurgu" onclick="mektupYazdir('soylemekIstediklerim')">Sana Söylemek İstedikleriiim</button>
-            <button class="mektup-sec-btn" onclick="mektupYazdir('ozledim')">Beni Özlediğinde Aç 🥺</button>
-            <button class="mektup-sec-btn" onclick="mektupYazdir('gulmek')">Gülmek İstediğinde Aç </button>
-            <button class="mektup-sec-btn" onclick="mektupYazdir('modun')">Modun Düştüğünde Aç 💖</button>
-            <button class="mektup-sec-btn" onclick="mektupYazdir('uyku')">Uykun Gelmediğinde Aç 🌙</button>
+        <!-- SEKME 3: Kendimi Açma Kutum -->
+        <div id="tab-vulnerable" class="hidden space-y-6">
+            <div class="glass-panel p-6 md:p-8 rounded-3xl border border-rose-500/30 max-w-2xl mx-auto">
+                <div class="flex items-center justify-between mb-4">
+                    <span class="px-3 py-1 bg-rose-600/20 text-rose-300 border border-rose-500/30 text-xs font-bold rounded-full">💌 Kendimi Açma Kutum</span>
+                    <span class="text-xs text-rose-300/60 font-mono">Savunmasız & Samimi Alan</span>
+                </div>
+                <h3 class="text-xl font-bold text-white mb-2">Sığınağımızdaki Kalp Notları 🌸</h3>
+                <p class="text-xs text-pink-200/70 mb-6">Dış dünyanın yorgunluğunu bırakıp birbirinize içini döktüğünüz, her an okunabilen ortak defter.</p>
+                
+                <div class="glass-card p-5 rounded-2xl border border-white/10 space-y-4 mb-6">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-bold text-pink-200">Kim yazıyor?</span>
+                        <select id="vulnerableAuthor" class="bg-black/40 border border-white/10 rounded-xl px-3 py-1.5 text-xs text-white focus:outline-none focus:border-rose-500">
+                            <option value="Elif">🌸 Elif</option>
+                            <option value="Türkay">💙 Türkay</option>
+                        </select>
+                    </div>
+                    <textarea id="vulnerableInput" rows="3" placeholder="Şu an içinden ne geçiyorsa, maskeleri düşürüp buraya yaz..." class="w-full bg-black/40 border border-white/10 rounded-xl p-3 text-sm text-white placeholder-pink-300/40 focus:outline-none focus:border-rose-500 resize-y"></textarea>
+                    <button onclick="vulnerableKaydet()" class="w-full py-2.5 bg-gradient-to-r from-rose-600 to-amber-600 hover:opacity-90 text-white font-bold rounded-xl text-xs transition-all shadow">Kutuya Kalpten Bir Not Bırak ✨</button>
+                </div>
+
+                <div id="vulnerableContainer" class="space-y-3 max-h-[450px] overflow-y-auto pr-1"></div>
+            </div>
         </div>
 
-        <h1> Anılarımız 💌</h1>
-        <div class="galeri" id="galeri-alani"></div>
+        <!-- SEKME 4: Zaman Şişeleri -->
+        <div id="tab-bottles" class="hidden space-y-6">
+            <div class="glass-panel p-6 md:p-8 rounded-3xl border border-cyan-500/30 max-w-2xl mx-auto">
+                <div class="flex items-center justify-between mb-4">
+                    <span class="px-3 py-1 bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 text-xs font-bold rounded-full">🍾 Geleceğe Şişe Mesajı</span>
+                    <button onclick="toggleBottleModal(true)" class="px-3 py-1.5 bg-cyan-600 hover:bg-cyan-500 text-white font-bold rounded-xl text-xs transition-all">+ Yeni Şişe At</button>
+                </div>
+                <h3 class="text-xl font-bold text-white mb-2">Zaman Kapsülü Şişelerimiz 🌊</h3>
+                <p class="text-xs text-pink-200/70 mb-6">Seçtiğiniz tarihe kadar mühürlü kalan, zamanı gelince açılıp okunan aşk mektupları.</p>
+                
+                <div id="bottleContainer" class="space-y-3 max-h-[450px] overflow-y-auto pr-1"></div>
+            </div>
+        </div>
 
-        <!-- Gizli Sürpriz Kutu -->
-        <div class="surpriz-kutu-container">
-            <div class="surpriz-kutu" onclick="mektupYazdir('buyukSurpriz')">🤍</div>
-            <div class="surpriz-yazi">Sadece çok özlediğinde tıkla... 🤫</div>
+        <!-- SEKME 5: Ortak Sözlük -->
+        <div id="tab-dictionary" class="hidden space-y-6">
+            <div class="glass-panel p-6 md:p-8 rounded-3xl border border-purple-500/30 max-w-2xl mx-auto">
+                <div class="flex items-center justify-between mb-4">
+                    <span class="px-3 py-1 bg-purple-500/20 text-purple-300 border border-purple-500/30 text-xs font-bold rounded-full">📖 Elif & Türkay Ortak Sözlüğü</span>
+                    <span class="text-xs text-purple-300/60 font-mono">Özel Kodlarımız</span>
+                </div>
+                <h3 class="text-xl font-bold text-white mb-2">Bizim Kelime Bulutumuz ✨</h3>
+                <p class="text-xs text-pink-200/70 mb-6">Dışarıdan kimsenin anlamadığı, sadece ikimizin bildiği ve güldüğü özel kelimeler sözlüğü.</p>
+                
+                <div class="glass-card p-5 rounded-2xl border border-white/10 space-y-4 mb-6">
+                    <div>
+                        <label class="block text-xs font-semibold text-purple-300 mb-1">Kelime / Deyim:</label>
+                        <input type="text" id="dictWordInput" placeholder="Örn: Nergis Modu 🌼" class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder-pink-300/40 focus:outline-none focus:border-purple-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-purple-300 mb-1">Anlamı ve Hikayesi:</label>
+                        <textarea id="dictDescInput" rows="3" placeholder="Bu kelime aramızda nasıl çıktı, ne anlama geliyor..." class="w-full bg-black/40 border border-white/10 rounded-xl p-3 text-sm text-white placeholder-pink-300/40 focus:outline-none focus:border-purple-500 resize-y"></textarea>
+                    </div>
+                    <button onclick="dictionaryEkle()" class="w-full py-2.5 bg-gradient-to-r from-purple-600 to-rose-600 hover:opacity-90 text-white font-bold rounded-xl text-xs transition-all shadow">Sözlüğe Kelime Ekle 📖</button>
+                </div>
+
+                <div id="dictionaryContainer" class="space-y-3 max-h-[450px] overflow-y-auto pr-1"></div>
+            </div>
+        </div>
+
+        <!-- SEKME 6: Hikayemiz -->
+        <div id="tab-story" class="hidden space-y-6">
+            <div class="glass-panel p-6 md:p-8 rounded-3xl border border-rose-500/20">
+                <div class="flex flex-col sm:flex-row items-center justify-between gap-4 mb-6">
+                    <div>
+                        <span class="px-3 py-1 bg-rose-500/20 text-rose-300 border border-rose-500/30 text-xs font-bold rounded-full">📖 Anılarımız</span>
+                        <h2 class="romantic-font text-2xl md:text-3xl font-bold text-white mt-1">Bizim Hikayemiz 💖</h2>
+                    </div>
+                    <button onclick="acHikayeModal(null)" class="px-4 py-2.5 bg-gradient-to-r from-rose-600 to-pink-600 text-white font-bold rounded-xl text-xs shadow-lg transition-all">+ Yeni Anı Ekle</button>
+                </div>
+                <p class="text-pink-200/80 text-center max-w-xl mx-auto mb-8 text-sm">Hayatımızın kesiştiği günden bu yana birlikte yazdığımız en güzel destan. Anıların üzerine tıklayarak düzenleyebilirsin!</p>
+                <div id="storyTimelineContainer" class="relative border-l-2 border-rose-500/30 ml-4 md:ml-32 space-y-8 py-4"></div>
+            </div>
+        </div>
+
+        <!-- SEKME 7: Polaroid Albüm (WhatsApp Fotoğrafları ile Entegre) -->
+        <div id="tab-photos" class="hidden space-y-6">
+            <div class="glass-panel p-6 md:p-8 rounded-3xl border border-rose-500/20">
+                <div class="flex flex-col sm:flex-row items-center justify-between gap-4 mb-6">
+                    <div>
+                        <span class="px-3 py-1 bg-amber-500/20 text-amber-300 border border-amber-500/30 text-xs font-bold rounded-full">📸 Polaroid Albüm</span>
+                        <h2 class="romantic-font text-2xl md:text-3xl font-bold text-white mt-1">Anı Fotoğraflarımız 🖼️</h2>
+                    </div>
+                </div>
+                <p class="text-pink-200/80 text-center max-w-xl mx-auto mb-8 text-sm">Polaroid çerçevelere tıklayarak arka yüzlerindeki romantik notları okuyabilirsin sevgilim!</p>
+                <div id="photoGridContainer" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"></div>
+            </div>
+        </div>
+
+        <!-- SEKME 8: Hayallerimiz -->
+        <div id="tab-bucket" class="hidden space-y-6">
+            <div class="glass-panel p-6 md:p-8 rounded-3xl border border-rose-500/20">
+                <div class="flex flex-col md:flex-row items-center justify-between gap-4 mb-6">
+                    <div>
+                        <span class="px-3 py-1 bg-purple-500/20 text-purple-300 border border-purple-500/30 text-xs font-bold rounded-full">🎯 Ortak Hayallerimiz</span>
+                        <h2 class="romantic-font text-2xl md:text-3xl font-bold text-white mt-2">Gelecek Hayalleri (Bucket List)</h2>
+                        <p class="text-xs text-pink-200/70">Hayallerimizi birlikte gerçekleştirmek için heyecanla bekliyoruz!</p>
+                    </div>
+                    <div class="flex gap-2 w-full md:w-auto">
+                        <input type="text" id="bucketInput" placeholder="Yeni hayalimiz (Örn: Paris'te kahve)..." class="bg-black/40 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder-pink-300/40 focus:outline-none focus:border-rose-500 flex-1 md:w-64">
+                        <button onclick="bucketEkle()" class="px-5 py-2.5 bg-gradient-to-r from-purple-600 to-rose-600 hover:from-purple-500 hover:to-rose-500 text-white font-bold rounded-xl text-sm transition-all shadow-md whitespace-nowrap">+ Ekle</button>
+                    </div>
+                </div>
+                <div id="bucketListContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-4"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Modals -->
+    <div id="miniGameModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md hidden">
+        <div class="glass-panel p-6 md:p-8 rounded-3xl max-w-md w-full relative border border-rose-500/30 text-center">
+            <h3 class="romantic-font text-2xl font-bold text-white mb-1">Elif & Türkay Aşk Hafızası 🧩</h3>
+            <p class="text-xs text-pink-200/70 mb-4">Aynı sembolleri bularak eşleştir, serana +40 XP kazan!</p>
+            <div id="memoryGrid" class="grid grid-cols-4 gap-2 mb-4"></div>
+            <div id="memoryMessage" class="text-xs text-amber-300 font-bold mb-4">Bütün kartları eşleştirmeye başla!</div>
+            <button onclick="acMiniOyunModal(false)" class="w-full py-2.5 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl text-xs transition-all">Kapat</button>
         </div>
     </div>
 
-    <!-- Ortak Mektup Penceresi -->
-    <div id="mektup-overlay">
-        <span class="mektup-kapat" onclick="mektupKapat()">&times;</span>
-        <div class="mektup-zarf">
-            <div id="mektup-metni"></div>
+    <div id="yaprakGameModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md hidden">
+        <div class="glass-panel p-6 md:p-8 rounded-3xl max-w-md w-full relative border border-purple-500/30 text-center">
+            <h3 class="romantic-font text-2xl font-bold text-white mb-1">Sera Temizliği ve Yaprak Toplama 🍃</h3>
+            <p class="text-xs text-purple-200/70 mb-4">Serada biriken yaprakları 15 saniyede topla (+35 XP)!</p>
+            <div id="yaprakGameArea" class="w-full h-64 bg-black/60 rounded-2xl border border-purple-500/30 relative overflow-hidden mb-4 cursor-crosshair"></div>
+            <div id="yaprakGameScore" class="text-xs text-purple-300 font-bold mb-4">Toplanan: 0 / 10 | Süre: 15s</div>
+            <button onclick="acYaprakTohumOyunu(false)" class="w-full py-2.5 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl text-xs transition-all">Kapat</button>
         </div>
     </div>
 
-    <div id="lightbox">
-        <span class="close" onclick="kapat()">&times;</span>
-        <div class="nav-btn" id="prev" onclick="degis(-1)">&#10094;</div>
-        <img id="buyuk-resim" src="" alt="Anı">
-        <div id="foto-notu"></div>
-        <div class="nav-btn" id="next" onclick="degis(1)">&#10095;</div>
+    <div id="bottleModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md hidden">
+        <div class="glass-panel p-6 md:p-8 rounded-3xl max-w-md w-full relative border border-cyan-500/30">
+            <h3 class="romantic-font text-2xl font-bold text-white mb-2">Geleceğe Mektup Şişesi 🍾</h3>
+            <p class="text-xs text-pink-200/70 mb-4">Belirlediğin tarihe kadar mühürlenecek olan aşk şişeni bırak.</p>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-cyan-300 mb-1">Şişeyi Atan Sevgili:</label>
+                    <select id="bottleAuthor" class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-cyan-500">
+                        <option value="Elif">🌸 Elif</option>
+                        <option value="Türkay">💙 Türkay</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-cyan-300 mb-1">Açılacağı Tarih:</label>
+                    <input type="date" id="bottleDate" class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-cyan-500 font-mono">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-cyan-300 mb-1">Mektup / Not:</label>
+                    <textarea id="bottleMsg" rows="4" placeholder="Gelecekteki sevgiline söylemek istediklerin..." class="w-full bg-black/40 border border-white/10 rounded-xl p-3 text-sm text-white placeholder-pink-300/40 focus:outline-none focus:border-cyan-500 resize-none"></textarea>
+                </div>
+                <div class="flex gap-3 pt-2">
+                    <button onclick="toggleBottleModal(false)" class="flex-1 py-3 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl text-sm transition-all">İptal</button>
+                    <button onclick="bottleKaydet()" class="flex-1 py-3 bg-cyan-600 hover:bg-cyan-500 text-white font-bold rounded-xl text-sm transition-all shadow-md">Şişeyi Denize Bırak 🌊</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hikaye Modal -->
+    <div id="storyModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md hidden">
+        <div class="glass-panel p-6 md:p-8 rounded-3xl max-w-md w-full relative border border-rose-500/30">
+            <h3 id="storyModalTitle" class="romantic-font text-2xl font-bold text-white mb-2">Hikayemize Anı Ekle ✨</h3>
+            <p class="text-xs text-pink-200/70 mb-4">Zaman çizelgemize yeni bir unutulmaz anı ekleyin veya düzenleyin.</p>
+            <input type="hidden" id="storyEditId" value="">
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-pink-300 mb-1">Dönem / Başlık:</label>
+                    <input type="text" id="storyTitle" placeholder="Örn: İlk Tatilimiz ✈️" class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder-pink-300/40 focus:outline-none focus:border-rose-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-pink-300 mb-1">Alt Başlık / Tarih:</label>
+                    <input type="text" id="storySubtitle" placeholder="Örn: Bodrum Kaçamağı" class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder-pink-300/40 focus:outline-none focus:border-rose-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-pink-300 mb-1">Anı Detayı / Açıklama:</label>
+                    <textarea id="storyDesc" rows="3" placeholder="O gün neler hissettiğini yaz..." class="w-full bg-black/40 border border-white/10 rounded-xl p-3 text-sm text-white placeholder-pink-300/40 focus:outline-none focus:border-rose-500"></textarea>
+                </div>
+                <div class="flex gap-3 pt-2">
+                    <button onclick="acHikayeModal(null)" class="flex-1 py-3 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl text-sm transition-all">İptal</button>
+                    <button onclick="storyKaydet()" class="flex-1 py-3 bg-rose-600 hover:bg-rose-500 text-white font-bold rounded-xl text-sm transition-all shadow-md">Kaydet 💖</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
-        const notlar = [
-            "İlk datemiz, o günden bugüne her an içimdeki heyecanı tarif edemem... ❤️ ❤️", 
-            "Ufoyla ısınan masum köylüler yani biz, dünyanın en tatlı halleriydi.", 
-            "gülüşüne öldüğüm aşk kadın, okulda seni görebilmek için verdiğimiz çabaa.",
-            "tek görünümlük fotoğraflarınla savaştığımız o güzel evren, hepsi bizim anımız.", 
-            "Matracimizin yavaştan bize ısındığı,içimizi ısıtan gülüşün.", 
-            "İlk dosya açışımız, belki o an farkında değildik ama bir ömürlük hikaye başlıyordu.",
-            "yanında olamasam da gözlerinde kaybolduğum o en uzak ve en yakın anım.", 
-            "Aşkımız ve o gün bize getirmeyi unuttuğun kalpli stickerlar, iyi ki unutmuşuz, bu sayede daha çok güldük.", 
-            "ilk defa twin kombinleri denediğimiz evren.",
-            "seninle ilk konserimiz, Madrigal çalarken dünyada sadece ikimizin varlığıyla baktığım o unutulmaz gece.", 
-            "konser çıkışı kırmızı ışıkta derin konularrr, sanki trafik akmıyor da zaman bizim için duruyordu.", 
-            "seninle her an çok özel, hele o anki tatlılığın beni benden alıyor.",
-            "yanındayken dünya duruyor, sanki evren sadece senin gülüşün etrafında dönüyor.", 
-            "en masum bakışın, beni kendine bininci kez aşık ettiğin o eşsiz annn.", 
-            "Birlikte ilk derbi galibiyetimiz, seninle paylaşınca her şeyin zaferi daha bir güzel.",
-            "kalbimin sahibi ve ailesiii şimdilikk.", 
-            "o gün seni çooook özlemiştim, yanına geldiğim an tüm dünyanın yorgunluğu bitti.", 
-            "Bize ilk pasta yapışın,emeğinle o pastayı dünyanın en lezzetli şeyi yaptın.",
-            "takip etmek diyince bizdir, yeter ki yanımda sen ol aşkım.", 
-            "Elif ve Polat olduğumuz evren, her halimizle birbirimize bu kadar yakışmamız bir mucize.", 
-            "seninle her yol çiçek, ama sen zaten o çiçeklerin en güzeli, en değerlisisin.",
-            "gözlerin... İçlerinde kaybolup, sonsuza kadar orada kalmak istediğim tek yer.", 
-            "seni ilk gördüğüm o gün, hayatımın geri kalanının sadece seninle olacağını anladığım an.", 
-            "doğum gününde ne dilediğini meraktan çatladığımız gün, asıl dilek senin gibi birini hayatıma kattığı için benimkisiydi.",
-            "sen benim şansımsın, iyi kii hayatımdasın, iyi kii benimsin.", 
-            "Elif'im, her halinle öylesine güzelsin ki, kusurlar bile seninle kusursuzlaşıyor.", 
-            "bizsiz yediğin yemeklerr yazıyoruzz...",
-            "seninle zaman kavramı yok, ifşa olarak görsende gözlerindeki o ışıkla her anı anlamlandırıyoruz.", 
-            "Senaya sempati kazandığımız anlar, bizi çektiği için değil, senin neşene tanıklık ettiği için sağ olsun ahahhahah.", 
-            "dünyadaki en tatlı kız, evet sensin, yanılıyor muyum?",
-            "her anın ayrı yeri var ama senin yerin hep kalbimin en başköşesinde, sonsuza kadar.", 
-            "seninle yaşamaya, nefes almaya ve her yeni güne uyanmaya değer.", 
-            "o güzel sabah kahvaltımız, sen karşımdayken çayın bile tadı bambaşka. kesinlikle yanaklarına odaklanmıyorum.",
-            "yaptığımız ilk o ufak hata bile seninle anıya dönüştü, o saçlarının kokusu hala burnumda.", 
-            "sen ve o doğal hallerin, fotoğraf karesine sığmayan samimiyetin.", 
-            "kahvaltımızın hiç bitmemesi için zamana yalvardığımız o unutulmaz gün.",
-            "peçetelerini bile sakladığım evren, benim için her zerren çok kiymetli.", 
-            "yakışmak, benzemek ve bir olmak deyince akla gelen tek ikili biziz.", 
-            "tek sığınağım sensin, hayatın bütün fırtınaları senin yanında diner.",
-            "yanına yakıştığımı düşündüğüm, gururla gülümsediğim en güzel gün.", 
-            "sen ve eklerin, senin tatlılığının yanında onlar bile sönük kalıyor, evet kesinlikle benimsin.", 
-            "bence en tatlı fotomuz, beraber gülüşümüzden daha güzel bir tablo yok.",
-            "senle fotoğraf çekilmeyi, o anı dondurup sonsuza kadar yaşatmayı seviyorum.", 
-            "beni dövmediğin için her gün şükrediyorum, ama şakadan dövsen bile o bile güzel.", 
-            "beraber yaşlanmaya, saçlarımız beyazlayınca bile birbirimize aynı aşkla bakmaya.",
-            "kalbim seninle dolu, sarı kedim benim, hayatımın neşesi.", 
-            "şimdilikk ennn güzel hatıra, ama daha güzellerini ekleyeceğiz.", 
-            "sonsuza kadar... Başlangıcımız sensin bitişimiz de sadece senle olsun."
-        ];
-
-        // Mektup İçerikleri Dizisi
-        const mektupMetinleri = {
-            soylemekIstediklerim: "Selam sevgilim. Böyle bir şeyi tamamen içimden gelerek, seni biraz olsun gülümsetebilmek için yaptım. Umarım gördüğünde o dünyalar güzeli yüzünde kocaman bir tebessüm oluşmuştur.\n\nHer an, her saniye fiziken yanında olamıyorum ve bazen bunun canını sıktığını biliyorum. İşte tam olarak bu yüzden; ne zaman modun düşerse, ne zaman beni yanında hissetmek istersen girip mutlu ol diye bu dijital sığınağı hazırladım. Kilometreler ne derse desin; fiziken uzak olsak bile kalben, ruhen attığım her adımda, aldığım her nefeste senin yanındayım.\n\nBenim için bu dünyadaki en özel, en değerli ve en eşsiz varlık sensin. Aynı yoğun duyguları ve heyecanı kalbinde taşıdığını bilmek, senin de beni aynı aşkla sevdiğini hissetmek bu hayattaki en büyük gücüm. Aramıza, aşkımıza ve bize olan o güzel sevgin kalbinde hiç eksilmesin, hep ilk günkü gibi büyüsün tek isteğim bu.\n\nİleride birlikte yapacağımız, sayfalarını el ele dolduracağımız o gerçek anı defterimiz öncesi bu bizim için ufak bir pratik, aşkımızın tatlı bir fragmanı olsun istedim. Ama hepsinden öte, seni ne kadar çok sevdiğimi sana bir kez daha haykırmak içindi bu hamlem. Sen benim bu hayattaki en güzel şansım, sarı kedim, kalbimin en huzurlu köşesisin. İyi ki hayatımdasın Elif'im, sonsuza kadar sadece sen ve ben... ❤️",
-            ozledim: "Sonsuza kadar sadece sen ve ben... ❤️\n\nYanında olamasam da kalbimin her atışı seninle sarı kedim. Beni özlediğin her an fotoğraflarımıza bak, ne kadar güzel güldüğümüzü ve birbirimize nasıl aşkla bağlandığımızı hatırla. Çok yakında yine yan yana olacağız bir tanem.",
-            gulmek: "İyi ki varsın Elif'im, iyi ki hayatımdasııın ✨\n\nYüzünün o eşsiz gülüşünü canlandırmak için galerideki twin kombinli ifşalarımıza, beni şakadan dövdüğün anlara ya da ufoyla ısınmaya çalıştığımız o masum hallerimize bakk. Dünyada senin neşenden daha güzel hiçbir manzara yok sevgilim.",
-            modun: "Dünyanın en güzel gülüşü senin yüzünde ❤️\n\nUnutma ki sen bu dünyadaki en güçlü, en özel ogle değerli kızsın. Canını sıkan ne varsa geçecek, çünkü arkanda her zaman seni çok seven, seninle gurur duyan ve her düştüğünde seni sımsıkı tutacak bir sevgilin var. Başını dik tut sol yanım.",
-            uyku: "Tanışmamız kader, her anımız bir mucize, her saniyemiz aşk 🌹\n\nUykun gelmediyse şimdi gözlerini kapat ve yanındaymışım gibi hayal et. Saçlarınla oynadığımı, seni kollarımın arasına alıp kokunu içime çektiğimi düşün... baktın kii uyuyamıyorsun ne olursa olsun beni aramazsan küseriz kii .Kalbim tamamen seninle dolu.Tatlı rüyalar sarı kedim, rüyanda bizi gör.",
-            buyukSurpriz: "Elif'im, dünyalar güzelim...\n\nBu kutuyu açtığına göre bana olan aşkımın büyüklüğünü bir kez daha derinden hissetmek istedin. İyi ki de açmışsın.\n\nHayatıma girdiğin o ilk günden beri dünyamı tamamen değiştirdin. Seninle geçen her gün, her saniye ömrümün en değerli anları oldu. Gülüşün içimi ısıtan tek sığınak, gözlerinse kaybolmaktan asla korkmadığım tek evren.\n\nBu sidedeki her bir fotoğraf, her bir küçük peçete detayı bile senin benim için ne kadar eşsiz olduğunun küçük birer kanıtı. Biz seninle bir olduk, eksik parçalarımızı birbirimizde tamamladık.\n\nSonsuza kadar sadece sen ve ben... Her anımız bir mucize, her saniyemiz aşk olmaya devam edecek. Seni kelimelerin anlatamayacağı kadar çok seviyorum sarı kedim, iyi ki benimsin... ❤️"
-        };
-
-        let suankiIndex = 0;
-        const toplamResim = 48;
-        const baslangicTarihi = new Date("2026-03-28T00:00:00"); 
-
-        function kontrolEt() {
-            if (document.getElementById("sifre").value === "887529") {
-                document.getElementById("login-ekrani").style.display = "none";
-                document.getElementById("site-icerigi").style.display = "block";
-                document.getElementById("music-btn").style.display = "block";
-                
-                setInterval(kalpYarat, 300);
-                document.getElementById("audio").play();
-                setInterval(sayacGuncelle, 1000);
-                sayacGuncelle();
-
-                const galeri = document.getElementById("galeri-alani");
-                for (let i = 1; i <= toplamResim; i++) {
-                    galeri.innerHTML += `<img src="image_${i}.jpeg" onerror="this.onerror=null; this.src='image_${i}.jpg';" onclick="ac(${i})">`;
-                }
+        // --- MÜZİK ÇALAR ---
+        let musicPlaying = false;
+        function muzikToggle() {
+            const audio = document.getElementById('bgMusic');
+            const statusText = document.getElementById('musicStatusText');
+            const btn = document.getElementById('musicToggleBtn');
+            if (musicPlaying) {
+                audio.pause();
+                musicPlaying = false;
+                statusText.innerText = "Durduruldu";
+                btn.innerText = "🎵";
             } else {
-                alert("Şifre yanlış aşkım Bir daha dene ipucuu telefon şifren...");
+                audio.play().catch(e => console.log("Oynatma hatası:", e));
+                musicPlaying = true;
+                statusText.innerText = "Çalıyor... 🎶";
+                btn.innerText = "⏸️";
             }
         }
 
-        function sayacGuncelle() {
-            const simdi = new Date();
-            const fark = simdi - baslangicTarihi;
-            const gun = Math.floor(fark / (1000 * 60 * 60 * 24));
-            const saat = Math.floor((fark % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const dakika = Math.floor((fark % (1000 * 60 * 60)) / (1000 * 60));
-            const saniye = Math.floor((fark % (1000 * 60)) / 1000);
+        // --- CANLI SAYAC ---
+        function updateCounter() {
+            const startDate = new Date("2024-01-01T00:00:00");
+            const now = new Date();
+            const diff = now - startDate;
+            
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+            const mins = Math.floor((diff / 1000 / 60) % 60);
+            const secs = Math.floor((diff / 1000) % 60);
 
-            document.getElementById("sayac-gun").innerText = gun;
-            document.getElementById("sayac-saat").innerText = saat;
-            document.getElementById("sayac-dakika").innerText = dakika;
-            document.getElementById("sayac-saniye").innerText = saniye;
+            const dEl = document.getElementById('daysCount');
+            const hEl = document.getElementById('hoursCount');
+            const mEl = document.getElementById('minsCount');
+            const sEl = document.getElementById('secsCount');
+
+            if (dEl) dEl.innerText = days;
+            if (hEl) hEl.innerText = hours;
+            if (mEl) mEl.innerText = mins;
+            if (sEl) sEl.innerText = secs;
+        }
+        setInterval(updateCounter, 1000);
+        updateCounter();
+
+        // --- GİRİŞ KONTROLÜ ---
+        function girisYap() {
+            const pass = document.getElementById('loginPass').value.trim();
+            if (pass === '1111' || pass === 'elif' || pass === 'türkay' || pass === 'turkay' || pass === '2025') {
+                document.getElementById('loginScreen').classList.add('hidden');
+                document.getElementById('mainApp').classList.remove('hidden');
+                loadAllData();
+            } else {
+                document.getElementById('loginError').classList.remove('hidden');
+            }
         }
 
-        function sevgimetreHesapla() {
-            const btn = document.getElementById("sevgimetre-btn");
-            const sonucDiv = document.getElementById("sevgimetre-sonuc");
-            const yuzdeAlan = document.getElementById("sevgimetre-yuzde");
-            const mesajAlan = document.getElementById("sevgimetre-mesaj");
+        // --- SEKME DEĞİŞİMİ ---
+        function sekmeDegis(tabName) {
+            ['garden', 'ritual', 'vulnerable', 'bottles', 'dictionary', 'story', 'photos', 'bucket'].forEach(t => {
+                const tab = document.getElementById('tab-' + t);
+                const btn = document.getElementById('btn-' + t);
+                if (tab) tab.classList.add('hidden');
+                if (btn) btn.className = "px-4 py-2.5 rounded-xl text-sm font-bold transition-all text-pink-200/70 hover:text-white hover:bg-white/5";
+            });
+            const activeTab = document.getElementById('tab-' + tabName);
+            const activeBtn = document.getElementById('btn-' + tabName);
+            if (activeTab) activeTab.classList.remove('hidden');
+            if (activeBtn) activeBtn.className = "px-4 py-2.5 rounded-xl text-sm font-bold transition-all bg-gradient-to-r from-amber-500 to-rose-600 text-white shadow-lg";
+        }
+
+        // --- NERGİS SERASI ---
+        let treeData = JSON.parse(localStorage.getItem('nergis_tree_v20')) || { 
+            xp: 0, level: 1, moisture: 50, coins: 50, 
+            lastWatered: "", lastWateredBy: "", lastFertilized: "", 
+            lastMemoryGame: "", lastCleanGame: "", streak: 1 
+        };
+        let currentGardenAuthor = 'Elif';
+
+        function setGardenAuthor(author) {
+            currentGardenAuthor = author;
+            const btnElif = document.getElementById('gardenAuthorElif');
+            const btnTurkay = document.getElementById('gardenAuthorTurkay');
+            if (author === 'Elif') {
+                btnElif.className = "px-3 py-1 rounded-lg text-xs font-bold transition-all bg-pink-600 text-white shadow";
+                btnTurkay.className = "px-3 py-1 rounded-lg text-xs font-bold transition-all bg-black/40 text-pink-300 border border-white/10";
+            } else {
+                btnTurkay.className = "px-3 py-1 rounded-lg text-xs font-bold transition-all bg-cyan-600 text-white shadow";
+                btnElif.className = "px-3 py-1 rounded-lg text-xs font-bold transition-all bg-black/40 text-pink-300 border border-white/10";
+            }
+        }
+
+        const treeLevels = [
+            { level: 1, name: "Minik Tohum", icon: "🌱", height: 5.0, maxXp: 50, badge: "🌱 Çırak Bahçıvan" },
+            { level: 2, name: "Taze Filiz", icon: "🌿", height: 8.5, maxXp: 120, badge: "🌱 Çırak Bahçıvan" },
+            { level: 3, name: "Minik Yaprak", icon: "🍃", height: 12.0, maxXp: 200, badge: "🌱 Çırak Bahçıvan" },
+            { level: 4, name: "Gelişen Filiz", icon: "🌱", height: 18.0, maxXp: 300, badge: "🌿 Hevesli Botanikçi" },
+            { level: 5, name: "Taze Nergis Sapı", icon: "🌿🌼", height: 25.0, maxXp: 450, badge: "🌿 Hevesli Botanikçi" },
+            { level: 6, name: "Uzayan Nergis Sapı", icon: "🌿🌼", height: 34.0, maxXp: 650, badge: "🌿 Hevesli Botanikçi" },
+            { level: 7, name: "Tomurcuklanan Sap", icon: "🍃", height: 45.0, maxXp: 900, badge: "🌼 Sera Uzmanı" },
+            { level: 8, name: "İlk Nergis Tomurcuğu", icon: "🟡", height: 58.0, maxXp: 1200, badge: "🌼 Sera Uzmanı" },
+            { level: 9, name: "Açılmaya Başlayan Çiçek", icon: "🌼", height: 72.0, maxXp: 1600, badge: "🌼 Sera Uzmanı" },
+            { level: 10, name: "Güzel Sarı Nergis", icon: "🌼", height: 89.0, maxXp: 2100, badge: "🌼 Usta Bahçıvan" },
+            { level: 11, name: "İki Dallı Nergis", icon: "🌿🌼", height: 108.0, maxXp: 2700, badge: "🌼 Usta Bahçıvan" },
+            { level: 12, name: "Serpilen Bahçe Fidanı", icon: "🪴", height: 130.0, maxXp: 3400, badge: "🌼 Usta Bahçıvan" },
+            { level: 13, name: "Güçlü Gövdeli Fidan", icon: "🌳", height: 155.0, maxXp: 4200, badge: "🌳 Çiçek Efendisi" },
+            { level: 14, name: "Çoklu Çiçekli Nergis", icon: "💐", height: 183.0, maxXp: 5100, badge: "🌳 Çiçek Efendisi" },
+            { level: 15, name: "Yarı Olgun Nergis Ağacı", icon: "🌳🌼", height: 214.0, maxXp: 6100, badge: "🌳 Çiçek Efendisi" },
+            { level: 16, name: "Kelebekli Nergis", icon: "🦋🌼", height: 248.0, maxXp: 7200, badge: "🦋 Doğa Perisi" },
+            { level: 17, name: "Genişleyen Dallı Ağaç", icon: "🌳", height: 285.0, maxXp: 8400, badge: "🦋 Doğa Perisi" },
+            { level: 18, name: "Mis Kokulu Ağaç", icon: "🌸", height: 325.0, maxXp: 9700, badge: "🦋 Doğa Perisi" },
+            { level: 19, name: "Işıltılı Nergis Ağacı", icon: "✨🌳", height: 368.0, maxXp: 11100, badge: "✨ Büyülü Bahçıvan" },
+            { level: 20, name: "Muhteşem Nergis Ağacı", icon: "🌳🌼", height: 414.0, maxXp: 12600, badge: "✨ Büyülü Bahçıvan" },
+            { level: 21, name: "Görkemli Aşk Ağacı", icon: "🌳💐", height: 463.0, maxXp: 14200, badge: "💖 Aşk Serası Kurucusu" },
+            { level: 22, name: "Peri Tozlu Bahçe", icon: "🌟🌳", height: 515.0, maxXp: 15900, badge: "💖 Aşk Serası Kurucusu" },
+            { level: 23, name: "Kraliyet Nergisi", icon: "👑🌼", height: 570.0, maxXp: 17700, badge: "👑 Nergis Kralı & Kraliçesi" },
+            { level: 24, name: "Kelebek Cenneti Ağacı", icon: "🦋🌳", height: 628.0, maxXp: 19600, badge: "👑 Nergis Kralı & Kraliçesi" },
+            { level: 25, name: "Sonsuzluk Nergisi", icon: "💖🌳", height: 689.0, maxXp: 21600, badge: "👑 Nergis Kralı & Kraliçesi" },
+            { level: 26, name: "Efsanevi Nergis Ormanı", icon: "🌲🌼", height: 753.0, maxXp: 23700, badge: "🌟 Efsanevi Botanikçi" },
+            { level: 27, name: "Gökyüzüne Ulaşan Ağaç", icon: "⛅🌳", height: 820.0, maxXp: 25900, badge: "🌟 Efsanevi Botanikçi" },
+            { level: 28, name: "Büyülü Aşk Çınarı", icon: "🌳✨", height: 890.0, maxXp: 28200, badge: "🌟 Efsanevi Botanikçi" },
+            { level: 29, name: "İlahî Nergis Bahçesi", icon: "💫🌼", height: 963.0, maxXp: 30600, badge: "💫 Cennet Bahçıvanı" },
+            { level: 30, name: "Sonsuzluk Krallığı Ağacı", icon: "👑💖🌳", height: 1040.0, maxXp: 35000, badge: "👑💖 Sonsuzluk Hükümdarı" }
+        ];
+
+        function renderTree() {
+            let currentLevelObj = treeLevels[Math.min(treeData.level - 1, treeLevels.length - 1)];
             
-            btn.style.display = "none";
-            sonucDiv.style.display = "block";
-            mesajAlan.style.opacity = "0";
-            mesajAlan.innerText = "";
+            const vEl = document.getElementById('treeVisual');
+            const lText = document.getElementById('treeLevelText');
+            const sName = document.getElementById('treeStageName');
+            const xpText = document.getElementById('treeXpText');
+            const xpBar = document.getElementById('treeXpBar');
+            const hText = document.getElementById('treeHeightText');
+            const stText = document.getElementById('streakText');
+            const lwText = document.getElementById('lastWateredByText');
+            const badgeEl = document.getElementById('gardenerBadge');
+            const unlockedCount = document.getElementById('unlockedLevelsCount');
+            const moistureText = document.getElementById('plantMoistureText');
+            const coinsText = document.getElementById('loveCoinsText');
+
+            if (vEl) vEl.innerText = currentLevelObj.icon;
+            if (lText) lText.innerText = `Seviye ${treeData.level}: ${currentLevelObj.name}`;
+            if (sName) sName.innerText = currentLevelObj.name;
+            if (xpText) xpText.innerText = `${treeData.xp} / ${currentLevelObj.maxXp} XP`;
+            if (badgeEl) badgeEl.innerText = currentLevelObj.badge;
+            if (unlockedCount) unlockedCount.innerText = `Açılan: ${treeData.level} / 30`;
+            if (moistureText) moistureText.innerText = `${treeData.moisture}%`;
+            if (coinsText) coinsText.innerText = `${treeData.coins || 50} 🪙`;
             
-            let suankiYuzde = 0;
-            const hedef = 100;
-            
-            const interval = setInterval(() => {
-                if (suankiYuzde < hedef) {
-                    suankiYuzde++;
-                    yuzdeAlan.innerText = "%" + suankiYuzde;
-                } else {
-                    clearInterval(interval);
-                    mesajAlan.innerText = "Her şeyi sorgula, sana olan sevgimii sorgulama... 🤍";
-                    mesajAlan.style.opacity = "1";
+            let percent = Math.min(100, (treeData.xp / currentLevelObj.maxXp) * 100);
+            if (xpBar) xpBar.style.width = percent + '%';
+            if (hText) hText.innerText = `${currentLevelObj.height.toFixed(1)} cm`;
+            if (stText) stText.innerText = `🔥 ${treeData.streak || 1} Gün`;
+            if (lwText) lwText.innerText = treeData.lastWateredBy ? `${treeData.lastWateredBy} ✨` : "Henüz yok";
+
+            const today = new Date().toDateString();
+            const waterBtn = document.getElementById('waterBtn');
+            const bonusBtn = document.getElementById('bonusBtn');
+            const memoryBtn = document.getElementById('memoryGameBtn');
+            const cleanBtn = document.getElementById('cleanGameBtn');
+            const treeStatus = document.getElementById('treeStatus');
+
+            if (treeData.lastWatered === today) {
+                if (treeStatus) treeStatus.innerText = `Bugün seranızı ${treeData.lastWateredBy} suladı 💧✨ Günlük sulama tamamlandı!`;
+                if (waterBtn) { waterBtn.disabled = true; waterBtn.classList.add('opacity-50', 'cursor-not-allowed'); }
+            } else {
+                if (treeStatus) treeStatus.innerText = "Bugün seranız henüz sulanmadı 💧 Elif veya Türkay sulayabilir!";
+                if (waterBtn) { waterBtn.disabled = false; waterBtn.classList.remove('opacity-50', 'cursor-not-allowed'); }
+            }
+
+            if (treeData.lastFertilized === today) {
+                if (bonusBtn) { bonusBtn.disabled = true; bonusBtn.classList.add('opacity-50', 'cursor-not-allowed'); bonusBtn.innerText = "✨ Gübre Kullanıldı ✔"; }
+            } else {
+                if (bonusBtn) { bonusBtn.disabled = false; bonusBtn.classList.remove('opacity-50', 'cursor-not-allowed'); bonusBtn.innerText = "✨ Gübre (+50 XP)"; }
+            }
+
+            if (treeData.lastMemoryGame === today && memoryBtn) {
+                memoryBtn.disabled = true;
+                memoryBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                memoryBtn.innerHTML = "<span>🧩 Eşleştirme (Bugün Oynandı ✔)</span>";
+            } else if (memoryBtn) {
+                memoryBtn.disabled = false;
+                memoryBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                memoryBtn.innerHTML = "<span>🧩 Aşk Eşleştirme (+40 XP)</span>";
+            }
+
+            if (treeData.lastCleanGame === today && cleanBtn) {
+                cleanBtn.disabled = true;
+                cleanBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                cleanBtn.innerHTML = "<span>🍃 Yaprak Toplama (Bugün Oynandı ✔)</span>";
+            } else if (cleanBtn) {
+                cleanBtn.disabled = false;
+                cleanBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                cleanBtn.innerHTML = "<span>🍃 Bahçe Yaprak Toplama (+35 XP)</span>";
+            }
+
+            renderLevelsCatalog();
+            drawCanvasGarden();
+        }
+
+        function sulamaYap() {
+            const today = new Date().toDateString();
+            if (treeData.lastWatered === today) return;
+
+            treeData.lastWatered = today;
+            treeData.lastWateredBy = currentGardenAuthor;
+            treeData.xp += 25;
+            treeData.moisture = Math.min(100, treeData.moisture + 20);
+            treeData.coins += 10;
+            treeData.streak = (treeData.streak || 0) + 1;
+
+            checkLevelUp();
+            localStorage.setItem('nergis_tree_v20', JSON.stringify(treeData));
+            renderTree();
+        }
+
+        function ikramVer() {
+            const today = new Date().toDateString();
+            if (treeData.lastFertilized === today) return;
+
+            treeData.lastFertilized = today;
+            treeData.xp += 50;
+            treeData.coins += 25;
+            checkLevelUp();
+            localStorage.setItem('nergis_tree_v20', JSON.stringify(treeData));
+            renderTree();
+        }
+
+        function checkLevelUp() {
+            let currentLevelObj = treeLevels[Math.min(treeData.level - 1, treeLevels.length - 1)];
+            while (treeData.xp >= currentLevelObj.maxXp && treeData.level < treeLevels.length) {
+                treeData.level++;
+                treeData.coins += 50;
+                currentLevelObj = treeLevels[Math.min(treeData.level - 1, treeLevels.length - 1)];
+            }
+        }
+
+        function renderLevelsCatalog() {
+            const grid = document.getElementById('treeLevelsGrid');
+            if (!grid) return;
+            grid.innerHTML = "";
+            treeLevels.forEach((lvl) => {
+                const isUnlocked = treeData.level >= lvl.level;
+                const div = document.createElement('div');
+                div.className = `p-2 rounded-xl border text-center flex flex-col items-center justify-center ${isUnlocked ? 'bg-amber-500/10 border-amber-500/40 text-white' : 'bg-black/40 border-white/5 text-white/30'}`;
+                div.innerHTML = `
+                    <span class="text-xl mb-1">${lvl.icon}</span>
+                    <span class="text-[9px] font-bold">Lv.${lvl.level}</span>
+                `;
+                grid.appendChild(div);
+            });
+        }
+
+        function drawCanvasGarden() {
+            const canvas = document.getElementById('gardenCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = 'rgba(255, 215, 0, 0.35)';
+            for (let i = 0; i < 25; i++) {
+                let x = (i * 33) % canvas.width;
+                let y = (i * 47) % canvas.height;
+                ctx.beginPath();
+                ctx.arc(x, y, 2, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        // --- YAPRAK TOPLAMA MİNİ OYUNU ---
+        let yaprakTimer = null;
+        let yaprakScore = 0;
+
+        function acYaprakTohumOyunu(open) {
+            const today = new Date().toDateString();
+            if (open && treeData.lastCleanGame === today) return;
+
+            const modal = document.getElementById('yaprakGameModal');
+            if (!modal) return;
+            if (open) {
+                modal.classList.remove('hidden');
+                initYaprakGame();
+            } else {
+                modal.classList.add('hidden');
+                if (yaprakTimer) clearInterval(yaprakTimer);
+            }
+        }
+
+        function initYaprakGame() {
+            yaprakScore = 0;
+            const area = document.getElementById('yaprakGameArea');
+            area.innerHTML = "";
+            let timeLeft = 15;
+            document.getElementById('yaprakGameScore').innerText = `Toplanan: 0 / 10 | Süre: ${timeLeft}s`;
+
+            const spawner = setInterval(() => {
+                if (timeLeft <= 0 || yaprakScore >= 10) {
+                    clearInterval(spawner);
+                    return;
                 }
-            }, 20);
-        }
+                const item = document.createElement('div');
+                item.className = "absolute text-2xl cursor-pointer select-none transition-transform transform hover:scale-125";
+                item.style.left = Math.random() * 80 + '%';
+                item.style.top = Math.random() * 75 + '%';
+                item.innerText = '🍃';
+                item.onclick = () => {
+                    yaprakScore++;
+                    item.remove();
+                    document.getElementById('yaprakGameScore').innerText = `Toplanan: ${yaprakScore} / 10 | Süre: ${timeLeft}s`;
+                    if (yaprakScore >= 10) {
+                        clearInterval(spawner);
+                        clearInterval(yaprakTimer);
+                        treeData.lastCleanGame = new Date().toDateString();
+                        document.getElementById('yaprakGameScore').innerText = "Tebrikler! +35 XP ve +20 🪙 Kazandın! 🎉";
+                        treeData.xp += 35;
+                        treeData.coins += 20;
+                        checkLevelUp();
+                        localStorage.setItem('nergis_tree_v20', JSON.stringify(treeData));
+                        renderTree();
+                    }
+                };
+                area.appendChild(item);
+                setTimeout(() => { if (item.parentNode) item.remove(); }, 1800);
+            }, 600);
 
-        let mektupInterval;
-
-        function mektupYazdir(tip) {
-            document.getElementById("mektup-overlay").style.display = "flex";
-            const alan = document.getElementById("mektup-metni");
-            alan.innerText = "";
-            let index = 0;
-            const secilenMetin = mektupMetinleri[tip];
-            
-            clearInterval(mektupInterval);
-            mektupInterval = setInterval(() => {
-                if (index < secilenMetin.length) {
-                    alan.innerText += secilenMetin.charAt(index);
-                    index++;
-                    document.querySelector('.mektup-zarf').scrollTop = document.querySelector('.mektup-zarf').scrollHeight;
-                } else {
-                    clearInterval(mektupInterval);
+            yaprakTimer = setInterval(() => {
+                timeLeft--;
+                document.getElementById('yaprakGameScore').innerText = `Toplanan: ${yaprakScore} / 10 | Süre: ${timeLeft}s`;
+                if (timeLeft <= 0) {
+                    clearInterval(yaprakTimer);
+                    clearInterval(spawner);
                 }
-            }, 45);
-        }
-
-        function mektupKapat() {
-            clearInterval(mektupInterval);
-            document.getElementById("mektup-overlay").style.display = "none";
-        }
-
-        function kalpYarat() {
-            const el = document.createElement('div');
-            el.className = 'kalp';
-            el.innerText = Math.random() > 0.5 ? '❤️' : '🤍';
-            el.style.left = (Math.random() * 100) + '%';
-            el.style.animationDuration = (Math.random() * 4 + 3) + 's';
-            document.body.appendChild(el);
-            setTimeout(() => el.remove(), 7000);
-        }
-
-        function ac(i) { 
-            suankiIndex = i; 
-            guncelle(); 
-            document.getElementById("lightbox").style.display = "flex"; 
-        }
-
-        function kapat() { 
-            document.getElementById("lightbox").style.display = "none"; 
-        }
-
-        function degis(y) { 
-            suankiIndex += y; 
-            if(suankiIndex < 1) suankiIndex = toplamResim; 
-            if(suankiIndex > toplamResim) suankiIndex = 1; 
-            guncelle(); 
-        }
-        
-        function guncelle() {
-            document.getElementById("buyuk-resim").src = `image_${suankiIndex}.jpeg`;
-            document.getElementById("buyuk-resim").onerror = function() { this.src = `image_${suankiIndex}.jpg`; };
-            document.getElementById("foto-notu").innerText = notlar[suankiIndex - 1];
-        }
-
-        function muzikCal() { 
-            document.getElementById("audio").paused ? document.getElementById("audio").play() : document.getElementById("audio").pause(); 
-        }
-
-        /* FARE TAKİP EFETKİ: Kalplerin dökülme kodu */
-        window.addEventListener('mousemove', function(e) {
-            if (Math.random() > 0.15) return; 
-
-            const iz = document.createElement('div');
-            iz.className = 'cursor-iz';
-            iz.innerText = Math.random() > 0.5 ? '❤️' : '🤍';
-            iz.style.left = e.clientX + 'px';
-            iz.style.top = e.clientY + 'px';
-            
-            const boyut = Math.random() * 10 + 10;
-            iz.style.fontSize = boyut + 'px';
-            
-            document.body.appendChild(iz);
-            
-            setTimeout(() => {
-                iz.remove();
             }, 1000);
-        });
+        }
 
-        window.addEventListener('keydown', (e) => {
-            if (e.key === "ArrowLeft") degis(-1);
-            if (e.key === "ArrowRight") degis(1);
-            if (e.key === "Escape") { kapat(); mektupKapat(); }
-        });
+        // --- HAFIZA BULMACASI MİNİ OYUNU ---
+        const memoryIcons = ['🌸', '💙', '💍', '✨'];
+        let firstCard = null;
+        let lockBoard = false;
+        let matchedPairs = 0;
+
+        function acMiniOyunModal(open) {
+            const today = new Date().toDateString();
+            if (open && treeData.lastMemoryGame === today) return;
+
+            const modal = document.getElementById('miniGameModal');
+            if (!modal) return;
+            if (open) {
+                modal.classList.remove('hidden');
+                initMemoryGame();
+            } else {
+                modal.classList.add('hidden');
+            }
+        }
+
+        function initMemoryGame() {
+            matchedPairs = 0;
+            firstCard = null;
+            lockBoard = false;
+            document.getElementById('memoryMessage').innerText = "Kartları eşleştirmeye başla sevgilim!";
+            
+            const deck = [...memoryIcons, ...memoryIcons, ...memoryIcons, ...memoryIcons].sort(() => 0.5 - Math.random());
+            const grid = document.getElementById('memoryGrid');
+            grid.innerHTML = "";
+
+            deck.forEach((icon, index) => {
+                const card = document.createElement('div');
+                card.className = "h-14 bg-white/10 border border-white/20 rounded-xl flex items-center justify-center text-2xl cursor-pointer hover:bg-white/20 transition-all select-none";
+                card.dataset.icon = icon;
+                card.dataset.index = index;
+                card.innerText = "❓";
+                card.onclick = () => flipCard(card, icon);
+                grid.appendChild(card);
+            });
+        }
+
+        function flipCard(card, icon) {
+            if (lockBoard || card.classList.contains('matched') || card === firstCard) return;
+
+            card.innerText = icon;
+            card.className = "h-14 bg-rose-600/30 border border-rose-500/50 rounded-xl flex items-center justify-center text-2xl select-none";
+
+            if (!firstCard) {
+                firstCard = card;
+                return;
+            }
+
+            if (firstCard.dataset.icon === icon) {
+                firstCard.classList.add('matched');
+                card.classList.add('matched');
+                firstCard = null;
+                matchedPairs++;
+                if (matchedPairs === 4) {
+                    treeData.lastMemoryGame = new Date().toDateString();
+                    document.getElementById('memoryMessage').innerText = "Tebrikler! Bulmacayı çözdün +40 XP kazandın! 🎉";
+                    treeData.xp += 40;
+                    checkLevelUp();
+                    localStorage.setItem('nergis_tree_v20', JSON.stringify(treeData));
+                    renderTree();
+                }
+            } else {
+                lockBoard = true;
+                setTimeout(() => {
+                    firstCard.innerText = "❓";
+                    firstCard.className = "h-14 bg-white/10 border border-white/20 rounded-xl flex items-center justify-center text-2xl cursor-pointer hover:bg-white/20 transition-all select-none";
+                    card.innerText = "❓";
+                    card.className = "h-14 bg-white/10 border border-white/20 rounded-xl flex items-center justify-center text-2xl cursor-pointer hover:bg-white/20 transition-all select-none";
+                    firstCard = null;
+                    lockBoard = false;
+                }, 800);
+            }
+        }
+
+        // --- 30 GÜNLÜK OTOMATİK SORULAR LİSTESİ ---
+        const thirtyDaysQuestions = [
+            "Bugün beni düşünürken aklına gelen ilk kelime ve duygu neydi?",
+            "İkimizin geleceği hayal ettiğinde gözünün önüne gelen ilk manzara nedir?",
+            "Bugün bana sarılabilseydin ilk söyleyeceğin cümle ne olurdu?",
+            "Bugüne kadar birlikte yaşadığımız en komik anı hangisi?",
+            "Benim hangi hareketim veya sözüm seni istemsizce gülümsetiyor?",
+            "Şu an yanımda olsaydın hangi kahveyi/çayı içmek isterdik?",
+            "İlişkimizin en büyüleyici ve sihirli anı sence hangisiydi?",
+            "Bana ait en çok hangi eşyayı veya fotoğrafı seviyorsun?",
+            "Bugün günün nasıl geçti, tüm yorgunluğunu bana tek cümleyle özetle.",
+            "Birlikte yapacağımız ilk büyük tatil neresi olmalı?",
+            "Gelecekteki evimizde sabah uyandığımızda ilk ne yapacağız?",
+            "Benimle ilgili keşfettiğin en şaşırtıcı veya tatlı şey neydi?",
+            "Bugün aklından geçen en romantik düşünceyi benimle paylaş.",
+            "Bana cook seveceğim bir lakap takacak olsan ne olurdu?",
+            "İkimizin karakterindeki en uyumlu ve en zıt yönler sence neler?",
+            "Birlikte yaşlanırken en çok neye gülüyor olacağımızı düşünüyorsun?",
+            "Bugün bana teşekkür etmek isteseydin bu ne için olurdu?",
+            "Zor bir gün geçirdiğinde seni anında mutlu eden şey nedir?",
+            "Benimle ilgili en güvendiğin ve huzur bulduğun şey ne?",
+            "Geleceğe attığımız bu şişe mektuplarından 1 yıl sonra açıldığında ne hissedeceğiz?",
+            "Birlikte izlediğimiz en güzel film veya dinlediğimiz şarkı hangisi?",
+            "Bana yapmayı en çok sevdiğin sürpriz sence hangisi?",
+            "Bugün enerjini yükselten en tatlı detay neydi?",
+            "Sence birbirimize en çok benzediğimiz özellik hangisi?",
+            "Hayatımın dönüm noktası dediğin an sence hangisiydi?",
+            "Şu an gözlerini kapatsan beni nerede hayal edersin?",
+            "Bana bir şarkı armağan etsen bu hangisi olurdu?",
+            "Gelecekte çocukluğumuza veya gençliğimize dönebilsek ilk nereye giderdik?",
+            "Bugün bana vereceğin en büyük aşk puanı 10 üzerinden kaç?",
+            "Sonsuza kadar seninle kalmak fikri sana ne hissettiriyor?"
+        ];
+
+        let qaStorage = JSON.parse(localStorage.getItem('thirty_days_qa_v1')) || {};
+        let currentAuthor = 'Elif';
+
+        function setAuthor(author) {
+            currentAuthor = author;
+            const btnElif = document.getElementById('authorBtnElif');
+            const btnTurkay = document.getElementById('authorBtnTurkay');
+            if (author === 'Elif') {
+                btnElif.className = "flex-1 sm:flex-none px-4 py-2 rounded-xl text-xs font-bold transition-all bg-pink-600 text-white shadow-md";
+                btnTurkay.className = "flex-1 sm:flex-none px-4 py-2 rounded-xl text-xs font-bold transition-all bg-black/40 text-pink-300 border border-white/10";
+            } else {
+                btnTurkay.className = "flex-1 sm:flex-none px-4 py-2 rounded-xl text-xs font-bold transition-all bg-cyan-600 text-white shadow-md";
+                btnElif.className = "flex-1 sm:flex-none px-4 py-2 rounded-xl text-xs font-bold transition-all bg-black/40 text-pink-300 border border-white/10";
+            }
+        }
+
+        function getActiveQuestionIndex() {
+            const startDate = new Date("2026-10-16T00:00:00");
+            const now = new Date();
+            const diffTime = now - startDate;
+            const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+            return Math.max(0, Math.min(diffDays, thirtyDaysQuestions.length - 1));
+        }
+
+        function loadQA() {
+            const qIndex = getActiveQuestionIndex();
+            const questionTitle = thirtyDaysQuestions[qIndex];
+            
+            const baseDate = new Date("2026-10-16T00:00:00");
+            baseDate.setDate(baseDate.getDate() + qIndex);
+            const dateStr = baseDate.toLocaleDateString('tr-TR');
+
+            document.getElementById('questionDayBadge').innerText = `💬 Günün Sorusu (Gün ${qIndex + 1} / 30)`;
+            document.getElementById('questionDateText').innerText = dateStr;
+            document.getElementById('dailyQuestionTitle').innerText = questionTitle;
+
+            const dayKey = `day_${qIndex}`;
+            if (!qaStorage[dayKey]) {
+                qaStorage[dayKey] = { elif: "", turkay: "" };
+            }
+
+            const currentDayData = qaStorage[dayKey];
+            const aElif = document.getElementById('answerElif');
+            const aTurkay = document.getElementById('answerTurkay');
+            const bElif = document.getElementById('elifStatusBadge');
+            const bTurkay = document.getElementById('turkayStatusBadge');
+
+            if (currentDayData.elif) {
+                aElif.innerText = `"${currentDayData.elif}"`;
+                aElif.className = "p-3 rounded-xl bg-pink-950/30 border border-pink-500/30 text-sm text-pink-100 min-h-[110px] max-h-[350px] overflow-y-auto italic text-left font-medium whitespace-pre-wrap";
+                bElif.innerText = "Cevaplandı ✔";
+                bElif.className = "text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-bold";
+            } else {
+                aElif.innerText = "Elif henüz cevap yazmadı...";
+                aElif.className = "p-3 rounded-xl bg-black/40 border border-white/10 text-sm text-pink-300/50 min-h-[110px] italic flex items-center justify-center text-center";
+                bElif.innerText = "Bekleniyor...";
+                bElif.className = "text-[10px] px-2 py-0.5 rounded-full bg-pink-500/20 text-pink-300";
+            }
+
+            if (currentDayData.turkay) {
+                aTurkay.innerText = `"${currentDayData.turkay}"`;
+                aTurkay.className = "p-3 rounded-xl bg-cyan-950/30 border border-cyan-500/30 text-sm text-cyan-100 min-h-[110px] max-h-[350px] overflow-y-auto italic text-left font-medium whitespace-pre-wrap";
+                bTurkay.innerText = "Cevaplandı ✔";
+                bTurkay.className = "text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-bold";
+            } else {
+                aTurkay.innerText = "Türkay henüz cevap yazmadı...";
+                aTurkay.className = "p-3 rounded-xl bg-black/40 border border-white/10 text-sm text-cyan-300/50 min-h-[110px] italic flex items-center justify-center text-center";
+                bTurkay.innerText = "Bekleniyor...";
+                bTurkay.className = "text-[10px] px-2 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300";
+            }
+        }
+
+        function cevapGonder() {
+            const val = document.getElementById('myAnswerInput').value.trim();
+            if (!val) return;
+            const qIndex = getActiveQuestionIndex();
+            const dayKey = `day_${qIndex}`;
+            if (!qaStorage[dayKey]) qaStorage[dayKey] = { elif: "", turkay: "" };
+
+            if (currentAuthor === 'Elif') qaStorage[dayKey].elif = val;
+            else qaStorage[dayKey].turkay = val;
+
+            localStorage.setItem('thirty_days_qa_v1', JSON.stringify(qaStorage));
+            document.getElementById('myAnswerInput').value = "";
+            loadQA();
+        }
+
+        // --- KENDİMİ AÇMA KUTUM ---
+        let vulnerableNotes = JSON.parse(localStorage.getItem('vulnerable_notes_v2')) || [];
+
+        function vulnerableKaydet() {
+            const author = document.getElementById('vulnerableAuthor').value;
+            const text = document.getElementById('vulnerableInput').value.trim();
+            if (!text) return;
+
+            const now = new Date().toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit' });
+            vulnerableNotes.unshift({ id: Date.now(), author, text, date: now });
+            localStorage.setItem('vulnerable_notes_v2', JSON.stringify(vulnerableNotes));
+            document.getElementById('vulnerableInput').value = "";
+            loadVulnerableNotes();
+        }
+
+        function vulnerableSil(id) {
+            vulnerableNotes = vulnerableNotes.filter(n => n.id !== id);
+            localStorage.setItem('vulnerable_notes_v2', JSON.stringify(vulnerableNotes));
+            loadVulnerableNotes();
+        }
+
+        function loadVulnerableNotes() {
+            const container = document.getElementById('vulnerableContainer');
+            if (!container) return;
+            container.innerHTML = "";
+
+            if (vulnerableNotes.length === 0) {
+                container.innerHTML = `<p class="text-xs text-rose-300/50 italic text-center py-4">Kutuda henüz not yok, ilk kalpten notu sen bırak...</p>`;
+                return;
+            }
+
+            vulnerableNotes.forEach(note => {
+                const authorBadge = note.author === 'Elif' ? '🌸 Elif' : '💙 Türkay';
+                const card = document.createElement('div');
+                card.className = "glass-card p-4 rounded-2xl border border-rose-500/20 space-y-1 relative group";
+                card.innerHTML = `
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-bold text-rose-300">${authorBadge}</span>
+                        <div class="flex items-center gap-2">
+                            <span class="text-[10px] text-pink-300/50 font-mono">${note.date}</span>
+                            <button onclick="vulnerableSil(${note.id})" class="text-rose-400/60 hover:text-rose-300 text-xs transition-colors p-1" title="Notu Sil">🗑️</button>
+                        </div>
+                    </div>
+                    <p class="text-sm text-white font-medium italic">"${note.text}"</p>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // --- ZAMAN KAPSÜLÜ ŞİŞE MESAJLARI ---
+        let bottleMessages = JSON.parse(localStorage.getItem('bottle_messages_v6')) || [];
+
+        function toggleBottleModal(show) {
+            const modal = document.getElementById('bottleModal');
+            if (modal) {
+                if (show) modal.classList.remove('hidden');
+                else modal.classList.add('hidden');
+            }
+        }
+
+        function bottleKaydet() {
+            const author = document.getElementById('bottleAuthor').value;
+            const date = document.getElementById('bottleDate').value;
+            const msg = document.getElementById('bottleMsg').value.trim();
+            if (!date || !msg) return;
+
+            bottleMessages.push({ id: Date.now(), author, date, msg });
+            localStorage.setItem('bottle_messages_v6', JSON.stringify(bottleMessages));
+            document.getElementById('bottleDate').value = "";
+            document.getElementById('bottleMsg').value = "";
+            toggleBottleModal(false);
+            loadBottles();
+        }
+
+        function bottleSil(id) {
+            bottleMessages = bottleMessages.filter(b => b.id !== id);
+            localStorage.setItem('bottle_messages_v6', JSON.stringify(bottleMessages));
+            loadBottles();
+        }
+
+        function loadBottles() {
+            const container = document.getElementById('bottleContainer');
+            if (!container) return;
+            container.innerHTML = "";
+            const todayStr = new Date().toISOString().split('T')[0];
+
+            if (bottleMessages.length === 0) {
+                container.innerHTML = `<p class="text-xs text-cyan-300/50 italic text-center py-4">Henüz denize şişe bırakılmamış...</p>`;
+                return;
+            }
+
+            bottleMessages.forEach(b => {
+                const isUnlocked = b.date <= todayStr;
+                const authorBadge = b.author === 'Elif' ? '🌸 Elif' : '💙 Türkay';
+                const card = document.createElement('div');
+                card.className = "glass-card p-4 rounded-2xl border border-cyan-500/30 flex items-center justify-between";
+                card.innerHTML = `
+                    <div class="flex-1 pr-3">
+                        <div class="flex items-center gap-2 mb-1">
+                            <span class="text-xs font-bold text-pink-300">${authorBadge}</span>
+                            <span class="text-xs font-bold text-cyan-300">🍾 Açılış: ${b.date}</span>
+                            <span class="text-[10px] px-2 py-0.5 rounded-full ${isUnlocked ? 'bg-emerald-500/20 text-emerald-300 font-bold' : 'bg-cyan-500/20 text-cyan-300'}">${isUnlocked ? 'Mühür Açıldı ✨' : 'Mühürlü 🔒'}</span>
+                        </div>
+                        <p class="text-sm text-white font-medium">${isUnlocked ? b.msg : 'Bu mektup mühürlüdür, seçilen tarihte açılacaktır...'}</p>
+                    </div>
+                    <button onclick="bottleSil(${b.id})" class="text-cyan-400/60 hover:text-cyan-300 text-xs transition-colors p-2" title="Şişeyi Sil">🗑️</button>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // --- ORTAK SÖZLÜK ---
+        let dictionaryList = JSON.parse(localStorage.getItem('our_dictionary_v1')) || [];
+
+        function dictionaryEkle() {
+            const wordInput = document.getElementById('dictWordInput');
+            const descInput = document.getElementById('dictDescInput');
+            if (!wordInput || !descInput) return;
+            const word = wordInput.value.trim();
+            const desc = descInput.value.trim();
+            if (!word || !desc) return;
+
+            dictionaryList.unshift({ id: Date.now(), word, desc });
+            localStorage.setItem('our_dictionary_v1', JSON.stringify(dictionaryList));
+            wordInput.value = "";
+            descInput.value = "";
+            loadDictionary();
+        }
+
+        function dictionarySil(id) {
+            dictionaryList = dictionaryList.filter(d => d.id !== id);
+            localStorage.setItem('our_dictionary_v1', JSON.stringify(dictionaryList));
+            loadDictionary();
+        }
+
+        function loadDictionary() {
+            const container = document.getElementById('dictionaryContainer');
+            if (!container) return;
+            container.innerHTML = "";
+
+            if (dictionaryList.length === 0) {
+                container.innerHTML = `<p class="text-xs text-purple-300/50 italic text-center py-4">Sözlükte henüz kelime yok, ilk özel kelimenizi siz ekleyin...</p>`;
+                return;
+            }
+
+            dictionaryList.forEach(item => {
+                const card = document.createElement('div');
+                card.className = "glass-card p-4 rounded-2xl border border-purple-500/30 space-y-2 relative";
+                card.innerHTML = `
+                    <div class="flex items-center justify-between">
+                        <h4 class="text-base font-bold text-purple-200">📌 ${item.word}</h4>
+                        <button onclick="dictionarySil(${item.id})" class="text-purple-400/60 hover:text-purple-300 text-xs transition-colors p-1" title="Kelimeyi Sil">🗑️</button>
+                    </div>
+                    <p class="text-sm text-white/90 italic">"${item.desc}"</p>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // --- HİKAYEMİZ ---
+        let storyEvents = JSON.parse(localStorage.getItem('story_events_v6')) || [
+            { id: 1, title: "Hikayemizin İlk Kıvılcımı ✨", subtitle: "İlk Karşılaşma / Başlangıç", desc: "Gözlerinle karşılaştığım o an, dünyamın rengi tamamen değişti." }
+        ];
+
+        function acHikayeModal(id) {
+            const modal = document.getElementById('storyModal');
+            const titleInput = document.getElementById('storyTitle');
+            const subtitleInput = document.getElementById('storySubtitle');
+            const descInput = document.getElementById('storyDesc');
+            const editIdInput = document.getElementById('storyEditId');
+            const modalTitle = document.getElementById('storyModalTitle');
+
+            if (modal.classList.contains('hidden')) {
+                modal.classList.remove('hidden');
+                if (id) {
+                    const ev = storyEvents.find(e => e.id === id);
+                    if (ev) {
+                        modalTitle.innerText = "Anıyı Düzenle ✍️";
+                        editIdInput.value = ev.id;
+                        titleInput.value = ev.title;
+                        subtitleInput.value = ev.subtitle;
+                        descInput.value = ev.desc;
+                    }
+                } else {
+                    modalTitle.innerText = "Hikayemize Anı Ekle ✨";
+                    editIdInput.value = "";
+                    titleInput.value = "";
+                    subtitleInput.value = "";
+                    descInput.value = "";
+                }
+            } else {
+                modal.classList.add('hidden');
+            }
+        }
+
+        function storyKaydet() {
+            const editId = document.getElementById('storyEditId').value;
+            const title = document.getElementById('storyTitle').value.trim();
+            const subtitle = document.getElementById('storySubtitle').value.trim();
+            const desc = document.getElementById('storyDesc').value.trim();
+
+            if (!title || !desc) return;
+
+            if (editId) {
+                storyEvents = storyEvents.map(ev => ev.id == editId ? { ...ev, title, subtitle: subtitle || "Özel Anımız", desc } : ev);
+            } else {
+                storyEvents.push({ id: Date.now(), title, subtitle: subtitle || "Özel Anımız", desc });
+            }
+
+            localStorage.setItem('story_events_v6', JSON.stringify(storyEvents));
+            acHikayeModal(null);
+            loadStoryEvents();
+        }
+
+        function loadStoryEvents() {
+            const container = document.getElementById('storyTimelineContainer');
+            if (!container) return;
+            container.innerHTML = "";
+            storyEvents.forEach(ev => {
+                const div = document.createElement('div');
+                div.className = "relative pl-6 cursor-pointer group";
+                div.innerHTML = `
+                    <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-rose-500 border-2 border-[#170817]"></div>
+                    <div onclick="acHikayeModal(${ev.id})" class="p-3 rounded-xl hover:bg-white/5 transition-all">
+                        <span class="text-xs font-mono text-rose-300">${ev.subtitle} (Düzenlemek için tıkla ✍️)</span>
+                        <h4 class="text-lg font-bold text-white">${ev.title}</h4>
+                        <p class="text-xs text-pink-200/70 mt-1">${ev.desc}</p>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        // --- POLAROID ALBÜM (Gerçek WhatsApp Fotoğrafları ile) ---
+        const polaroidPhotos = [
+            { id: 1, url: "WhatsApp Image 2026-10-12 at 21.25.32 (1).jpeg", caption: "Anı 1 ✨", note: "Kalplerimizin birlikte attığı en güzel anlardan biri." },
+            { id: 2, url: "WhatsApp Image 2026-10-12 at 21.25.32 (2).jpeg", caption: "Anı 2 🌸", note: "Seninle her anımız ayrı bir masal sevgilim." },
+            { id: 3, url: "WhatsApp Image 2026-10-12 at 21.25.32 (3).jpeg", caption: "Anı 3 💖", note: "Gülüşün dünyamı aydınlatan en güzel güneş." },
+            { id: 4, url: "WhatsApp Image 2026-10-12 at 21.25.32.jpeg", caption: "Anı 4 ☕", note: "Yanında geçirdiğim her saniye çok kıymetli." },
+            { id: 5, url: "WhatsApp Image 2026-10-12 at 21.25.33 (1).jpeg", caption: "Anı 5 🌟", note: "Gözlerindeki ışık yolumu aydınlatıyor." },
+            { id: 6, url: "WhatsApp Image 2026-10-12 at 21.25.33 (2).jpeg", caption: "Anı 6 🤍", note: "Dünyadaki en huzurlu yer senin yanın." },
+            { id: 7, url: "WhatsApp Image 2026-10-12 at 21.25.33 (3).jpeg", caption: "Anı 7 🍃", note: "El ele yürüyemeyeceğimiz hiçbir yol yok." },
+            { id: 8, url: "WhatsApp Image 2026-10-12 at 21.25.33 (4).jpeg", caption: "Anı 8 💫", note: "İkimizin kalbi tek bir ritimde atıyor." },
+            { id: 9, url: "WhatsApp Image 2026-10-12 at 21.25.33 (5).jpeg", caption: "Anı 9 🌸", note: "Birlikte yazdığımız en tatlı hikaye." },
+            { id: 10, url: "WhatsApp Image 2026-10-12 at 21.25.33 (6).jpeg", caption: "Anı 10 ✨", note: "İyi ki varsın, iyi ki benimlesin sevgilim." },
+            { id: 11, url: "WhatsApp Image 2026-10-12 at 21.25.33 (7).jpeg", caption: "Anı 11 💖", note: "Sonsuza kadar sürecek bu sevda." },
+            { id: 12, url: "WhatsApp Image 2026-10-12 at 21.25.33.jpeg", caption: "Anı 12 🌙", note: "Gece göğü bile senin kadar güzel olamaz." },
+            { id: 13, url: "WhatsApp Image 2026-10-12 at 21.26.40.jpeg", caption: "Anı 13 🌷", note: "Nergis bahçemiz gibi açan sevgimiz." },
+            { id: 14, url: "WhatsApp Image 2026-10-12 at 21.27.46.jpeg", caption: "Anı 14 🦋", note: "Birlikte nice senelere sevgilim." }
+        ];
+
+        function loadPolaroidPhotos() {
+            const container = document.getElementById('photoGridContainer');
+            if (!container) return;
+            container.innerHTML = "";
+            polaroidPhotos.forEach(p => {
+                const card = document.createElement('div');
+                card.className = "perspective-1000 h-80 cursor-pointer group";
+                card.innerHTML = `
+                    <div class="relative w-full h-full duration-700 transform-style-3d group-hover:rotate-y-180" id="polaroid-${p.id}">
+                        <div class="absolute inset-0 bg-white/95 p-3 pb-6 rounded-2xl shadow-xl flex flex-col justify-between backface-hidden text-zinc-800 border border-white/40">
+                            <div class="w-full h-56 rounded-xl overflow-hidden bg-zinc-200">
+                                <img src="${p.url}" alt="${p.caption}" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/400x400/e0a899/ffffff?text=Elif+Turkay'">
+                            </div>
+                            <div class="text-center pt-2">
+                                <p class="handwriting-font text-xl font-bold text-zinc-800">${p.caption}</p>
+                                <span class="text-[10px] text-zinc-400 font-mono">Çevirmek için tıkla 🔄</span>
+                            </div>
+                        </div>
+                        <div class="absolute inset-0 bg-gradient-to-br from-rose-900/90 to-pink-950/95 p-6 rounded-2xl shadow-xl flex flex-col items-center justify-center text-center backface-hidden rotate-y-180 border border-rose-500/40 text-pink-100">
+                            <span class="text-3xl mb-2">💖</span>
+                            <h4 class="romantic-font text-lg font-bold text-rose-200 mb-2">${p.caption}</h4>
+                            <p class="text-xs italic leading-relaxed">"${p.note}"</p>
+                            <span class="text-[10px] text-pink-300/60 font-mono mt-4">Ön yüze dön</span>
+                        </div>
+                    </div>
+                `;
+                card.onclick = () => {
+                    const el = document.getElementById(`polaroid-${p.id}`);
+                    el.style.transform = el.style.transform === 'rotateY(180deg)' ? 'rotateY(0deg)' : 'rotateY(180deg)';
+                };
+                container.appendChild(card);
+            });
+        }
+
+        // --- BUCKET LIST ---
+        let bucketList = JSON.parse(localStorage.getItem('bucket_list_v6')) || [];
+
+        function bucketEkle() {
+            const input = document.getElementById('bucketInput');
+            if (!input) return;
+            const val = input.value.trim();
+            if (!val) return;
+            bucketList.push({ id: Date.now(), text: val, done: false });
+            localStorage.setItem('bucket_list_v6', JSON.stringify(bucketList));
+            input.value = "";
+            loadBucketList();
+        }
+
+        function bucketToggle(id) {
+            bucketList = bucketList.map(b => b.id === id ? { ...b, done: !b.done } : b);
+            localStorage.setItem('bucket_list_v6', JSON.stringify(bucketList));
+            loadBucketList();
+        }
+
+        function loadBucketList() {
+            const container = document.getElementById('bucketListContainer');
+            if (!container) return;
+            container.innerHTML = "";
+            if (bucketList.length === 0) {
+                container.innerHTML = `<p class="text-xs text-pink-300/50 italic col-span-2 text-center py-4">Henüz hayal eklenmemiş, ilk ortak hayalinizi buraya yazın...</p>`;
+                return;
+            }
+            bucketList.forEach(b => {
+                const card = document.createElement('div');
+                card.className = `p-4 rounded-2xl border transition-all flex items-center justify-between ${b.done ? 'bg-purple-950/20 border-purple-500/30 opacity-75 line-through' : 'glass-card border-white/10'}`;
+                card.innerHTML = `
+                    <span class="text-sm font-medium text-white">${b.text}</span>
+                    <button onclick="bucketToggle(${b.id})" class="px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${b.done ? 'bg-purple-500/20 text-purple-300' : 'bg-white/10 hover:bg-white/20 text-white'}">
+                        ${b.done ? 'Tamamlandı ✨' : 'Yapıldı ✔'}
+                    </button>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function loadAllData() {
+            renderTree();
+            loadQA();
+            loadVulnerableNotes();
+            loadBottles();
+            loadDictionary();
+            loadStoryEvents();
+            loadPolaroidPhotos();
+            loadBucketList();
+        }
     </script>
 </body>
 </html>
