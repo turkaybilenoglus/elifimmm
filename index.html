@@ -2,597 +2,582 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SONSUZA KADAR❤️ ELİİFİİİM ❤️ - 7. AY ÖZEL</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+    <title>SONSUZA KADAR❤️ ELİİFİİİM ❤️</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&family=Playfair+Display:ital,wght@0,600;1,400&family=Caveat:wght@600;700&display=swap');
-
-        :root {
-            --bg-gradient: linear-gradient(135deg, #2c1a32 0%, #5c2c44 50%, #9f5069 100%);
-            --glass-bg: rgba(255, 255, 255, 0.08);
-            --glass-border: rgba(255, 255, 255, 0.18);
-        }
-
+        /* CSS Kısmı: Premium Gece Mürdümü & Tozlu Gül Estetiği */
+        
         body {
             margin: 0;
             padding: 0;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background: var(--bg-gradient);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #2c1a32 0%, #9f5069 100%);
             min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
             color: white;
             overflow-x: hidden;
             background-attachment: fixed;
+            /* Özel Kedi Patisi İmleci */
             cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' style='font-size:24px'><text y='24'>🐾</text></svg>"), auto;
         }
 
-        button, input, select, textarea, .clickable, .mektup-sec-btn, .surpriz-kutu, .postit-card {
+        /* Tıklanabilir Alanlarda Kalp İmleci */
+        button, input, .mektup-sec-btn, .surpriz-kutu, .galeri img, .mektup-kapat, .close, .nav-btn {
             cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' style='font-size:24px'><text y='24'>❤️</text></svg>"), pointer !important;
         }
 
-        .glass-card {
-            background: var(--glass-bg);
+        /* Fare Arkasından Dökülen Kalplerin Stili */
+        .cursor-iz {
+            position: fixed;
+            pointer-events: none;
+            z-index: 999999;
+            transform: translate(-50%, -50%);
+            animation: kalpurucma 1s forwards linear;
+        }
+
+        @keyframes kalpurucma {
+            0% { transform: translate(-50%, -50%) translateY(0) scale(1); opacity: 1; }
+            100% { transform: translate(-50%, -50%) translateY(-40px) scale(0.4); opacity: 0; }
+        }
+
+        /* Kalp Yağmuru Animasyonu */
+        .kalp {
+            position: fixed;
+            font-size: 30px;
+            z-index: 99999;
+            animation: yagis linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes yagis {
+            0% { transform: translateY(-50px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(105vh) rotate(360deg); opacity: 0.5; }
+        }
+
+        /* Giriş Ekranı Konteynırı */
+        .login-box {
+            background: rgba(255, 255, 255, 0.08);
             backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            border: 1px solid var(--glass-border);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
-            border-radius: 28px;
-        }
-
-        .glass-btn {
-            background: rgba(255, 255, 255, 0.12);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.25);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .glass-btn:hover {
-            background: rgba(159, 80, 105, 0.6);
-            transform: translateY(-3px);
-            border-color: rgba(255, 255, 255, 0.5);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-        }
-
-        .handwritten {
-            font-family: 'Caveat', cursive;
-        }
-
-        /* Sticky Note Cards */
-        .postit-yellow { background: linear-gradient(135deg, #fef08a 0%, #fde047 100%); color: #713f12; }
-        .postit-pink { background: linear-gradient(135deg, #fbcfe8 0%, #f472b6 100%); color: #831843; }
-        .postit-blue { background: linear-gradient(135deg, #bae6fd 0%, #38bdf8 100%); color: #0c4a6e; }
-        .postit-green { background: linear-gradient(135deg, #bbf7d0 0%, #4ade80 100%); color: #14532d; }
-
-        .postit-card {
-            transition: all 0.3s ease;
-            box-shadow: 5px 8px 15px rgba(0, 0, 0, 0.2);
-        }
-
-        .postit-card:hover {
-            transform: scale(1.05) rotate(0deg) !important;
+            padding: 60px;
+            border-radius: 40px;
+            margin-top: 15vh;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 25px 60px rgba(0,0,0,0.4);
             z-index: 10;
         }
 
-        .custom-scroll::-webkit-scrollbar {
-            width: 8px;
+        .login-box h1 { font-size: 3rem; margin-bottom: 30px; text-shadow: 0 2px 10px rgba(0,0,0,0.2); }
+
+        input#sifre {
+            padding: 20px;
+            width: 300px;
+            border-radius: 25px;
+            border: none;
+            font-size: 1.2rem;
+            text-align: center;
+            margin-bottom: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #2c1a32;
         }
-        .custom-scroll::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 10px;
+
+        button.giris-btn {
+            padding: 20px 50px;
+            border-radius: 25px;
+            border: none;
+            background: #5c2c44;
+            color: white;
+            font-size: 1.2rem;
+            transition: 0.3s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
-        .custom-scroll::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.25);
-            border-radius: 10px;
+
+        button.giris-btn:hover { background: #7a3659; transform: scale(1.05); }
+
+        /* Ana İçerik */
+        #site-icerigi {
+            display: none;
+            width: 90%;
+            max-width: 1000px;
+            margin-top: 30px;
+            text-align: center;
+            z-index: 5;
+            padding-bottom: 50px;
         }
+
+        /* Birliktelik Sayacı Alanı */
+        .sayac-kutusu {
+            background: rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 25px;
+            border-radius: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        }
+
+        .sayac-kutusu h2 { margin: 0 0 15px 0; font-size: 1.8rem; color: #fff; text-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+
+        .sayac-zaman {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            font-size: 1.2rem;
+        }
+
+        .sayac-parca {
+            background: rgba(92, 44, 68, 0.5);
+            padding: 10px 20px;
+            border-radius: 15px;
+            min-width: 60px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .sayac-rakam { font-size: 2rem; font-weight: bold; block-size: auto; display: block; color: #ffebee; }
+
+        /* Mektup Butonları Alanı */
+        .mektup-butonlari-container {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+
+        .mektup-sec-btn {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 14px 22px;
+            border-radius: 20px;
+            color: white;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        /* Öne Çıkan Özel Buton */
+        .mektup-sec-btn.ozel-vurgu {
+            background: rgba(159, 80, 105, 0.4);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        .mektup-sec-btn:hover {
+            background: #5c2c44;
+            transform: translateY(-4px);
+            border-color: rgba(255, 255, 255, 0.6);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+
+        /* Fotoğraf Galerisi */
+        .galeri {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .galeri img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 20px;
+            border: 3px solid rgba(255,255,255,0.25);
+            transition: 0.4s;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        .galeri img:hover { transform: scale(1.08); border-color: rgba(255,255,255,0.8); box-shadow: 0 12px 30px rgba(0,0,0,0.3); }
+
+        /* Sürpriz Kutu Alanı */
+        .surpriz-kutu-container {
+            margin-top: 60px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .surpriz-kutu {
+            font-size: 70px;
+            transition: transform 0.3s ease;
+            animation: titreme 2s infinite;
+            display: inline-block;
+        }
+
+        .surpriz-kutu:hover { transform: scale(1.2) rotate(10deg); }
+
+        @keyframes titreme {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .surpriz-yazi { font-size: 1.3rem; margin-top: 10px; font-weight: bold; color: #ffebee; }
+
+        /* Ortak Mektup ve Pop-up Ekranı */
+        #mektup-overlay {
+            display: none;
+            position: fixed;
+            z-index: 200000;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(15, 6, 18, 0.97);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .mektup-zarf {
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 40px;
+            border-radius: 30px;
+            max-width: 600px;
+            width: 85%;
+            max-height: 80vh;
+            overflow-y: auto;
+            text-align: left;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.6);
+            position: relative;
+        }
+
+        #mektup-metni {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            color: #ffebee;
+            white-space: pre-wrap;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .mektup-kapat {
+            position: absolute;
+            top: 15px; right: 25px;
+            font-size: 40px;
+            color: white;
+        }
+
+        /* Lightbox - Büyütme Alanı */
+        #lightbox {
+            display: none;
+            position: fixed;
+            z-index: 100000;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.98);
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        #lightbox img {
+            max-width: 90%;
+            max-height: 70%;
+            object-fit: contain;
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+
+        #foto-notu {
+            margin-top: 30px;
+            font-size: 1.8rem;
+            color: #ffcc80;
+            font-weight: bold;
+            max-width: 80%;
+            padding: 20px;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+        }
+
+        .nav-btn { position: absolute; top: 50%; font-size: 80px; color: white; padding: 30px; user-select: none; }
+        #prev { left: 5%; } #next { right: 5%; }
+        .close { position: absolute; top: 30px; right: 50px; font-size: 60px; }
     </style>
 </head>
-<body class="flex flex-col items-center justify-start min-h-screen pb-16 px-4">
+<body>
 
-    <div id="top-bar" class="fixed top-4 right-4 z-50 flex items-center gap-3 hidden">
-        <div class="glass-card px-3 py-1.5 flex items-center gap-2 text-xs font-semibold">
-            <span class="text-pink-300">Benim:</span>
-            <select id="user-role-select" onchange="changeUserRole(this.value)" class="bg-transparent text-white font-bold outline-none cursor-pointer">
-                <option value="Türkay" class="bg-slate-800 text-white">Türkay 💙</option>
-                <option value="Elif" class="bg-slate-800 text-white">Elif 💖</option>
-            </select>
-        </div>
-
-        <button id="music-btn" onclick="muzikCal()" class="w-12 h-12 rounded-full glass-btn flex items-center justify-center text-xl shadow-lg hover:rotate-12 transition-transform">
-            🎵
-        </button>
-    </div>
-
+    <button id="music-btn" style="display:none; position:fixed; top:20px; right:20px; padding:20px; border-radius:50%; border:none; z-index:9999; background: rgba(255,255,255,0.2); color:white;" onclick="muzikCal()">🎵</button>
     <audio id="audio" src="madrigal.mp3" loop></audio>
 
-    <div id="login-ekrani" class="glass-card p-8 md:p-12 mt-20 text-center max-w-md w-full mx-auto z-20">
-        <div class="text-5xl mb-4 animate-bounce">💖</div>
-        <h1 class="text-3xl font-extrabold mb-2 tracking-wide text-pink-100">Elif'ime Özel❤️</h1>
-        <p class="text-xs text-pink-200/80 mb-6 font-medium">7. Ayımıza Özel Güncellenmiş Aşk Sığınağımız ✨</p>
+    <div class="login-box" id="login-ekrani">
+        <h1>Elifime Özel❤️</h1>
+        <input type="password" id="sifre" placeholder="Şifre buraya yaparsııınn...">
+        <br>
+        <button class="giris-btn" onclick="kontrolEt()">Giriş Yap</button>
+    </div>
+
+    <div id="site-icerigi">
         
-        <input type="password" id="sifre" placeholder="Şifre (1111)" 
-            class="w-full py-3.5 px-6 rounded-2xl border-0 text-center font-bold text-gray-800 text-lg mb-4 bg-white/90 focus:outline-none focus:ring-4 focus:ring-pink-400 shadow-inner">
-        
-        <button type="button" id="giris-btn" onclick="girisYap()" class="w-full py-4 rounded-2xl font-bold text-lg bg-pink-600/80 hover:bg-pink-500 text-white shadow-lg transition-all duration-300 hover:scale-[1.02] active:scale-95 cursor-pointer">
-            Giriş Yap 💞
-        </button>
-    </div>
-
-    <div id="site-icerigi" class="hidden w-full max-w-4xl mt-16 text-center z-10 space-y-8">
-
-        <div class="glass-card p-6 md:p-8 relative overflow-hidden">
-            <div class="absolute -top-10 -right-10 w-32 h-32 bg-pink-500/20 rounded-full blur-2xl"></div>
-            <span class="inline-block px-4 py-1.5 rounded-full text-xs font-extrabold bg-pink-500/30 text-pink-200 uppercase tracking-widest mb-3 border border-pink-400/30">
-                🎉 7. Ayımız Kutlu Olsun Bebeğim! 🎉
-            </span>
-            <h1 class="text-3xl md:text-5xl font-black text-white tracking-tight leading-tight">
-                Sonsuza Kadar <span class="text-pink-300 font-serif italic">Elif & Türkay</span>
-            </h1>
-            <p class="text-sm md:text-base text-pink-100/80 mt-2">
-                Birlikte Büyüttüğümüz Aşkımız ve Ortak Dijital Not Panomuz 🐾❤️
-            </p>
-        </div>
-
-        <div class="glass-card p-6 md:p-8">
-            <h2 class="text-xl md:text-2xl font-bold text-white mb-6 flex items-center justify-center gap-2">
-                <span>🥰</span> İyi Ki Karşıma Çıktın Sol Yanım...
-            </h2>
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 md:gap-4">
-                <div class="bg-pink-950/40 border border-white/10 p-4 rounded-2xl">
-                    <span id="sayac-gun" class="block text-3xl md:text-4xl font-black text-pink-200">0</span>
-                    <span class="text-xs font-semibold text-pink-300/80 uppercase tracking-wider">Gün</span>
-                </div>
-                <div class="bg-pink-950/40 border border-white/10 p-4 rounded-2xl">
-                    <span id="sayac-saat" class="block text-3xl md:text-4xl font-black text-pink-200">0</span>
-                    <span class="text-xs font-semibold text-pink-300/80 uppercase tracking-wider">Saat</span>
-                </div>
-                <div class="bg-pink-950/40 border border-white/10 p-4 rounded-2xl">
-                    <span id="sayac-dakika" class="block text-3xl md:text-4xl font-black text-pink-200">0</span>
-                    <span class="text-xs font-semibold text-pink-300/80 uppercase tracking-wider">Dakika</span>
-                </div>
-                <div class="bg-pink-950/40 border border-white/10 p-4 rounded-2xl">
-                    <span id="sayac-saniye" class="block text-3xl md:text-4xl font-black text-pink-200">0</span>
-                    <span class="text-xs font-semibold text-pink-300/80 uppercase tracking-wider">Saniye</span>
-                </div>
+        <!-- Birliktelik Sayacı -->
+        <div class="sayac-kutusu">
+            <h2>İyi Ki Karşıma Çıktın Sol Yanım... 🥰</h2>
+            <div class="sayac-zaman">
+                <div class="sayac-parca"><span class="sayac-rakam" id="sayac-gun">0</span>Gün</div>
+                <div class="sayac-parca"><span class="sayac-rakam" id="sayac-saat">0</span>Saat</div>
+                <div class="sayac-parca"><span class="sayac-rakam" id="sayac-dakika">0</span>Dakika</div>
+                <div class="sayac-parca"><span class="sayac-rakam" id="sayac-saniye">0</span>Saniye</div>
             </div>
         </div>
 
-        <div class="glass-card p-6 md:p-8 relative text-left">
-            <div class="flex flex-wrap items-center justify-between gap-4 mb-6 border-b border-white/10 pb-4">
-                <div>
-                    <h2 class="text-xl md:text-2xl font-black text-white flex items-center gap-2">
-                        <span>📌</span> Ortak Aşk Panomuz (Canlı Senkronize ☁️)
-                    </h2>
-                    <p class="text-xs text-pink-200/80 mt-1">Sizin yazdığınız her not anında buluta kaydolur ve ikinizin de telefonunda görünür!</p>
-                </div>
-                <button onclick="toggleNoteModal()" class="glass-btn px-5 py-2.5 rounded-2xl text-xs font-extrabold text-pink-200 bg-pink-600/40 hover:bg-pink-500/60 transition flex items-center gap-2">
-                    <span>✍️</span> Yeni Not Bırak
-                </button>
-            </div>
-
-            <div id="sync-status" class="text-[11px] text-pink-200/70 mb-3 italic flex items-center gap-2">
-                <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Bulut Veritabanı Aktif
-            </div>
-
-            <div id="notes-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 min-h-[220px]">
-                <!-- Populated dynamically via JavaScript -->
+        <!-- Sevgimetre Alanı -->
+        <div class="sayac-kutusu">
+            <h2>Seni Ne Kadar Seviyorum? 🙄</h2>
+            <button class="mektup-sec-btn ozel-vurgu" id="sevgimetre-btn" onclick="sevgimetreHesapla()">Sorgula... ❤️</button>
+            <div id="sevgimetre-sonuc" style="display:none; margin-top:15px;">
+                <span id="sevgimetre-yuzde" style="font-size: 3rem; font-weight: bold; color: #ffebee; display:block;">%0</span>
+                <p id="sevgimetre-mesaj" style="font-size: 1.4rem; color: #ffcc80; margin-top: 15px; opacity: 0; transition: opacity 1s; font-weight: bold; text-shadow: 0 2px 5px rgba(0,0,0,0.3);"></p>
             </div>
         </div>
 
-        <div class="glass-card p-6 md:p-8">
-            <h2 class="text-xl md:text-2xl font-bold text-white mb-3">Seni Ne Kadar Seviyorum? 🙄</h2>
-            <button id="sevgimetre-btn" onclick="sevgimetreHesapla()" class="glass-btn px-8 py-3.5 rounded-2xl font-bold text-base text-pink-200 cursor-pointer">
-                Sorgula... ❤️
-            </button>
-            <div id="sevgimetre-sonuc" class="hidden mt-4">
-                <span id="sevgimetre-yuzde" class="text-5xl font-black text-pink-200 block">0%</span>
-                <p id="sevgimetre-mesaj" class="text-lg text-amber-300 font-bold mt-3 opacity-0 transition-opacity duration-1000"></p>
-            </div>
+        <!-- Mektup Butonları Alanı -->
+        <div class="mektup-butonlari-container">
+            <button class="mektup-sec-btn ozel-vurgu" onclick="mektupYazdir('soylemekIstediklerim')">Sana Söylemek İstedikleriiim</button>
+            <button class="mektup-sec-btn" onclick="mektupYazdir('ozledim')">Beni Özlediğinde Aç 🥺</button>
+            <button class="mektup-sec-btn" onclick="mektupYazdir('gulmek')">Gülmek İstediğinde Aç </button>
+            <button class="mektup-sec-btn" onclick="mektupYazdir('modun')">Modun Düştüğünde Aç 💖</button>
+            <button class="mektup-sec-btn" onclick="mektupYazdir('uyku')">Uykun Gelmediğinde Aç 🌙</button>
         </div>
 
-        <div class="glass-card p-6 md:p-8">
-            <h2 class="text-xl md:text-2xl font-bold text-white mb-6">Özel Kalp Mektuplarımız 💌</h2>
-            <div class="flex flex-wrap justify-center gap-3">
-                <button class="mektup-sec-btn glass-btn px-5 py-3 rounded-2xl text-sm font-semibold bg-pink-500/30 border-pink-400/40" onclick="mektupYazdir('yedinciAy')">
-                    🎂 7. Ay Özel Mektubumuz!
-                </button>
-                <button class="mektup-sec-btn glass-btn px-5 py-3 rounded-2xl text-sm font-semibold" onclick="mektupYazdir('soylemekIstediklerim')">
-                    Sana Söylemek İstedikleriiim
-                </button>
-                <button class="mektup-sec-btn glass-btn px-5 py-3 rounded-2xl text-sm font-semibold" onclick="mektupYazdir('ozledim')">
-                    Beni Özlediğinde Aç 🥺
-                </button>
-                <button class="mektup-sec-btn glass-btn px-5 py-3 rounded-2xl text-sm font-semibold" onclick="mektupYazdir('gulmek')">
-                    Gülmek İstediğinde Aç 😂
-                </button>
-                <button class="mektup-sec-btn glass-btn px-5 py-3 rounded-2xl text-sm font-semibold" onclick="mektupYazdir('modun')">
-                    Modun Düştüğünde Aç 💖
-                </button>
-                <button class="mektup-sec-btn glass-btn px-5 py-3 rounded-2xl text-sm font-semibold" onclick="mektupYazdir('uyku')">
-                    Uykun Gelmediğinde Aç 🌙
-                </button>
-            </div>
-        </div>
+        <h1> Anılarımız 💌</h1>
+        <div class="galeri" id="galeri-alani"></div>
 
-        <div class="glass-card p-6 md:p-8">
-            <h2 class="text-2xl md:text-3xl font-black text-white mb-2">Anılarımız 📸</h2>
-            <p class="text-xs text-pink-200/80 mb-6">Her bir fotoğrafın arkasında ikimizin unutulmaz hikayesi var...</p>
-            
-            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4" id="galeri-alani">
-                <!-- Javascript will populate photos -->
-            </div>
-        </div>
-
-        <div class="glass-card p-8 flex flex-col items-center text-center">
-            <div class="surpriz-kutu text-7xl cursor-pointer select-none transition-transform hover:scale-125" onclick="mektupYazdir('buyukSurpriz')">
-                🤍
-            </div>
-            <div class="text-base font-bold text-pink-200 mt-3">Sadece çok özlediğinde tıkla... 🤫</div>
-        </div>
-
-    </div>
-
-    <div id="note-modal" class="fixed inset-0 z-[200000] hidden flex items-center justify-center bg-black/80 p-4 backdrop-blur-md">
-        <div class="glass-card p-6 md:p-8 max-w-md w-full relative border border-white/20">
-            <button onclick="toggleNoteModal()" class="absolute top-4 right-5 text-2xl text-white/80 hover:text-white">&times;</button>
-            <h3 class="text-xl font-extrabold text-white mb-4">✍️ Yeni Aşk Notu Yapıştır</h3>
-            
-            <div class="space-y-4 text-left text-xs font-semibold">
-                <div>
-                    <label class="block text-pink-200 mb-1">Notu Yazan:</label>
-                    <select id="note-author" class="w-full bg-slate-900/90 text-white p-3 rounded-xl border border-white/20 outline-none">
-                        <option value="Türkay 💙">Türkay 💙</option>
-                        <option value="Elif 💖">Elif 💖</option>
-                    </select>
-                </div>
-
-                <div>
-                    <label class="block text-pink-200 mb-1">Kağıt Rengi:</label>
-                    <div class="flex gap-3">
-                        <button type="button" onclick="selectColor('yellow')" class="w-8 h-8 rounded-full postit-yellow border-2 border-white shadow"></button>
-                        <button type="button" onclick="selectColor('pink')" class="w-8 h-8 rounded-full postit-pink border-2 border-white shadow"></button>
-                        <button type="button" onclick="selectColor('blue')" class="w-8 h-8 rounded-full postit-blue border-2 border-white shadow"></button>
-                        <button type="button" onclick="selectColor('green')" class="w-8 h-8 rounded-full postit-green border-2 border-white shadow"></button>
-                    </div>
-                </div>
-
-                <div>
-                    <label class="block text-pink-200 mb-1">Mesajın / Notun:</label>
-                    <textarea id="note-text" rows="4" placeholder="Seni bugün çok özledim birtanem..." class="w-full bg-white/90 text-slate-900 p-3 rounded-xl border-0 outline-none font-sans text-sm shadow-inner"></textarea>
-                </div>
-
-                <button id="save-note-btn" onclick="saveNote()" class="w-full py-3.5 rounded-xl font-bold text-sm bg-pink-600 hover:bg-pink-500 text-white shadow-lg transition flex items-center justify-center gap-2">
-                    <span>Panoya İğnele</span> 📌
-                </button>
-            </div>
+        <!-- Gizli Sürpriz Kutu -->
+        <div class="surpriz-kutu-container">
+            <div class="surpriz-kutu" onclick="mektupYazdir('buyukSurpriz')">🤍</div>
+            <div class="surpriz-yazi">Sadece çok özlediğinde tıkla... 🤫</div>
         </div>
     </div>
 
-    <!-- Custom Delete Note Confirmation Modal -->
-    <div id="delete-confirm-modal" class="fixed inset-0 z-[250000] hidden flex items-center justify-center bg-black/80 p-4 backdrop-blur-md">
-        <div class="glass-card p-6 text-center max-w-sm w-full border border-pink-400/30">
-            <div class="text-4xl mb-3">🥺</div>
-            <h3 class="text-lg font-bold text-white mb-2">Notu Silmek İstiyor Musun?</h3>
-            <p class="text-xs text-pink-200/80 mb-6">Bu güzel hatırayı panodan ve buluttan kaldırmak istediğine emin misin sevgilim?</p>
-            <div class="flex justify-center gap-3">
-                <button onclick="closeDeleteModal()" class="px-5 py-2.5 rounded-xl text-xs font-bold glass-btn text-white">
-                    Vazgeç
-                </button>
-                <button id="confirm-delete-btn" class="px-5 py-2.5 rounded-xl text-xs font-bold bg-rose-600 hover:bg-rose-500 text-white shadow-lg transition">
-                    Evet, Sil ❤️
-                </button>
-            </div>
+    <!-- Ortak Mektup Penceresi -->
+    <div id="mektup-overlay">
+        <span class="mektup-kapat" onclick="mektupKapat()">&times;</span>
+        <div class="mektup-zarf">
+            <div id="mektup-metni"></div>
         </div>
     </div>
 
-    <!-- Letter Popup Modal -->
-    <div id="mektup-overlay" class="fixed inset-0 z-[200000] hidden items-center justify-center bg-black/90 p-4 backdrop-blur-md">
-        <div class="relative glass-card p-6 md:p-10 max-w-2xl w-full max-h-[80vh] flex flex-col border border-white/20">
-            <button class="close-btn absolute top-4 right-6 text-3xl text-white/80 hover:text-white" onclick="mektupKapat()">&times;</button>
-            <div class="overflow-y-auto pr-2 custom-scroll mt-4">
-                <div id="mektup-metni" class="text-base md:text-lg text-pink-100 leading-relaxed font-mono whitespace-pre-wrap"></div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Lightbox Photo Modal -->
-    <div id="lightbox" class="fixed inset-0 z-[100000] hidden flex-col items-center justify-center bg-black/95 p-4">
-        <button class="close-btn absolute top-6 right-8 text-4xl text-white" onclick="kapat()">&times;</button>
-        <button class="absolute left-4 top-1/2 -translate-y-1/2 text-4xl text-white/80 hover:text-white p-4" onclick="degis(-1)">&#10094;</button>
-        <img id="buyuk-resim" src="" alt="Anı" class="max-w-[90vw] max-h-[65vh] object-contain rounded-2xl border-2 border-white/20 shadow-2xl">
-        <div id="foto-notu" class="mt-4 text-center text-amber-300 font-bold text-base md:text-xl max-w-2xl px-4"></div>
-        <button class="absolute right-4 top-1/2 -translate-y-1/2 text-4xl text-white/80 hover:text-white p-4" onclick="degis(1)">&#10095;</button>
+    <div id="lightbox">
+        <span class="close" onclick="kapat()">&times;</span>
+        <div class="nav-btn" id="prev" onclick="degis(-1)">&#10094;</div>
+        <img id="buyuk-resim" src="" alt="Anı">
+        <div id="foto-notu"></div>
+        <div class="nav-btn" id="next" onclick="degis(1)">&#10095;</div>
     </div>
 
     <script>
-        let selectedColor = 'yellow';
-        let currentRole = "Türkay";
-        let noteToDeleteId = null;
-
-        // Cloud Storage Setup (Shared Online Database Key for Türkay & Elif)
-        const CLOUD_BIN_ID = "66f2a890e41b4d34e4334a1b"; // Dedicated shared key
-        const API_URL = "https://api.jsonbin.io/v3/b/" + CLOUD_BIN_ID;
-
-        function changeUserRole(role) {
-            currentRole = role;
-            const authorSelect = document.getElementById("note-author");
-            if (authorSelect) authorSelect.value = `${role} ${role === 'Türkay' ? '💙' : '💖'}`;
-        }
-
-        // Login System Logic
-        function girisYap() {
-            const sifreInput = document.getElementById("sifre").value.trim();
-            if (sifreInput === "1111") {
-                document.getElementById("login-ekrani").classList.add("hidden");
-                document.getElementById("site-icerigi").classList.remove("hidden");
-                document.getElementById("top-bar").classList.remove("hidden");
-                baslatSayac();
-                galeriYukle();
-                loadNotesFromCloud();
-            } else {
-                alert("Yanlış şifre sevgilim! (İpucu: 1111) ❤️");
-            }
-        }
-
-        document.getElementById("sifre")?.addEventListener("keypress", function(e) {
-            if (e.key === "Enter") girisYap();
-        });
-
-        // Relationship Counter Logic
-        function baslatSayac() {
-            const baslangic = new Date("2026-03-28T00:00:00").getTime();
-            setInterval(() => {
-                const simdi = new Date().getTime();
-                const fark = simdi - baslangic;
-
-                const gun = Math.floor(fark / (1000 * 60 * 60 * 24));
-                const saat = Math.floor((fark % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const dakika = Math.floor((fark % (1000 * 60 * 60)) / (1000 * 60));
-                const saniye = Math.floor((fark % (1000 * 60)) / 1000);
-
-                if (document.getElementById("sayac-gun")) document.getElementById("sayac-gun").innerText = gun;
-                if (document.getElementById("sayac-saat")) document.getElementById("sayac-saat").innerText = saat;
-                if (document.getElementById("sayac-dakika")) document.getElementById("sayac-dakika").innerText = dakika;
-                if (document.getElementById("sayac-saniye")) document.getElementById("sayac-saniye").innerText = saniye;
-            }, 1000);
-        }
-
-        // Default initial fallback notes
-        const defaultNotes = [
-            { id: 1, author: "Türkay 💙", text: "7. ayımız kutlu olsun biriciğim! Seni dünyadaki her şeyden çok seviyorum. ❤️", color: "pink", date: "Bugün" },
-            { id: 2, author: "Elif 💖", text: "İyi ki hayatımdasın Türkay'ım, seninle her anım bir rüya gibi ✨", color: "yellow", date: "Dün" }
+        const notlar = [
+            "İlk datemiz, o günden bugüne her an içimdeki heyecanı tarif edemem... ❤️ ❤️", 
+            "Ufoyla ısınan masum köylüler yani biz, dünyanın en tatlı halleriydi.", 
+            "gülüşüne öldüğüm aşk kadın, okulda seni görebilmek için verdiğimiz çabaa.",
+            "tek görünümlük fotoğraflarınla savaştığımız o güzel evren, hepsi bizim anımız.", 
+            "Matracimizin yavaştan bize ısındığı,içimizi ısıtan gülüşün.", 
+            "İlk dosya açışımız, belki o an farkında değildik ama bir ömürlük hikaye başlıyordu.",
+            "yanında olamasam da gözlerinde kaybolduğum o en uzak ve en yakın anım.", 
+            "Aşkımız ve o gün bize getirmeyi unuttuğun kalpli stickerlar, iyi ki unutmuşuz, bu sayede daha çok güldük.", 
+            "ilk defa twin kombinleri denediğimiz evren.",
+            "seninle ilk konserimiz, Madrigal çalarken dünyada sadece ikimizin varlığıyla baktığım o unutulmaz gece.", 
+            "konser çıkışı kırmızı ışıkta derin konularrr, sanki trafik akmıyor da zaman bizim için duruyordu.", 
+            "seninle her an çok özel, hele o anki tatlılığın beni benden alıyor.",
+            "yanındayken dünya duruyor, sanki evren sadece senin gülüşün etrafında dönüyor.", 
+            "en masum bakışın, beni kendine bininci kez aşık ettiğin o eşsiz annn.", 
+            "Birlikte ilk derbi galibiyetimiz, seninle paylaşınca her şeyin zaferi daha bir güzel.",
+            "kalbimin sahibi ve ailesiii şimdilikk.", 
+            "o gün seni çooook özlemiştim, yanına geldiğim an tüm dünyanın yorgunluğu bitti.", 
+            "Bize ilk pasta yapışın,emeğinle o pastayı dünyanın en lezzetli şeyi yaptın.",
+            "takip etmek diyince bizdir, yeter ki yanımda sen ol aşkım.", 
+            "Elif ve Polat olduğumuz evren, her halimizle birbirimize bu kadar yakışmamız bir mucize.", 
+            "seninle her yol çiçek, ama sen zaten o çiçeklerin en güzeli, en değerlisisin.",
+            "gözlerin... İçlerinde kaybolup, sonsuza kadar orada kalmak istediğim tek yer.", 
+            "seni ilk gördüğüm o gün, hayatımın geri kalanının sadece seninle olacağını anladığım an.", 
+            "doğum gününde ne dilediğini meraktan çatladığımız gün, asıl dilek senin gibi birini hayatıma kattığı için benimkisiydi.",
+            "sen benim şansımsın, iyi kii hayatımdasın, iyi kii benimsin.", 
+            "Elif'im, her halinle öylesine güzelsin ki, kusurlar bile seninle kusursuzlaşıyor.", 
+            "bizsiz yediğin yemeklerr yazıyoruzz...",
+            "seninle zaman kavramı yok, ifşa olarak görsende gözlerindeki o ışıkla her anı anlamlandırıyoruz.", 
+            "Senaya sempati kazandığımız anlar, bizi çektiği için değil, senin neşene tanıklık ettiği için sağ olsun ahahhahah.", 
+            "dünyadaki en tatlı kız, evet sensin, yanılıyor muyum?",
+            "her anın ayrı yeri var ama senin yerin hep kalbimin en başköşesinde, sonsuza kadar.", 
+            "seninle yaşamaya, nefes almaya ve her yeni güne uyanmaya değer.", 
+            "o güzel sabah kahvaltımız, sen karşımdayken çayın bile tadı bambaşka. kesinlikle yanaklarına odaklanmıyorum.",
+            "yaptığımız ilk o ufak hata bile seninle anıya dönüştü, o saçlarının kokusu hala burnumda.", 
+            "sen ve o doğal hallerin, fotoğraf karesine sığmayan samimiyetin.", 
+            "kahvaltımızın hiç bitmemesi için zamana yalvardığımız o unutulmaz gün.",
+            "peçetelerini bile sakladığım evren, benim için her zerren çok kiymetli.", 
+            "yakışmak, benzemek ve bir olmak deyince akla gelen tek ikili biziz.", 
+            "tek sığınağım sensin, hayatın bütün fırtınaları senin yanında diner.",
+            "yanına yakıştığımı düşündüğüm, gururla gülümsediğim en güzel gün.", 
+            "sen ve eklerin, senin tatlılığının yanında onlar bile sönük kalıyor, evet kesinlikle benimsin.", 
+            "bence en tatlı fotomuz, beraber gülüşümüzden daha güzel bir tablo yok.",
+            "senle fotoğraf çekilmeyi, o anı dondurup sonsuza kadar yaşatmayı seviyorum.", 
+            "beni dövmediğin için her gün şükrediyorum, ama şakadan dövsen bile o bile güzel.", 
+            "beraber yaşlanmaya, saçlarımız beyazlayınca bile birbirimize aynı aşkla bakmaya.",
+            "kalbim seninle dolu, sarı kedim benim, hayatımın neşesi.", 
+            "şimdilikk ennn güzel hatıra, ama daha güzellerini ekleyeceğiz.", 
+            "sonsuza kadar... Başlangıcımız sensin bitişimiz de sadece senle olsun."
         ];
 
-        // Load Notes from Cloud & Fallback to Local
-        async function loadNotesFromCloud() {
-            const statusEl = document.getElementById("sync-status");
-            if (statusEl) statusEl.innerHTML = `<span class="inline-block w-2 h-2 rounded-full bg-amber-400 animate-ping"></span> Buluttan notlar yükleniyor...`;
-
-            try {
-                // Try LocalStorage first for instant view
-                const localData = localStorage.getItem("love_notes_db");
-                if (localData) {
-                    renderNotes(JSON.parse(localData));
-                }
-
-                // Sync with online store
-                const res = await fetch("https://api.myjson.online/v1/records/481f1e09-0c8a-493a-86fa-b6730cd51a66", {
-                    method: 'GET'
-                });
-
-                if (res.ok) {
-                    const data = await res.json();
-                    if (data && data.jsonData && Array.isArray(data.jsonData.notes)) {
-                        localStorage.setItem("love_notes_db", JSON.stringify(data.jsonData.notes));
-                        renderNotes(data.jsonData.notes);
-                        if (statusEl) statusEl.innerHTML = `<span class="inline-block w-2 h-2 rounded-full bg-emerald-400"></span> Bulut Veritabanı Senkronize ☁️`;
-                        return;
-                    }
-                }
-            } catch (err) {
-                console.log("Cloud read fallback to local storage:", err);
-            }
-
-            // Fallback
-            const saved = localStorage.getItem("love_notes_db");
-            const notes = saved ? JSON.parse(saved) : defaultNotes;
-            renderNotes(notes);
-            if (statusEl) statusEl.innerHTML = `<span class="inline-block w-2 h-2 rounded-full bg-emerald-400"></span> Çevrimdışı / Hafıza Modu Aktif`;
-        }
-
-        // Save Notes to Cloud & Local
-        async function syncNotesToCloud(notes) {
-            localStorage.setItem("love_notes_db", JSON.stringify(notes));
-            renderNotes(notes);
-
-            const statusEl = document.getElementById("sync-status");
-            if (statusEl) statusEl.innerHTML = `<span class="inline-block w-2 h-2 rounded-full bg-blue-400 animate-pulse"></span> Buluta kaydediliyor...`;
-
-            try {
-                await fetch("https://api.myjson.online/v1/records/481f1e09-0c8a-493a-86fa-b6730cd51a66", {
-                    method: 'PUT',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ jsonData: { notes: notes } })
-                });
-                if (statusEl) statusEl.innerHTML = `<span class="inline-block w-2 h-2 rounded-full bg-emerald-400"></span> Bulut Veritabanı Senkronize ☁️`;
-            } catch (e) {
-                console.log("Sync error:", e);
-                if (statusEl) statusEl.innerHTML = `<span class="inline-block w-2 h-2 rounded-full bg-emerald-400"></span> Telefon Hafızasına Kaydedildi`;
-            }
-        }
-
-        function renderNotes(notes) {
-            const grid = document.getElementById("notes-grid");
-            if (!grid) return;
-            grid.innerHTML = "";
-
-            if (!notes || notes.length === 0) {
-                grid.innerHTML = `<div class="col-span-full text-center py-8 text-pink-200/60 font-medium">Henüz hiç not yazılmamış. İlk notu sen bırak sevgilim! ❤️</div>`;
-                return;
-            }
-
-            const rotations = ['rotate-1', '-rotate-2', 'rotate-2', '-rotate-1', 'rotate-3'];
-
-            notes.forEach((note, index) => {
-                const rotClass = rotations[index % rotations.length];
-                grid.innerHTML += `
-                    <div class="postit-card postit-${note.color} p-4 rounded-2xl relative ${rotClass} flex flex-col justify-between group">
-                        <button onclick="askDeleteNote(event, ${note.id})" class="absolute top-2 right-3 w-7 h-7 rounded-full bg-black/10 hover:bg-black/20 flex items-center justify-center text-sm font-black transition-all cursor-pointer z-10" title="Notu Sil">
-                            &times;
-                        </button>
-                        <div class="handwritten text-lg leading-snug mb-3 whitespace-pre-wrap pr-4">${note.text}</div>
-                        <div class="flex items-center justify-between text-[11px] font-extrabold opacity-80 pt-2 border-t border-black/10">
-                            <span>${note.author}</span>
-                            <span>${note.date}</span>
-                        </div>
-                    </div>
-                `;
-            });
-        }
-
-        function toggleNoteModal() {
-            const modal = document.getElementById("note-modal");
-            modal.classList.toggle("hidden");
-        }
-
-        function selectColor(color) {
-            selectedColor = color;
-        }
-
-        async function saveNote() {
-            const text = document.getElementById("note-text").value.trim();
-            const author = document.getElementById("note-author").value;
-
-            if (!text) {
-                alert("Lütfen bir not yaz sevgilim! ❤️");
-                return;
-            }
-
-            const saved = localStorage.getItem("love_notes_db");
-            const notes = saved ? JSON.parse(saved) : defaultNotes;
-
-            const newNote = {
-                id: Date.now(),
-                author: author,
-                text: text,
-                color: selectedColor,
-                date: new Date().toLocaleDateString('tr-TR', { day: 'numeric', month: 'short' })
-            };
-
-            notes.unshift(newNote);
-            document.getElementById("note-text").value = "";
-            toggleNoteModal();
-
-            await syncNotesToCloud(notes);
-        }
-
-        function askDeleteNote(e, id) {
-            if (e) e.stopPropagation();
-            noteToDeleteId = id;
-            const modal = document.getElementById("delete-confirm-modal");
-            const btn = document.getElementById("confirm-delete-btn");
-            if (modal && btn) {
-                btn.onclick = function() {
-                    executeDeleteNote();
-                };
-                modal.classList.remove("hidden");
-            }
-        }
-
-        function closeDeleteModal() {
-            noteToDeleteId = null;
-            document.getElementById("delete-confirm-modal")?.classList.add("hidden");
-        }
-
-        async function executeDeleteNote() {
-            if (!noteToDeleteId) return;
-            const saved = localStorage.getItem("love_notes_db");
-            let notes = saved ? JSON.parse(saved) : defaultNotes;
-            notes = notes.filter(n => n.id !== noteToDeleteId);
-            closeDeleteModal();
-            await syncNotesToCloud(notes);
-        }
-
-        // Sevgimetre Logic
-        function sevgimetreHesapla() {
-            const resBox = document.getElementById("sevgimetre-sonuc");
-            const pctEl = document.getElementById("sevgimetre-yuzde");
-            const msgEl = document.getElementById("sevgimetre-mesaj");
-
-            resBox.classList.remove("hidden");
-            pctEl.innerText = "%∞";
-            msgEl.innerText = "Matematik ve rakamlar seni ne kadar çok sevdiğimi ölçmeye yetmedi... Sonsuza kadar sen! ❤️✨";
-            msgEl.style.opacity = "1";
-        }
-
-        // Secret Letters Logic
-        const mektuplar = {
-            yedinciAy: `7. Ayımız Kutlu Olsun Bebeğim ❤️\n\nSeninle geçen her bir gün, ömrüme ömür katıyor. 7 ay önce ellerini tuttuğum an kaderimin değiştiğini hissetmiştim. Şimdi geri dönüp baktığımda, iyi ki sen diyorum. İyi ki hayatımın tam merkezindesin, iyi ki benim evimsin. Seni sonsuz bir aşkla seviyorum...`,
-            soylemekIstediklerim: `Sana Söylemek İstediklerim 💖\n\nSen gülünce dünyadaki tüm dertler unutuluyor sevgilim. Yüzündeki o tebessüm benim dünyadaki en büyük servetim. Birlikte kuracağımız geleceğin heyecanıyla atıyor kalbim. Seni her gün bir önceki günden daha çok seviyorum.`,
-            ozledim: `Beni Özlediğinde Aç 🥺\n\nŞu an yanımda olmayabilirsin ama aklımın ve kalbimin tam ortasındasın. Gözlerini kapat ve sana sarıldığımı hisset. Çok yakında yine yan yana olacağız ve ben seni kollarımın arasında sıkıca tutacağım. Seni çok özledim...`,
-            gulmek: `Gülmek İstediğinde Aç 😂\n\nUnutma ki sen dünyanın en tatlı ve en şapşal insanısın! Sen güldüğünde etrafa yayılan ışık dünyayı aydınlatıyor. Şimdi o güzel yüzüne kocaman bir gülücük kondur bakalım! 😊`,
-            modun: `Modun Düştüğünde Aç 💖\n\nCanım sevgilim, ne olursa olsun senin arkanda dağ gibi duran bir Türkay var. Hiçbir şeyin seni üzmesine izin verme. Sen çok güçlüsün ve benim en kıymetlimsin. Gel ve bana sarıl!`,
-            uyku: `Uykun Gelmediğinde Aç 🌙\n\nŞimdi başını yastığa koy ve güzel şeyler hayal et sevgilim. Rüyalarında benimle gezintiye çık. Yarın yepyeni ve güzel bir güne uyanacağız. Mışıl mışıl uyu, iyi uykular birtanem...`,
-            buyukSurpriz: `Büyük Sürpriz 🤍\n\nSeni sonsuza kadar seveceğime ve ne olursa olsun elini hiç bırakmayacağıma söz veriyorum. Sen benim ilk ve tek aşkımsın... ❤️`
+        // Mektup İçerikleri Dizisi
+        const mektupMetinleri = {
+            soylemekIstediklerim: "Selam sevgilim. Böyle bir şeyi tamamen içimden gelerek, seni biraz olsun gülümsetebilmek için yaptım. Umarım gördüğünde o dünyalar güzeli yüzünde kocaman bir tebessüm oluşmuştur.\n\nHer an, her saniye fiziken yanında olamıyorum ve bazen bunun canını sıktığını biliyorum. İşte tam olarak bu yüzden; ne zaman modun düşerse, ne zaman beni yanında hissetmek istersen girip mutlu ol diye bu dijital sığınağı hazırladım. Kilometreler ne derse desin; fiziken uzak olsak bile kalben, ruhen attığım her adımda, aldığım her nefeste senin yanındayım.\n\nBenim için bu dünyadaki en özel, en değerli ve en eşsiz varlık sensin. Aynı yoğun duyguları ve heyecanı kalbinde taşıdığını bilmek, senin de beni aynı aşkla sevdiğini hissetmek bu hayattaki en büyük gücüm. Aramıza, aşkımıza ve bize olan o güzel sevgin kalbinde hiç eksilmesin, hep ilk günkü gibi büyüsün tek isteğim bu.\n\nİleride birlikte yapacağımız, sayfalarını el ele dolduracağımız o gerçek anı defterimiz öncesi bu bizim için ufak bir pratik, aşkımızın tatlı bir fragmanı olsun istedim. Ama hepsinden öte, seni ne kadar çok sevdiğimi sana bir kez daha haykırmak içindi bu hamlem. Sen benim bu hayattaki en güzel şansım, sarı kedim, kalbimin en huzurlu köşesisin. İyi ki hayatımdasın Elif'im, sonsuza kadar sadece sen ve ben... ❤️",
+            ozledim: "Sonsuza kadar sadece sen ve ben... ❤️\n\nYanında olamasam da kalbimin her atışı seninle sarı kedim. Beni özlediğin her an fotoğraflarımıza bak, ne kadar güzel güldüğümüzü ve birbirimize nasıl aşkla bağlandığımızı hatırla. Çok yakında yine yan yana olacağız bir tanem.",
+            gulmek: "İyi ki varsın Elif'im, iyi ki hayatımdasııın ✨\n\nYüzünün o eşsiz gülüşünü canlandırmak için galerideki twin kombinli ifşalarımıza, beni şakadan dövdüğün anlara ya da ufoyla ısınmaya çalıştığımız o masum hallerimize bakk. Dünyada senin neşenden daha güzel hiçbir manzara yok sevgilim.",
+            modun: "Dünyanın en güzel gülüşü senin yüzünde ❤️\n\nUnutma ki sen bu dünyadaki en güçlü, en özel ogle değerli kızsın. Canını sıkan ne varsa geçecek, çünkü arkanda her zaman seni çok seven, seninle gurur duyan ve her düştüğünde seni sımsıkı tutacak bir sevgilin var. Başını dik tut sol yanım.",
+            uyku: "Tanışmamız kader, her anımız bir mucize, her saniyemiz aşk 🌹\n\nUykun gelmediyse şimdi gözlerini kapat ve yanındaymışım gibi hayal et. Saçlarınla oynadığımı, seni kollarımın arasına alıp kokunu içime çektiğimi düşün... baktın kii uyuyamıyorsun ne olursa olsun beni aramazsan küseriz kii .Kalbim tamamen seninle dolu.Tatlı rüyalar sarı kedim, rüyanda bizi gör.",
+            buyukSurpriz: "Elif'im, dünyalar güzelim...\n\nBu kutuyu açtığına göre bana olan aşkımın büyüklüğünü bir kez daha derinden hissetmek istedin. İyi ki de açmışsın.\n\nHayatıma girdiğin o ilk günden beri dünyamı tamamen değiştirdin. Seninle geçen her gün, her saniye ömrümün en değerli anları oldu. Gülüşün içimi ısıtan tek sığınak, gözlerinse kaybolmaktan asla korkmadığım tek evren.\n\nBu sidedeki her bir fotoğraf, her bir küçük peçete detayı bile senin benim için ne kadar eşsiz olduğunun küçük birer kanıtı. Biz seninle bir olduk, eksik parçalarımızı birbirimizde tamamladık.\n\nSonsuza kadar sadece sen ve ben... Her anımız bir mucize, her saniyemiz aşk olmaya devam edecek. Seni kelimelerin anlatamayacağı kadar çok seviyorum sarı kedim, iyi ki benimsin... ❤️"
         };
 
-        function mektupYazdir(key) {
-            const text = mektuplar[key] || "Mektup bulunamadı.";
-            document.getElementById("mektup-metni").innerText = text;
+        let suankiIndex = 0;
+        const toplamResim = 48;
+        const baslangicTarihi = new Date("2026-03-28T00:00:00"); 
+
+        function kontrolEt() {
+            if (document.getElementById("sifre").value === "887529") {
+                document.getElementById("login-ekrani").style.display = "none";
+                document.getElementById("site-icerigi").style.display = "block";
+                document.getElementById("music-btn").style.display = "block";
+                
+                setInterval(kalpYarat, 300);
+                document.getElementById("audio").play();
+                setInterval(sayacGuncelle, 1000);
+                sayacGuncelle();
+
+                const galeri = document.getElementById("galeri-alani");
+                for (let i = 1; i <= toplamResim; i++) {
+                    galeri.innerHTML += `<img src="image_${i}.jpeg" onerror="this.onerror=null; this.src='image_${i}.jpg';" onclick="ac(${i})">`;
+                }
+            } else {
+                alert("Şifre yanlış aşkım Bir daha dene ipucuu telefon şifren...");
+            }
+        }
+
+        function sayacGuncelle() {
+            const simdi = new Date();
+            const fark = simdi - baslangicTarihi;
+            const gun = Math.floor(fark / (1000 * 60 * 60 * 24));
+            const saat = Math.floor((fark % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const dakika = Math.floor((fark % (1000 * 60 * 60)) / (1000 * 60));
+            const saniye = Math.floor((fark % (1000 * 60)) / 1000);
+
+            document.getElementById("sayac-gun").innerText = gun;
+            document.getElementById("sayac-saat").innerText = saat;
+            document.getElementById("sayac-dakika").innerText = dakika;
+            document.getElementById("sayac-saniye").innerText = saniye;
+        }
+
+        function sevgimetreHesapla() {
+            const btn = document.getElementById("sevgimetre-btn");
+            const sonucDiv = document.getElementById("sevgimetre-sonuc");
+            const yuzdeAlan = document.getElementById("sevgimetre-yuzde");
+            const mesajAlan = document.getElementById("sevgimetre-mesaj");
+            
+            btn.style.display = "none";
+            sonucDiv.style.display = "block";
+            mesajAlan.style.opacity = "0";
+            mesajAlan.innerText = "";
+            
+            let suankiYuzde = 0;
+            const hedef = 100;
+            
+            const interval = setInterval(() => {
+                if (suankiYuzde < hedef) {
+                    suankiYuzde++;
+                    yuzdeAlan.innerText = "%" + suankiYuzde;
+                } else {
+                    clearInterval(interval);
+                    mesajAlan.innerText = "Her şeyi sorgula, sana olan sevgimii sorgulama... 🤍";
+                    mesajAlan.style.opacity = "1";
+                }
+            }, 20);
+        }
+
+        let mektupInterval;
+
+        function mektupYazdir(tip) {
             document.getElementById("mektup-overlay").style.display = "flex";
+            const alan = document.getElementById("mektup-metni");
+            alan.innerText = "";
+            let index = 0;
+            const secilenMetin = mektupMetinleri[tip];
+            
+            clearInterval(mektupInterval);
+            mektupInterval = setInterval(() => {
+                if (index < secilenMetin.length) {
+                    alan.innerText += secilenMetin.charAt(index);
+                    index++;
+                    document.querySelector('.mektup-zarf').scrollTop = document.querySelector('.mektup-zarf').scrollHeight;
+                } else {
+                    clearInterval(mektupInterval);
+                }
+            }, 45);
         }
 
         function mektupKapat() {
+            clearInterval(mektupInterval);
             document.getElementById("mektup-overlay").style.display = "none";
         }
 
-        // Photo Gallery Logic
-        const fotograflar = Array.from({ length: 48 }, (_, i) => ({
-            url: `foto${i + 1}.jpg`,
-            not: `Anı #${i + 1} - Seninle her anımız bir ömre bedel ❤️`
-        }));
-
-        let mevcutFotoIndex = 0;
-
-        function galeriYukle() {
-            const alan = document.getElementById("galeri-alani");
-            if (!alan) return;
-            alan.innerHTML = "";
-
-            fotograflar.forEach((foto, i) => {
-                alan.innerHTML += `
-                    <div onclick="ac(${i})" class="glass-card p-2 rounded-2xl overflow-hidden cursor-pointer hover:scale-105 transition">
-                        <img src="${foto.url}" onerror="this.src='https://placehold.co/300x300/5c2c44/ffffff?text=An%C4%B1+${i+1}'" class="w-full h-32 md:h-40 object-cover rounded-xl">
-                    </div>
-                `;
-            });
+        function kalpYarat() {
+            const el = document.createElement('div');
+            el.className = 'kalp';
+            el.innerText = Math.random() > 0.5 ? '❤️' : '🤍';
+            el.style.left = (Math.random() * 100) + '%';
+            el.style.animationDuration = (Math.random() * 4 + 3) + 's';
+            document.body.appendChild(el);
+            setTimeout(() => el.remove(), 7000);
         }
 
-        function ac(index) {
-            mevcutFotoIndex = index;
-            document.getElementById("buyuk-resim").src = fotograflar[index].url;
-            document.getElementById("foto-notu").innerText = fotograflar[index].not;
-            document.getElementById("lightbox").style.display = "flex";
+        function ac(i) { 
+            suankiIndex = i; 
+            guncelle(); 
+            document.getElementById("lightbox").style.display = "flex"; 
         }
 
-        function kapat() {
-            document.getElementById("lightbox").style.display = "none";
+        function kapat() { 
+            document.getElementById("lightbox").style.display = "none"; 
         }
 
-        function degis(yon) {
-            mevcutFotoIndex = (mevcutFotoIndex + yon + fotograflar.length) % fotograflar.length;
-            ac(mevcutFotoIndex);
+        function degis(y) { 
+            suankiIndex += y; 
+            if(suankiIndex < 1) suankiIndex = toplamResim; 
+            if(suankiIndex > toplamResim) suankiIndex = 1; 
+            guncelle(); 
+        }
+        
+        function guncelle() {
+            document.getElementById("buyuk-resim").src = `image_${suankiIndex}.jpeg`;
+            document.getElementById("buyuk-resim").onerror = function() { this.src = `image_${suankiIndex}.jpg`; };
+            document.getElementById("foto-notu").innerText = notlar[suankiIndex - 1];
         }
 
-        function muzikCal() {
-            const audio = document.getElementById("audio");
-            if (audio.paused) {
-                audio.play();
-            } else {
-                audio.pause();
-            }
+        function muzikCal() { 
+            document.getElementById("audio").paused ? document.getElementById("audio").play() : document.getElementById("audio").pause(); 
         }
+
+        /* FARE TAKİP EFETKİ: Kalplerin dökülme kodu */
+        window.addEventListener('mousemove', function(e) {
+            if (Math.random() > 0.15) return; 
+
+            const iz = document.createElement('div');
+            iz.className = 'cursor-iz';
+            iz.innerText = Math.random() > 0.5 ? '❤️' : '🤍';
+            iz.style.left = e.clientX + 'px';
+            iz.style.top = e.clientY + 'px';
+            
+            const boyut = Math.random() * 10 + 10;
+            iz.style.fontSize = boyut + 'px';
+            
+            document.body.appendChild(iz);
+            
+            setTimeout(() => {
+                iz.remove();
+            }, 1000);
+        });
+
+        window.addEventListener('keydown', (e) => {
+            if (e.key === "ArrowLeft") degis(-1);
+            if (e.key === "ArrowRight") degis(1);
+            if (e.key === "Escape") { kapat(); mektupKapat(); }
+        });
     </script>
 </body>
 </html>
