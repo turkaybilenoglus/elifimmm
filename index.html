@@ -78,17 +78,16 @@
     <div class="fixed top-[-10%] left-[-10%] w-[500px] h-[500px] bg-rose-600/20 rounded-full blur-[120px] pointer-events-none"></div>
     <div class="fixed bottom-[-10%] right-[-10%] w-[500px] h-[500px] bg-pink-600/15 rounded-full blur-[120px] pointer-events-none"></div>
 
-    <!-- Müzik Çalar / Sabit Oynatıcı -->
+    <!-- Müzik Çalar -->
     <div class="fixed bottom-4 right-4 z-40 glass-panel p-3 rounded-2xl flex items-center gap-3 border border-rose-500/30 shadow-2xl">
-        <audio id="bgMusic" loop>
-            <source src="madrigal.mp3" type="audio/mpeg">
-            Tarayıcınız müzik çaları desteklemiyor.
-        </audio>
+        <audio id="bgMusic"></audio>
+        <button onclick="prevSong()" class="text-white/70 hover:text-white text-sm transition-all">⏮️</button>
         <button onclick="muzikToggle()" id="musicToggleBtn" class="w-10 h-10 bg-gradient-to-tr from-rose-600 to-pink-500 rounded-xl flex items-center justify-center text-white text-lg shadow-lg hover:scale-105 transition-all">
             🎵
         </button>
-        <div class="text-xs hidden sm:block">
-            <span class="block font-bold text-rose-200">Aşk Şarkımız</span>
+        <button onclick="nextSong()" class="text-white/70 hover:text-white text-sm transition-all">⏭️</button>
+        <div class="text-xs hidden sm:block max-w-[140px] truncate">
+            <span id="songTitleText" class="block font-bold text-rose-200 truncate">Madrigal</span>
             <span id="musicStatusText" class="text-[10px] text-pink-300/70">Çalmak için tıkla</span>
         </div>
     </div>
@@ -100,7 +99,7 @@
                 💖
             </div>
             <h1 class="romantic-font text-3xl font-extrabold text-rose-200 mt-6 mb-2">Elif & Türkay</h1>
-            <p class="text-pink-300/80 text-sm mb-6">Sonsuza kadar sürecek aşk sığınağımıza hoş geldiniz. Devam etmek için şifreyi girrr:</p>
+            <p class="text-pink-300/80 text-sm mb-6">Sonsuza kadar sürecek aşk sığınağımıza hoş geldiniz. Devam etmek için şifreyi girin:</p>
             
             <div class="space-y-4">
                 <input type="password" id="loginPass" placeholder="Örn: Özel Tarih veya Şifre" class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-center text-rose-100 placeholder-rose-300/40 focus:outline-none focus:border-rose-500 transition-all font-mono tracking-widest">
@@ -123,7 +122,7 @@
                 <h1 class="romantic-font text-4xl md:text-5xl font-black text-white mb-2 drop-shadow-md">Elif & Türkay</h1>
                 <p class="text-pink-200/90 text-sm md:text-base font-medium max-w-lg mx-auto mb-6">Kalplerimizin birlikte attığı her an, hayatımın en güzel hediyesi.</p>
                 
-                <!-- Live Counter -->
+                <!-- Live Counter (19 Nisan 2026 Sevgili Olma Tarihi) -->
                 <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-2xl mx-auto">
                     <div class="glass-card p-3 rounded-2xl text-center border border-white/10">
                         <span id="daysCount" class="block text-2xl md:text-3xl font-black text-rose-300 font-mono">0</span>
@@ -153,7 +152,7 @@
             <button onclick="sekmeDegis('bottles')" id="btn-bottles" class="px-4 py-2.5 rounded-xl text-sm font-bold transition-all text-pink-200/70 hover:text-white hover:bg-white/5">🍾 Zaman Şişeleri</button>
             <button onclick="sekmeDegis('dictionary')" id="btn-dictionary" class="px-4 py-2.5 rounded-xl text-sm font-bold transition-all text-pink-200/70 hover:text-white hover:bg-white/5">📖 Ortak Sözlük</button>
             <button onclick="sekmeDegis('story')" id="btn-story" class="px-4 py-2.5 rounded-xl text-sm font-bold transition-all text-pink-200/70 hover:text-white hover:bg-white/5">✨ Hikayemiz</button>
-            <button onclick="sekmeDegis('photos')" id="btn-photos" class="px-4 py-2.5 rounded-xl text-sm font-bold transition-all text-pink-200/70 hover:text-white hover:bg-white/5">📸 Polaroid Albüm</button>
+            <button onclick="sekmeDegis('photos')" id="btn-photos" class="px-4 py-2.5 rounded-xl text-sm font-bold transition-all text-pink-200/70 hover:text-white hover:bg-white/5">📸 Polaroid Albüm (25)</button>
             <button onclick="sekmeDegis('bucket')" id="btn-bucket" class="px-4 py-2.5 rounded-xl text-sm font-bold transition-all text-pink-200/70 hover:text-white hover:bg-white/5">🎯 Hayallerimiz</button>
         </nav>
 
@@ -394,12 +393,12 @@
             </div>
         </div>
 
-        <!-- SEKME 7: Polaroid Albüm (WhatsApp Fotoğrafları ile Entegre) -->
+        <!-- SEKME 7: Polaroid Albüm (Eksiksiz 25 Yüklenen Görsel) -->
         <div id="tab-photos" class="hidden space-y-6">
             <div class="glass-panel p-6 md:p-8 rounded-3xl border border-rose-500/20">
                 <div class="flex flex-col sm:flex-row items-center justify-between gap-4 mb-6">
                     <div>
-                        <span class="px-3 py-1 bg-amber-500/20 text-amber-300 border border-amber-500/30 text-xs font-bold rounded-full">📸 Polaroid Albüm</span>
+                        <span class="px-3 py-1 bg-amber-500/20 text-amber-300 border border-amber-500/30 text-xs font-bold rounded-full">📸 Polaroid Albüm (25 Ölümsüz Anı)</span>
                         <h2 class="romantic-font text-2xl md:text-3xl font-bold text-white mt-1">Anı Fotoğraflarımız 🖼️</h2>
                     </div>
                 </div>
@@ -505,28 +504,135 @@
     </div>
 
     <script>
-        // --- MÜZİK ÇALAR ---
+        // --- BULUT VERİ TABANI (JSONBIN SENKRONİZASYON API) ---
+        const myBinId = "6ad29df5ffd5d16053723a75"; 
+        const masterKey = "$2a$10$n0.eCw.MQrLCf49GVFjV.eKlBlHD7KafhPBTcH7kiSYXNrU3uq2Hi"; 
+
+        async function syncWithCloud(dataObject) {
+            if (!myBinId || myBinId === "OUR_SHARED_BIN_ID") return;
+            try {
+                await fetch(`https://api.jsonbin.io/v3/b/${myBinId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Master-Key': masterKey
+                    },
+                    body: JSON.stringify(dataObject)
+                });
+            } catch (err) {
+                console.log("Cloud sync hatası:", err);
+            }
+        }
+
+        async function loadFromCloud() {
+            if (!myBinId || myBinId === "OUR_SHARED_BIN_ID") return;
+            try {
+                const res = await fetch(`https://api.jsonbin.io/v3/b/${myBinId}/latest`, {
+                    headers: { 'X-Master-Key': masterKey }
+                });
+                const json = await res.json();
+                if (json.record) {
+                    if (json.record.treeData) {
+                        treeData = json.record.treeData;
+                        localStorage.setItem('nergis_tree_v20', JSON.stringify(treeData));
+                    }
+                    if (json.record.qaStorage) {
+                        qaStorage = json.record.qaStorage;
+                        localStorage.setItem('thirty_days_qa_v1', JSON.stringify(qaStorage));
+                    }
+                    if (json.record.vulnerableNotes) {
+                        vulnerableNotes = json.record.vulnerableNotes;
+                        localStorage.setItem('vulnerable_notes_v2', JSON.stringify(vulnerableNotes));
+                    }
+                    if (json.record.bottleMessages) {
+                        bottleMessages = json.record.bottleMessages;
+                        localStorage.setItem('bottle_messages_v6', JSON.stringify(bottleMessages));
+                    }
+                    if (json.record.dictionaryList) {
+                        dictionaryList = json.record.dictionaryList;
+                        localStorage.setItem('our_dictionary_v1', JSON.stringify(dictionaryList));
+                    }
+                    if (json.record.storyEvents) {
+                        storyEvents = json.record.storyEvents;
+                        localStorage.setItem('story_events_v6', JSON.stringify(storyEvents));
+                    }
+                    if (json.record.bucketList) {
+                        bucketList = json.record.bucketList;
+                        localStorage.setItem('bucket_list_v6', JSON.stringify(bucketList));
+                    }
+                    renderTree();
+                    loadQA();
+                    loadVulnerableNotes();
+                    loadBottles();
+                    loadDictionary();
+                    loadStoryEvents();
+                    loadBucketList();
+                }
+            } catch (err) {
+                console.log("Cloud load hatası:", err);
+            }
+        }
+
+        // --- Gelişmiş Müzik Çalar ---
+        const playlist = [
+            { title: "Madrigal", src: "madrigal.mp3" },
+            { title: "Can Ozan - Öyle Kolay Aşık Olmam", src: "Can-Ozan-feat-Damla-Eker-Oyle-Kolay-Asik-Ol...mp3" },
+            { title: "Canozan - Kalbimden Tenime", src: "Canozan-Kalbimden-Tenime-81.mp3" },
+            { title: "Tuana - Bir Kere Öpse", src: "Tuana-Bi-kere-opse-bukulur-uzay-54.mp3" },
+            { title: "Tuana - Cümlelerim", src: "Tuana-Cumlelerim-52.mp3" },
+            { title: "Hande Yener - Romeo", src: "mp3indirdur-Hande-Yener-Romeo.mp3" }
+        ];
+        let currentSongIndex = 0;
         let musicPlaying = false;
+
+        function loadSong(index) {
+            const audio = document.getElementById('bgMusic');
+            const songTitle = document.getElementById('songTitleText');
+            if (playlist[index]) {
+                audio.src = playlist[index].src;
+                songTitle.innerText = playlist[index].title;
+            }
+        }
+
         function muzikToggle() {
             const audio = document.getElementById('bgMusic');
             const statusText = document.getElementById('musicStatusText');
             const btn = document.getElementById('musicToggleBtn');
+            
+            if (!audio.src) loadSong(currentSongIndex);
+
             if (musicPlaying) {
                 audio.pause();
                 musicPlaying = false;
                 statusText.innerText = "Durduruldu";
                 btn.innerText = "🎵";
             } else {
-                audio.play().catch(e => console.log("Oynatma hatası:", e));
+                audio.play().catch(e => console.log("Müzik çalma engellendi:", e));
                 musicPlaying = true;
                 statusText.innerText = "Çalıyor... 🎶";
                 btn.innerText = "⏸️";
             }
         }
 
-        // --- CANLI SAYAC ---
+        function nextSong() {
+            currentSongIndex = (currentSongIndex + 1) % playlist.length;
+            loadSong(currentSongIndex);
+            if (musicPlaying) {
+                document.getElementById('bgMusic').play();
+            }
+        }
+
+        function prevSong() {
+            currentSongIndex = (currentSongIndex - 1 + playlist.length) % playlist.length;
+            loadSong(currentSongIndex);
+            if (musicPlaying) {
+                document.getElementById('bgMusic').play();
+            }
+        }
+
+        // --- CANLI SAYAC (19 Nisan 2026 Sevgili Olma Tarihi) ---
         function updateCounter() {
-            const startDate = new Date("2024-01-01T00:00:00");
+            const startDate = new Date("2026-04-19T00:00:00");
             const now = new Date();
             const diff = now - startDate;
             
@@ -542,8 +648,8 @@
 
             if (dEl) dEl.innerText = days;
             if (hEl) hEl.innerText = hours;
-            if (mEl) mEl.innerText = mins;
-            if (sEl) sEl.innerText = secs;
+            if (mEl) mEl.innerText = hours < 0 ? 0 : mins;
+            if (sEl) sEl.innerText = hours < 0 ? 0 : secs;
         }
         setInterval(updateCounter, 1000);
         updateCounter();
@@ -551,10 +657,12 @@
         // --- GİRİŞ KONTROLÜ ---
         function girisYap() {
             const pass = document.getElementById('loginPass').value.trim();
-            if (pass === '1111' || pass === 'elif' || pass === 'türkay' || pass === 'turkay' || pass === '2025') {
+            if (pass === '1111' || pass === 'elif' || pass === 'türkay' || pass === 'turkay' || pass === '1904' || pass === '2026') {
                 document.getElementById('loginScreen').classList.add('hidden');
                 document.getElementById('mainApp').classList.remove('hidden');
                 loadAllData();
+                loadSong(0);
+                loadFromCloud();
             } else {
                 document.getElementById('loginError').classList.remove('hidden');
             }
@@ -717,6 +825,7 @@
 
             checkLevelUp();
             localStorage.setItem('nergis_tree_v20', JSON.stringify(treeData));
+            syncWithCloud({ treeData, qaStorage, vulnerableNotes, bottleMessages, dictionaryList, storyEvents, bucketList });
             renderTree();
         }
 
@@ -729,6 +838,7 @@
             treeData.coins += 25;
             checkLevelUp();
             localStorage.setItem('nergis_tree_v20', JSON.stringify(treeData));
+            syncWithCloud({ treeData, qaStorage, vulnerableNotes, bottleMessages, dictionaryList, storyEvents, bucketList });
             renderTree();
         }
 
@@ -822,6 +932,7 @@
                         treeData.coins += 20;
                         checkLevelUp();
                         localStorage.setItem('nergis_tree_v20', JSON.stringify(treeData));
+                        syncWithCloud({ treeData, qaStorage, vulnerableNotes, bottleMessages, dictionaryList, storyEvents, bucketList });
                         renderTree();
                     }
                 };
@@ -902,6 +1013,7 @@
                     treeData.xp += 40;
                     checkLevelUp();
                     localStorage.setItem('nergis_tree_v20', JSON.stringify(treeData));
+                    syncWithCloud({ treeData, qaStorage, vulnerableNotes, bottleMessages, dictionaryList, storyEvents, bucketList });
                     renderTree();
                 }
             } else {
@@ -1034,6 +1146,7 @@
             else qaStorage[dayKey].turkay = val;
 
             localStorage.setItem('thirty_days_qa_v1', JSON.stringify(qaStorage));
+            syncWithCloud({ treeData, qaStorage, vulnerableNotes, bottleMessages, dictionaryList, storyEvents, bucketList });
             document.getElementById('myAnswerInput').value = "";
             loadQA();
         }
@@ -1049,6 +1162,7 @@
             const now = new Date().toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit' });
             vulnerableNotes.unshift({ id: Date.now(), author, text, date: now });
             localStorage.setItem('vulnerable_notes_v2', JSON.stringify(vulnerableNotes));
+            syncWithCloud({ treeData, qaStorage, vulnerableNotes, bottleMessages, dictionaryList, storyEvents, bucketList });
             document.getElementById('vulnerableInput').value = "";
             loadVulnerableNotes();
         }
@@ -1056,6 +1170,7 @@
         function vulnerableSil(id) {
             vulnerableNotes = vulnerableNotes.filter(n => n.id !== id);
             localStorage.setItem('vulnerable_notes_v2', JSON.stringify(vulnerableNotes));
+            syncWithCloud({ treeData, qaStorage, vulnerableNotes, bottleMessages, dictionaryList, storyEvents, bucketList });
             loadVulnerableNotes();
         }
 
@@ -1106,6 +1221,7 @@
 
             bottleMessages.push({ id: Date.now(), author, date, msg });
             localStorage.setItem('bottle_messages_v6', JSON.stringify(bottleMessages));
+            syncWithCloud({ treeData, qaStorage, vulnerableNotes, bottleMessages, dictionaryList, storyEvents, bucketList });
             document.getElementById('bottleDate').value = "";
             document.getElementById('bottleMsg').value = "";
             toggleBottleModal(false);
@@ -1115,6 +1231,7 @@
         function bottleSil(id) {
             bottleMessages = bottleMessages.filter(b => b.id !== id);
             localStorage.setItem('bottle_messages_v6', JSON.stringify(bottleMessages));
+            syncWithCloud({ treeData, qaStorage, vulnerableNotes, bottleMessages, dictionaryList, storyEvents, bucketList });
             loadBottles();
         }
 
@@ -1162,6 +1279,7 @@
 
             dictionaryList.unshift({ id: Date.now(), word, desc });
             localStorage.setItem('our_dictionary_v1', JSON.stringify(dictionaryList));
+            syncWithCloud({ treeData, qaStorage, vulnerableNotes, bottleMessages, dictionaryList, storyEvents, bucketList });
             wordInput.value = "";
             descInput.value = "";
             loadDictionary();
@@ -1170,6 +1288,7 @@
         function dictionarySil(id) {
             dictionaryList = dictionaryList.filter(d => d.id !== id);
             localStorage.setItem('our_dictionary_v1', JSON.stringify(dictionaryList));
+            syncWithCloud({ treeData, qaStorage, vulnerableNotes, bottleMessages, dictionaryList, storyEvents, bucketList });
             loadDictionary();
         }
 
@@ -1248,6 +1367,7 @@
             }
 
             localStorage.setItem('story_events_v6', JSON.stringify(storyEvents));
+            syncWithCloud({ treeData, qaStorage, vulnerableNotes, bottleMessages, dictionaryList, storyEvents, bucketList });
             acHikayeModal(null);
             loadStoryEvents();
         }
@@ -1271,7 +1391,7 @@
             });
         }
 
-        // --- POLAROID ALBÜM (Gerçek WhatsApp Fotoğrafları ile) ---
+        // --- POLAROID ALBÜM (Yüklenen Eksiksiz 25 Görsel) ---
         const polaroidPhotos = [
             { id: 1, url: "WhatsApp Image 2026-10-12 at 21.25.32 (1).jpeg", caption: "Anı 1 ✨", note: "Kalplerimizin birlikte attığı en güzel anlardan biri." },
             { id: 2, url: "WhatsApp Image 2026-10-12 at 21.25.32 (2).jpeg", caption: "Anı 2 🌸", note: "Seninle her anımız ayrı bir masal sevgilim." },
@@ -1286,7 +1406,18 @@
             { id: 11, url: "WhatsApp Image 2026-10-12 at 21.25.33 (7).jpeg", caption: "Anı 11 💖", note: "Sonsuza kadar sürecek bu sevda." },
             { id: 12, url: "WhatsApp Image 2026-10-12 at 21.25.33.jpeg", caption: "Anı 12 🌙", note: "Gece göğü bile senin kadar güzel olamaz." },
             { id: 13, url: "WhatsApp Image 2026-10-12 at 21.26.40.jpeg", caption: "Anı 13 🌷", note: "Nergis bahçemiz gibi açan sevgimiz." },
-            { id: 14, url: "WhatsApp Image 2026-10-12 at 21.27.46.jpeg", caption: "Anı 14 🦋", note: "Birlikte nice senelere sevgilim." }
+            { id: 14, url: "WhatsApp Image 2026-10-12 at 21.27.46.jpeg", caption: "Anı 14 🦋", note: "Birlikte nice senelere sevgilim." },
+            { id: 15, url: "WhatsApp Image 2026-10-12 at 21.28.10.jpeg", caption: "Anı 15 💫", note: "Seninle her manzara kusursuz." },
+            { id: 16, url: "WhatsApp Image 2026-10-12 at 21.30.10.jpeg", caption: "Anı 16 🎨", note: "Hayatımı renklendiren neşem." },
+            { id: 17, url: "WhatsApp Image 2026-10-12 at 21.32.15 (1).jpeg", caption: "Anı 17 ✨", note: "Yüzündeki tebessüme ömür verilir." },
+            { id: 18, url: "WhatsApp Image 2026-10-12 at 21.32.15 (2).jpeg", caption: "Anı 18 🌸", note: "Gönlümün en güzel köşesi." },
+            { id: 19, url: "WhatsApp Image 2026-10-12 at 21.32.15.jpeg", caption: "Anı 19 💖", note: "Aşkla bakışlarımız hiç solmasın." },
+            { id: 20, url: "WhatsApp Image 2026-10-12 at 21.36.43 (1).jpeg", caption: "Anı 20 🌿", note: "Huzuru bulduğum tek adresi." },
+            { id: 21, url: "WhatsApp Image 2026-10-12 at 21.36.43 (2).jpeg", caption: "Anı 21 ☀️", note: "Sabahımı aydınlatan güneşim." },
+            { id: 22, url: "WhatsApp Image 2026-10-12 at 21.36.43 (3).jpeg", caption: "Anı 22 ☕", note: "En tatlı sohbetlerin kahramanı." },
+            { id: 23, url: "WhatsApp Image 2026-10-12 at 21.36.43 (4).jpeg", caption: "Anı 23 💐", note: "Dualarımın en güzel karşılığı." },
+            { id: 24, url: "WhatsApp Image 2026-10-12 at 21.36.43 (5).jpeg", caption: "Anı 24 💕", note: "Kalbimdeki en derin sevgi." },
+            { id: 25, url: "WhatsApp Image 2026-10-12 at 21.36.43.jpeg", caption: "Anı 25 👑", note: "Benim güzel kraliçem." }
         ];
 
         function loadPolaroidPhotos() {
@@ -1333,6 +1464,7 @@
             if (!val) return;
             bucketList.push({ id: Date.now(), text: val, done: false });
             localStorage.setItem('bucket_list_v6', JSON.stringify(bucketList));
+            syncWithCloud({ treeData, qaStorage, vulnerableNotes, bottleMessages, dictionaryList, storyEvents, bucketList });
             input.value = "";
             loadBucketList();
         }
@@ -1340,6 +1472,7 @@
         function bucketToggle(id) {
             bucketList = bucketList.map(b => b.id === id ? { ...b, done: !b.done } : b);
             localStorage.setItem('bucket_list_v6', JSON.stringify(bucketList));
+            syncWithCloud({ treeData, qaStorage, vulnerableNotes, bottleMessages, dictionaryList, storyEvents, bucketList });
             loadBucketList();
         }
 
