@@ -1849,7 +1849,19 @@
                         
                         const jsonResult = await res.json();
                         if (jsonResult && jsonResult.status === "success" && (jsonResult.url || jsonResult.fileId)) {
-                            uploadedUrl = jsonResult.url || ("https://lh3.google.com/u/0/d/" + jsonResult.fileId);
+                            // iPhone ve Safari'nin doğrudan açabilmesi için Google Drive uzantısını direkt webContentLink formatına çeviriyoruz
+                            let rawId = jsonResult.fileId;
+                            if (!rawId && jsonResult.url) {
+                                const match = jsonResult.url.match(/\/d\/([a-zA-Z0-9_-]+)/);
+                                if (match) rawId = match[1];
+                            }
+                            
+                            if (rawId) {
+                                uploadedUrl = `https://lh3.googleusercontent.com/d/${rawId}=w1000`;
+                            } else {
+                                uploadedUrl = jsonResult.url;
+                            }
+
                             successDiskIndex = attempt;
                             break;
                         }
@@ -1858,6 +1870,7 @@
                     }
                 }
 
+                // Eğer bulut diskler yoğunluktan yanıt vermezse Safari'de sorunsuz oynaması için yerel Base64 formatını kaydediyoruz
                 const finalUrl = uploadedUrl || base64Data;
                 saveMediaItem(author, isVideo ? 'video' : 'image', finalUrl, caption, successDiskIndex);
             }
@@ -1955,15 +1968,22 @@
             document.getElementById('lightboxCaption').innerText = `"${item.caption}"`;
 
             let displayUrl = item.url;
-            if (displayUrl && displayUrl.includes('drive.google.com/uc?id=')) {
-                const fileId = displayUrl.split('id=')[1];
-                displayUrl = `https://lh3.google.com/u/0/d/${fileId}`;
+            if (displayUrl) {
+                if (displayUrl.includes('drive.google.com/uc?id=')) {
+                    const fileId = displayUrl.split('id=')[1];
+                    displayUrl = `https://lh3.googleusercontent.com/d/${fileId}=w1000`;
+                } else if (displayUrl.includes('/d/') && !displayUrl.includes('googleusercontent.com')) {
+                    const match = displayUrl.match(/\/d\/([a-zA-Z0-9_-]+)/);
+                    if (match) {
+                        displayUrl = `https://lh3.googleusercontent.com/d/${match[1]}=w1000`;
+                    }
+                }
             }
 
             if (item.type === 'video') {
-                container.innerHTML = `<video src="${displayUrl}" controls autoplay class="max-h-[72vh] max-w-full rounded-2xl shadow-2xl object-contain"></video>`;
+                container.innerHTML = `<video src="${displayUrl}" controls autoplay playsinline class="max-h-[72vh] max-w-full rounded-2xl shadow-2xl object-contain"></video>`;
             } else {
-                container.innerHTML = `<img src="${displayUrl}" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='https://placehold.co/600x600/170817/ff3366?text=Görsel+Önizleme';" alt="Anı" class="max-h-[72vh] max-w-full rounded-2xl shadow-2xl object-contain">`;
+                container.innerHTML = `<img src="${displayUrl}" referrerpolicy="no-referrer" crossorigin="anonymous" onerror="this.onerror=null;this.src='https://placehold.co/600x600/170817/ff3366?text=Görsel+Önizleme';" alt="Anı" class="max-h-[72vh] max-w-full rounded-2xl shadow-2xl object-contain">`;
             }
         }
 
@@ -1988,21 +2008,28 @@
                 card.onclick = () => openLightbox(item.id);
 
                 let displayUrl = item.url;
-                if (displayUrl && displayUrl.includes('drive.google.com/uc?id=')) {
-                    const fileId = displayUrl.split('id=')[1];
-                    displayUrl = `https://lh3.google.com/u/0/d/${fileId}`;
+                if (displayUrl) {
+                    if (displayUrl.includes('drive.google.com/uc?id=')) {
+                        const fileId = displayUrl.split('id=')[1];
+                        displayUrl = `https://lh3.googleusercontent.com/d/${fileId}=w800`;
+                    } else if (displayUrl.includes('/d/') && !displayUrl.includes('googleusercontent.com')) {
+                        const match = displayUrl.match(/\/d\/([a-zA-Z0-9_-]+)/);
+                        if (match) {
+                            displayUrl = `https://lh3.googleusercontent.com/d/${match[1]}=w800`;
+                        }
+                    }
                 }
 
                 let previewInner = "";
                 if (item.type === 'video') {
                     previewInner = `
-                        <video src="${displayUrl}" class="w-full h-full object-cover"></video>
+                        <video src="${displayUrl}" muted playsinline class="w-full h-full object-cover"></video>
                         <div class="absolute inset-0 bg-black/20 flex items-center justify-center">
                             <span class="w-10 h-10 rounded-full bg-black/60 text-white flex items-center justify-center text-sm shadow">▶️</span>
                         </div>
                     `;
                 } else {
-                    previewInner = `<img src="${displayUrl}" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='https://placehold.co/400x400/170817/ff3366?text=Yükleniyor';" alt="Anı" class="w-full h-full object-cover">`;
+                    previewInner = `<img src="${displayUrl}" referrerpolicy="no-referrer" crossorigin="anonymous" onerror="this.onerror=null;this.src='https://placehold.co/400x400/170817/ff3366?text=Görsel';" alt="Anı" class="w-full h-full object-cover">`;
                 }
 
                 card.innerHTML = `
