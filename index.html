@@ -4,6 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Elif & Türkay Sonsuza Kadar 💖</title>
+    
+    <!-- iPhone / iOS Ana Ekran (PWA) İkon ve Tam Ekran Ayarları -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Elif & Türkay">
+    <link rel="apple-touch-icon" href="https://placehold.co/180x180/170817/ff3366?text=💖">
+    <link rel="apple-touch-startup-image" href="https://placehold.co/1170x2532/170817/ff3366?text=Elif+%26%20T%C3%BCrkay">
+
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -21,6 +29,9 @@
     </script>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,800;1,400&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+    <!-- JSZip & FileSaver Kütüphaneleri -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
     <style>
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
@@ -45,17 +56,20 @@
         .handwriting-font {
             font-family: 'Caveat', cursive;
         }
-        .perspective-1000 {
-            perspective: 1000px;
+        @keyframes gentleSway {
+            0%, 100% { transform: rotate(-3deg) translateY(0); }
+            50% { transform: rotate(3deg) translateY(-4px); }
         }
-        .transform-style-3d {
-            transform-style: preserve-3d;
+        .sway-animation {
+            animation: gentleSway 3s ease-in-out infinite;
+            transform-origin: bottom center;
         }
-        .backface-hidden {
-            backface-visibility: hidden;
+        @keyframes vinylSpin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
-        .rotate-y-180 {
-            transform: rotateY(180deg);
+        .spin-vinyl {
+            animation: vinylSpin 6s linear infinite;
         }
         ::-webkit-scrollbar {
             width: 8px;
@@ -72,23 +86,43 @@
         }
     </style>
 </head>
-<body class="selection:bg-rose-500 selection:text-white pb-20">
+<body class="selection:bg-rose-500 selection:text-white pb-28">
 
     <!-- Arka plan Atmosferik Işıklar -->
     <div class="fixed top-[-10%] left-[-10%] w-[500px] h-[500px] bg-rose-600/20 rounded-full blur-[120px] pointer-events-none"></div>
     <div class="fixed bottom-[-10%] right-[-10%] w-[500px] h-[500px] bg-pink-600/15 rounded-full blur-[120px] pointer-events-none"></div>
 
-    <!-- Müzik Çalar -->
-    <div class="fixed bottom-4 right-4 z-40 glass-panel p-3 rounded-2xl flex items-center gap-3 border border-rose-500/30 shadow-2xl">
-        <audio id="bgMusic"></audio>
-        <button onclick="prevSong()" class="text-white/70 hover:text-white text-sm transition-all">⏮️</button>
-        <button onclick="muzikToggle()" id="musicToggleBtn" class="w-10 h-10 bg-gradient-to-tr from-rose-600 to-pink-500 rounded-xl flex items-center justify-center text-white text-lg shadow-lg hover:scale-105 transition-all">
-            🎵
-        </button>
-        <button onclick="nextSong()" class="text-white/70 hover:text-white text-sm transition-all">⏭️</button>
-        <div class="text-xs hidden sm:block max-w-[140px] truncate">
-            <span id="songTitleText" class="block font-bold text-rose-200 truncate">Madrigal</span>
-            <span id="musicStatusText" class="text-[10px] text-pink-300/70">Çalmak için tıkla</span>
+    <!-- Spotify Tarzı Gelişmiş Müzik Çalar -->
+    <div class="fixed bottom-4 right-4 z-40">
+        <!-- Genişletilmiş Çalma Listesi Paneli -->
+        <div id="spotifyExpandedPanel" class="glass-panel p-4 rounded-2xl w-72 mb-2 border border-rose-500/30 shadow-2xl hidden space-y-3">
+            <div class="flex items-center justify-between border-b border-white/10 pb-2">
+                <span class="text-xs font-bold text-rose-200">🎶 Ortak Çalma Listemiz</span>
+                <button onclick="toggleSpotifyPanel()" class="text-xs text-white/70 hover:text-white">✕ Kapat</button>
+            </div>
+            <div id="playlistContainer" class="space-y-1.5 max-h-40 overflow-y-auto pr-1"></div>
+            <div class="flex justify-between text-[10px] text-pink-300 font-mono">
+                <span id="currentTimeText">0:00</span>
+                <span id="durationText">0:00</span>
+            </div>
+            <input type="range" id="songProgressBar" value="0" max="100" oninput="seekSong(this.value)" class="w-full accent-rose-500 h-1.5 bg-white/20 rounded-lg cursor-pointer">
+        </div>
+
+        <!-- Alt Sabit Mini Player -->
+        <div class="glass-panel p-3 rounded-2xl flex items-center gap-3 border border-rose-500/30 shadow-2xl">
+            <audio id="bgMusic" ontimeupdate="updateProgress()" onended="nextSong()"></audio>
+            <!-- Vinyl Disk -->
+            <div onclick="toggleSpotifyPanel()" class="w-10 h-10 rounded-full bg-zinc-900 border border-rose-500/50 flex items-center justify-center cursor-pointer shadow relative overflow-hidden group">
+                <div id="vinylDisk" class="text-sm text-rose-300">💿</div>
+            </div>
+            <div class="cursor-pointer max-w-[150px]" onclick="toggleSpotifyPanel()">
+                <span id="songTitleText" class="block font-bold text-rose-200 text-xs truncate">Madrigal</span>
+                <span id="musicStatusText" class="text-[10px] text-pink-300/70 truncate block">Listeyi açmak için tıkla</span>
+            </div>
+            <div class="flex items-center gap-1.5">
+                <button onclick="muzikToggle()" id="musicToggleBtn" class="w-8 h-8 bg-gradient-to-tr from-rose-600 to-pink-500 rounded-xl flex items-center justify-center text-white text-sm shadow hover:scale-105 transition-all">🎵</button>
+                <button onclick="nextSong()" class="text-white/70 hover:text-white text-xs transition-all">⏭️</button>
+            </div>
         </div>
     </div>
 
@@ -102,7 +136,7 @@
             <p class="text-pink-300/80 text-sm mb-6">Sonsuza kadar sürecek aşk sığınağımıza hoş geldiniz. Devam etmek için şifreyi girin:</p>
             
             <div class="space-y-4">
-                <input type="password" id="loginPass" placeholder="Örn: Özel Tarih veya Şifre" class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-center text-rose-100 placeholder-rose-300/40 focus:outline-none focus:border-rose-500 transition-all font-mono tracking-widest">
+                <input type="password" id="loginPass" placeholder="Örn: 1111 veya Şifre" class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-center text-rose-100 placeholder-rose-300/40 focus:outline-none focus:border-rose-500 transition-all font-mono tracking-widest">
                 <button onclick="girisYap()" class="w-full py-3.5 bg-gradient-to-r from-rose-600 to-pink-600 hover:from-rose-500 hover:to-pink-500 text-white font-bold rounded-xl shadow-[0_0_20px_rgba(244,63,94,0.4)] transition-all transform hover:scale-[1.02]">
                     Kapıyı Aç ✨
                 </button>
@@ -146,13 +180,13 @@
 
         <!-- Navigation Tabs -->
         <nav class="flex flex-wrap justify-center gap-2 mb-8 bg-black/30 p-2 rounded-2xl backdrop-blur-md border border-white/10">
-            <button onclick="sekmeDegis('garden')" id="btn-garden" class="px-4 py-2.5 rounded-xl text-sm font-bold transition-all bg-gradient-to-r from-amber-500 to-rose-600 text-white shadow-lg">🌼 Nergis Seramız</button>
+            <button onclick="sekmeDegis('garden')" id="btn-garden" class="px-4 py-2.5 rounded-xl text-sm font-bold transition-all bg-gradient-to-r from-amber-500 to-rose-600 text-white shadow-lg">🌼 Nergis Serası</button>
             <button onclick="sekmeDegis('ritual')" id="btn-ritual" class="px-4 py-2.5 rounded-xl text-sm font-bold transition-all text-pink-200/70 hover:text-white hover:bg-white/5">💬 30 Günlük Ahiret Soruları</button>
             <button onclick="sekmeDegis('vulnerable')" id="btn-vulnerable" class="px-4 py-2.5 rounded-xl text-sm font-bold transition-all text-pink-200/70 hover:text-white hover:bg-white/5">💌 Kendimi Açma Kutum</button>
+            <button onclick="sekmeDegis('medicine')" id="btn-medicine" class="px-4 py-2.5 rounded-xl text-sm font-bold transition-all text-pink-200/70 hover:text-white hover:bg-white/5">💊 Demir İlacı Takibi</button>
             <button onclick="sekmeDegis('bottles')" id="btn-bottles" class="px-4 py-2.5 rounded-xl text-sm font-bold transition-all text-pink-200/70 hover:text-white hover:bg-white/5">🍾 Zaman Şişeleri</button>
             <button onclick="sekmeDegis('dictionary')" id="btn-dictionary" class="px-4 py-2.5 rounded-xl text-sm font-bold transition-all text-pink-200/70 hover:text-white hover:bg-white/5">📖 Ortak Sözlük</button>
-            <button onclick="sekmeDegis('story')" id="btn-story" class="px-4 py-2.5 rounded-xl text-sm font-bold transition-all text-pink-200/70 hover:text-white hover:bg-white/5">✨ Hikayemiz</button>
-            <button onclick="sekmeDegis('photos')" id="btn-photos" class="px-4 py-2.5 rounded-xl text-sm font-bold transition-all text-pink-200/70 hover:text-white hover:bg-white/5">📸Albümümüzzz (25)</button>
+            <button onclick="sekmeDegis('gallery')" id="btn-gallery" class="px-4 py-2.5 rounded-xl text-sm font-bold transition-all text-pink-200/70 hover:text-white hover:bg-white/5">📸 Galerimiz</button>
             <button onclick="sekmeDegis('bucket')" id="btn-bucket" class="px-4 py-2.5 rounded-xl text-sm font-bold transition-all text-pink-200/70 hover:text-white hover:bg-white/5">🎯 Hayallerimiz</button>
         </nav>
 
@@ -221,8 +255,7 @@
 
                     <div class="flex flex-col items-center justify-center bg-black/50 p-6 md:p-8 rounded-3xl border border-amber-500/20 min-w-[320px] relative shadow-2xl">
                         <div id="gardenStageBox" class="w-64 h-64 rounded-3xl bg-gradient-to-b from-[#220d20] via-[#150715] to-[#0c040d] border border-amber-500/30 flex flex-col items-center justify-center relative overflow-hidden mb-4 shadow-inner">
-                            <canvas id="gardenCanvas" width="240" height="240" class="absolute inset-0 pointer-events-none"></canvas>
-                            <div id="treeVisual" class="text-6xl mb-2 z-10 filter drop-shadow-[0_0_15px_rgba(244,63,94,0.6)] animate-pulse">🌱</div>
+                            <div id="treeVisual" class="text-6xl mb-2 z-10 filter drop-shadow-[0_0_15px_rgba(244,63,94,0.6)] sway-animation">🌱</div>
                             <div id="treeStageName" class="text-xs font-bold text-amber-200 z-10 bg-black/80 px-3 py-1 rounded-full border border-amber-500/30 shadow-md">Minik Tohum</div>
                             <div class="absolute bottom-2 text-[9px] text-amber-300/60 z-10">🌸 Elif & Türkay Serası 🌸</div>
                         </div>
@@ -260,12 +293,15 @@
             </div>
         </div>
 
-        <!-- SEKME 2: 30 Günlük Otomatik Sorular -->
+        <!-- SEKME 2: 30 Günlük Otomatik Sorular & Geçmiş Arşivi -->
         <div id="tab-ritual" class="hidden space-y-6">
             <div class="glass-panel p-6 md:p-8 rounded-3xl border border-rose-500/20 max-w-2xl mx-auto">
                 <div class="flex items-center justify-between mb-4">
                     <span id="questionDayBadge" class="px-3 py-1 bg-pink-500/20 text-pink-300 border border-pink-500/30 text-xs font-bold rounded-full">💬 Günün Sorusu (Gün 1 / 30)</span>
-                    <span id="questionDateText" class="text-xs text-pink-300/60 font-mono">16.10.2026</span>
+                    <div class="flex items-center gap-2">
+                        <button onclick="openQaHistoryModal()" class="px-3 py-1.5 bg-purple-600/30 hover:bg-purple-600/50 border border-purple-500/40 text-purple-200 font-bold text-xs rounded-xl shadow transition-all">📜 Geçmiş Cevaplar</button>
+                        <span id="questionDateText" class="text-xs text-pink-300/60 font-mono">16.10.2026</span>
+                    </div>
                 </div>
                 <h3 id="dailyQuestionTitle" class="text-xl font-bold text-white mb-6 text-center">Bugün beni düşünürken aklına gelen ilk kelime ve duygu neydi?</h3>
                 
@@ -338,6 +374,52 @@
             </div>
         </div>
 
+        <!-- YENİ SEKME: Demir İlacı Takip Alanı -->
+        <div id="tab-medicine" class="hidden space-y-6">
+            <div class="glass-panel p-6 md:p-8 rounded-3xl border border-pink-500/30 max-w-xl mx-auto text-center relative overflow-hidden">
+                <div class="absolute -top-10 -right-10 w-32 h-32 bg-pink-500/10 rounded-full blur-2xl pointer-events-none"></div>
+                
+                <span class="px-3.5 py-1 bg-pink-500/20 text-pink-300 border border-pink-500/30 text-xs font-bold rounded-full inline-block mb-3">💊 Sağlık ve Özen Köşesi</span>
+                <h3 class="romantic-font text-2xl md:text-3xl font-extrabold text-white mb-2">Elif'in Demir İlacı Takibi 🌸</h3>
+                <p class="text-xs text-pink-200/70 mb-6">Güzel sevgilimin sağlığı bizim her şeyimiz. Bugün demir ilacını içti mi?</p>
+
+                <div class="glass-card p-6 rounded-2xl border border-white/10 mb-6 space-y-4">
+                    <div id="medicineStatusBox" class="p-4 rounded-xl bg-black/40 border border-pink-500/30 flex flex-col items-center justify-center space-y-2">
+                        <span id="medStatusEmoji" class="text-3xl">⏳</span>
+                        <span id="medStatusText" class="text-sm font-bold text-pink-200">Bugün henüz içildi olarak işaretlenmedi.</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        <button onclick="demirIlaciIcildiToggle()" id="medToggleBtn" class="py-3.5 bg-gradient-to-r from-rose-600 to-pink-600 hover:opacity-90 text-white font-bold rounded-xl text-xs transition-all shadow-lg flex items-center justify-center gap-2">
+                            <span>💊 İlacımı İçtim (İşaretle) ✨</span>
+                        </button>
+                        <button onclick="sevgiHatirlaticiGonder()" class="py-3.5 bg-purple-600/30 hover:bg-purple-600/50 border border-purple-500/40 text-purple-200 font-bold rounded-xl text-xs transition-all shadow flex items-center justify-center gap-2">
+                            <span>🔔 Sevgi Sinyali Gönder 💖</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Son 7 Günlük Geçmiş Takvimi -->
+                <div class="text-left bg-black/40 p-4 rounded-2xl border border-white/10">
+                    <span class="text-xs font-bold text-pink-300 block mb-3">📅 Son Günlerin Demir Karnesi</span>
+                    <div id="medicineHistoryList" class="space-y-2 max-h-48 overflow-y-auto pr-1"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Elif Siteye Girdiğinde Çıkacak Akıllı Demir İlacı Hatırlatıcı Modalı -->
+        <div id="medicineAlertModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md hidden">
+            <div class="glass-panel p-8 rounded-3xl max-w-sm w-full text-center relative border border-pink-500/40 shadow-[0_0_50px_rgba(244,63,94,0.4)] animate-bounce">
+                <div class="text-5xl mb-3">💊💖</div>
+                <h3 class="romantic-font text-2xl font-bold text-white mb-2">Güzel Sevgilime Hatırlatma!</h3>
+                <p class="text-xs text-pink-200/90 mb-6">Bugün demir ilacını içmeyi unutmadın değil mi? Sağlığın bizim en değerli hazinemiz. Hemen içtiysen aşağıdan işaretle sevgilim!</p>
+                <div class="space-y-2">
+                    <button onclick="modalIlacIctim()" class="w-full py-3 bg-gradient-to-r from-rose-600 to-pink-600 text-white font-bold rounded-xl text-xs shadow-lg">İçtim Bile, İçim Rahat! ✨</button>
+                    <button onclick="closeMedicineAlertModal()" class="w-full py-2.5 bg-white/10 text-pink-200 hover:text-white font-bold rounded-xl text-xs">Sonra Hatırlat / Kapat</button>
+                </div>
+            </div>
+        </div>
+
         <!-- SEKME 4: Zaman Şişeleri -->
         <div id="tab-bottles" class="hidden space-y-6">
             <div class="glass-panel p-6 md:p-8 rounded-3xl border border-cyan-500/30 max-w-2xl mx-auto">
@@ -378,36 +460,68 @@
             </div>
         </div>
 
-        <!-- SEKME 6: Hikayemiz -->
-        <div id="tab-story" class="hidden space-y-6">
-            <div class="glass-panel p-6 md:p-8 rounded-3xl border border-rose-500/20">
+        <!-- SEKME 6: Galerimiz (Seçili Filtreye Göre ZIP İndirme Özellikli) -->
+        <div id="tab-gallery" class="hidden space-y-6">
+            <div class="glass-panel p-6 md:p-8 rounded-3xl border border-rose-500/30 max-w-4xl mx-auto">
                 <div class="flex flex-col sm:flex-row items-center justify-between gap-4 mb-6">
                     <div>
-                        <span class="px-3 py-1 bg-rose-500/20 text-rose-300 border border-rose-500/30 text-xs font-bold rounded-full">📖 Anılarımız</span>
-                        <h2 class="romantic-font text-2xl md:text-3xl font-bold text-white mt-1">Bizim Hikayemiz 💖</h2>
+                        <span class="px-3 py-1 bg-amber-500/20 text-amber-300 border border-amber-500/30 text-xs font-bold rounded-full">📸 Bulut Galerimiz</span>
+                        <h2 class="romantic-font text-2xl md:text-3xl font-bold text-white mt-1">Anı ve Medya Depomuz 🖼️</h2>
                     </div>
-                    <button onclick="acHikayeModal(null)" class="px-4 py-2.5 bg-gradient-to-r from-rose-600 to-pink-600 text-white font-bold rounded-xl text-xs shadow-lg transition-all">+ Yeni Anı Ekle</button>
+                    <div class="flex flex-wrap items-center gap-2">
+                        <!-- Seçili Filtreye Göre ZIP İndirme Butonu -->
+                        <button onclick="downloadFilteredGalleryZip()" class="px-3.5 py-1.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:opacity-90 text-white font-bold rounded-xl text-xs transition-all shadow flex items-center gap-1">
+                            <span>📦 Seçileni ZIP İndir</span>
+                        </button>
+                        <!-- Filtreleme Butonları -->
+                        <div class="flex gap-1 bg-black/40 p-1.5 rounded-2xl border border-white/10">
+                            <button onclick="filterGallery('all')" id="filterBtn-all" class="px-3 py-1.5 rounded-xl text-xs font-bold transition-all bg-rose-600 text-white shadow">💖 Bizimki</button>
+                            <button onclick="filterGallery('Elif')" id="filterBtn-Elif" class="px-3 py-1.5 rounded-xl text-xs font-bold transition-all text-pink-300 hover:text-white">🌸 Elif'in</button>
+                            <button onclick="filterGallery('Türkay')" id="filterBtn-Türkay" class="px-3 py-1.5 rounded-xl text-xs font-bold transition-all text-cyan-300 hover:text-white">💙 Türkay'ın</button>
+                        </div>
+                    </div>
                 </div>
-                <p class="text-pink-200/80 text-center max-w-xl mx-auto mb-8 text-sm">Hayatımızın kesiştiği günden bu yana birlikte yazdığımız en güzel destan. Anıların üzerine tıklayarak düzenleyebilirsin!</p>
-                <div id="storyTimelineContainer" class="relative border-l-2 border-rose-500/30 ml-4 md:ml-32 space-y-8 py-4"></div>
+
+                <!-- iPhone Tarzı Tür Filtreleri (Tümü / Fotoğraflar / Videolar) -->
+                <div class="flex items-center justify-between gap-2 mb-6 bg-black/30 p-2 rounded-2xl border border-white/10">
+                    <div class="flex gap-1">
+                        <button onclick="filterMediaType('all')" id="mediaType-all" class="px-4 py-1.5 rounded-xl text-xs font-bold bg-rose-600 text-white transition-all">Hepsi</button>
+                        <button onclick="filterMediaType('image')" id="mediaType-image" class="px-4 py-1.5 rounded-xl text-xs font-bold text-pink-300 hover:text-white transition-all">📸 Fotoğraflar</button>
+                        <button onclick="filterMediaType('video')" id="mediaType-video" class="px-4 py-1.5 rounded-xl text-xs font-bold text-pink-300 hover:text-white transition-all">🎥 Videolar</button>
+                    </div>
+                    <span id="galleryCountText" class="text-xs text-pink-300/70 font-mono px-2">0 Medya</span>
+                </div>
+
+                <p class="text-xs text-pink-200/70 mb-6 text-center">Yüzlerce fotoğraf ve videoyu iPhone galeri akıcılığında gezebilir, üzerine tıklayarak tam ekran inceleyebilirsin!</p>
+                
+                <!-- Medya Yükleme Paneli -->
+                <div class="glass-card p-5 rounded-2xl border border-white/10 space-y-4 mb-8">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-rose-300 mb-1">Yükleyen Sevgili:</label>
+                            <select id="mediaAuthor" class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-rose-500">
+                                <option value="Elif">🌸 Elif</option>
+                                <option value="Türkay">💙 Türkay</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-rose-300 mb-1">Fotoğraf veya Video Seç:</label>
+                            <input type="file" id="mediaFileInput" accept="image/*,video/*" class="w-full bg-black/40 border border-white/10 rounded-xl px-3 py-2 text-xs text-rose-200 focus:outline-none file:mr-4 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-rose-600 file:text-white hover:file:bg-rose-500">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-rose-300 mb-1">Romantik Not / Başlık:</label>
+                        <input type="text" id="mediaCaption" placeholder="Bu anı hakkında kısa bir not..." class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder-pink-300/40 focus:outline-none focus:border-rose-500">
+                    </div>
+                    <button onclick="mediaYukle()" class="w-full py-3 bg-gradient-to-r from-rose-600 to-amber-600 hover:opacity-90 text-white font-bold rounded-xl text-xs transition-all shadow-md">Buluta Kalıcı Olarak Yükle 🚀</button>
+                </div>
+
+                <!-- iPhone Tarzı Akıcı Medya Grid Alanı (Kare Kesitler, Sıfır Kasıntı) -->
+                <div id="galleryContainer" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3"></div>
             </div>
         </div>
 
-        <!-- SEKME 7: Albümümüzzz (Eksiksiz 25 Yüklenen Görsel) -->
-        <div id="tab-photos" class="hidden space-y-6">
-            <div class="glass-panel p-6 md:p-8 rounded-3xl border border-rose-500/20">
-                <div class="flex flex-col sm:flex-row items-center justify-between gap-4 mb-6">
-                    <div>
-                        <span class="px-3 py-1 bg-amber-500/20 text-amber-300 border border-amber-500/30 text-xs font-bold rounded-full">📸 Polaroid Albüm (25 Ölümsüz Anı)</span>
-                        <h2 class="romantic-font text-2xl md:text-3xl font-bold text-white mt-1">Anı Fotoğraflarımız 🖼️</h2>
-                    </div>
-                </div>
-                <p class="text-pink-200/80 text-center max-w-xl mx-auto mb-8 text-sm"> çerçevelere tıklayarak arka yüzlerindeki romantik notları okuyabilirsin sevgilim!</p>
-                <div id="photoGridContainer" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"></div>
-            </div>
-        </div>
-
-        <!-- SEKME 8: Hayallerimiz -->
+        <!-- SEKME 7: Hayallerimiz -->
         <div id="tab-bucket" class="hidden space-y-6">
             <div class="glass-panel p-6 md:p-8 rounded-3xl border border-rose-500/20">
                 <div class="flex flex-col md:flex-row items-center justify-between gap-4 mb-6">
@@ -476,29 +590,44 @@
         </div>
     </div>
 
-    <!-- Hikaye Modal -->
-    <div id="storyModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md hidden">
-        <div class="glass-panel p-6 md:p-8 rounded-3xl max-w-md w-full relative border border-rose-500/30">
-            <h3 id="storyModalTitle" class="romantic-font text-2xl font-bold text-white mb-2">Hikayemize Anı Ekle ✨</h3>
-            <p class="text-xs text-pink-200/70 mb-4">Zaman çizelgemize yeni bir unutulmaz anı ekleyin veya düzenleyin.</p>
-            <input type="hidden" id="storyEditId" value="">
-            <div class="space-y-4">
-                <div>
-                    <label class="block text-xs font-semibold text-pink-300 mb-1">Dönem / Başlık:</label>
-                    <input type="text" id="storyTitle" placeholder="Örn: İlk Tatilimiz ✈️" class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder-pink-300/40 focus:outline-none focus:border-rose-500">
+    <!-- Geçmiş Cevaplar Modalı -->
+    <div id="qaHistoryModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md hidden">
+        <div class="glass-panel p-6 md:p-8 rounded-3xl max-w-lg w-full relative border border-rose-500/30 max-h-[80vh] flex flex-col">
+            <div class="flex items-center justify-between mb-4 border-b border-white/10 pb-3">
+                <h3 class="romantic-font text-2xl font-bold text-white">📜 Geçmiş Günlerin Cevapları</h3>
+                <button onclick="closeQaHistoryModal()" class="text-rose-400 hover:text-rose-300 text-xs font-bold p-1">✕ Kapat</button>
+            </div>
+            <div id="qaHistoryList" class="space-y-4 overflow-y-auto pr-1 flex-1"></div>
+        </div>
+    </div>
+
+    <!-- iPhone Tarzı Tam Ekran Işık Kutusu (Lightbox) Modal -->
+    <div id="lightboxModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-xl hidden p-4">
+        <div class="relative max-w-4xl w-full h-full flex flex-col items-center justify-center">
+            <!-- Üst Kontroller -->
+            <div class="absolute top-4 left-4 right-4 flex items-center justify-between z-20 bg-black/40 backdrop-blur-md p-3 rounded-2xl border border-white/10">
+                <div class="flex items-center gap-2">
+                    <span id="lightboxAuthor" class="px-3 py-1 bg-rose-600/80 text-white text-xs font-bold rounded-full">🌸 Elif</span>
+                    <span id="lightboxDate" class="text-xs text-pink-200/70 font-mono">10.11.2026</span>
                 </div>
-                <div>
-                    <label class="block text-xs font-semibold text-pink-300 mb-1">Alt Başlık / Tarih:</label>
-                    <input type="text" id="storySubtitle" placeholder="Örn: Bodrum Kaçamağı" class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder-pink-300/40 focus:outline-none focus:border-rose-500">
+                <button onclick="closeLightbox()" class="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center font-bold text-sm transition-all">✕</button>
+            </div>
+
+            <!-- Medya Gösterim Alanı -->
+            <div class="relative flex-1 flex items-center justify-center w-full my-12 overflow-hidden">
+                <button onclick="prevLightboxItem()" class="absolute left-2 z-10 w-12 h-12 rounded-full bg-black/60 hover:bg-black/90 text-white text-xl flex items-center justify-center border border-white/20 shadow-lg transition-all">‹</button>
+                
+                <div id="lightboxContentContainer" class="max-h-[75vh] max-w-full flex items-center justify-center">
+                    <!-- Dinamik İçerik -->
                 </div>
-                <div>
-                    <label class="block text-xs font-semibold text-pink-300 mb-1">Anı Detayı / Açıklama:</label>
-                    <textarea id="storyDesc" rows="3" placeholder="O gün neler hissettiğini yaz..." class="w-full bg-black/40 border border-white/10 rounded-xl p-3 text-sm text-white placeholder-pink-300/40 focus:outline-none focus:border-rose-500"></textarea>
-                </div>
-                <div class="flex gap-3 pt-2">
-                    <button onclick="acHikayeModal(null)" class="flex-1 py-3 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl text-sm transition-all">İptal</button>
-                    <button onclick="storyKaydet()" class="flex-1 py-3 bg-rose-600 hover:bg-rose-500 text-white font-bold rounded-xl text-sm transition-all shadow-md">Kaydet 💖</button>
-                </div>
+
+                <button onclick="nextLightboxItem()" class="absolute right-2 z-10 w-12 h-12 rounded-full bg-black/60 hover:bg-black/90 text-white text-xl flex items-center justify-center border border-white/20 shadow-lg transition-all">›</button>
+            </div>
+
+            <!-- Alt Başlık ve Silme -->
+            <div class="absolute bottom-4 left-4 right-4 flex items-center justify-between z-20 bg-black/40 backdrop-blur-md p-4 rounded-2xl border border-white/10">
+                <p id="lightboxCaption" class="text-sm text-white font-medium italic">Açıklama</p>
+                <button onclick="deleteCurrentLightboxItem()" class="px-4 py-2 bg-rose-600/30 hover:bg-rose-600/50 border border-rose-500/40 text-rose-200 text-xs font-bold rounded-xl transition-all">🗑️ Medyayı Sil</button>
             </div>
         </div>
     </div>
@@ -552,9 +681,9 @@
                         dictionaryList = json.record.dictionaryList;
                         localStorage.setItem('our_dictionary_v1', JSON.stringify(dictionaryList));
                     }
-                    if (json.record.storyEvents) {
-                        storyEvents = json.record.storyEvents;
-                        localStorage.setItem('story_events_v6', JSON.stringify(storyEvents));
+                    if (json.record.galleryList) {
+                        galleryList = json.record.galleryList;
+                        localStorage.setItem('our_gallery_v1', JSON.stringify(galleryList));
                     }
                     if (json.record.bucketList) {
                         bucketList = json.record.bucketList;
@@ -565,7 +694,7 @@
                     loadVulnerableNotes();
                     loadBottles();
                     loadDictionary();
-                    loadStoryEvents();
+                    loadGallery();
                     loadBucketList();
                 }
             } catch (err) {
@@ -573,7 +702,7 @@
             }
         }
 
-        // --- Gelişmiş Müzik Çalar ---
+        // --- Gelişmiş Spotify Tarzı Müzik Çalar ---
         const playlist = [
             { title: "Madrigal", src: "madrigal.mp3" },
             { title: "Can Ozan - Öyle Kolay Aşık Olmam", src: "Can-Ozan-feat-Damla-Eker-Oyle-Kolay-Asik-Ol...mp3" },
@@ -586,18 +715,70 @@
         let musicPlaying = false;
 
         function loadSong(index) {
+            currentSongIndex = index;
             const audio = document.getElementById('bgMusic');
             const songTitle = document.getElementById('songTitleText');
             if (playlist[index]) {
                 audio.src = playlist[index].src;
                 songTitle.innerText = playlist[index].title;
+                renderPlaylistMenu();
             }
+        }
+
+        function toggleSpotifyPanel() {
+            const panel = document.getElementById('spotifyExpandedPanel');
+            panel.classList.toggle('hidden');
+        }
+
+        function renderPlaylistMenu() {
+            const container = document.getElementById('playlistContainer');
+            if (!container) return;
+            container.innerHTML = "";
+            playlist.forEach((song, idx) => {
+                const item = document.createElement('div');
+                item.className = `p-2 rounded-xl text-xs flex items-center justify-between cursor-pointer transition-all ${idx === currentSongIndex ? 'bg-rose-600/30 text-rose-200 font-bold border border-rose-500/40' : 'text-white/70 hover:bg-white/10'}`;
+                item.innerHTML = `<span>🎵 ${song.title}</span>`;
+                item.onclick = () => {
+                    loadSong(idx);
+                    document.getElementById('bgMusic').play();
+                    musicPlaying = true;
+                    document.getElementById('musicStatusText').innerText = "Çalıyor... 🎶";
+                    document.getElementById('musicToggleBtn').innerText = "⏸️";
+                    document.getElementById('vinylDisk').classList.add('spin-vinyl');
+                };
+                container.appendChild(item);
+            });
+        }
+
+        function updateProgress() {
+            const audio = document.getElementById('bgMusic');
+            const bar = document.getElementById('songProgressBar');
+            if (audio.duration && bar) {
+                const percent = (audio.currentTime / audio.duration) * 100;
+                bar.value = percent;
+                document.getElementById('currentTimeText').innerText = formatTime(audio.currentTime);
+                document.getElementById('durationText').innerText = formatTime(audio.duration);
+            }
+        }
+
+        function seekSong(val) {
+            const audio = document.getElementById('bgMusic');
+            if (audio.duration) {
+                audio.currentTime = (val / 100) * audio.duration;
+            }
+        }
+
+        function formatTime(secs) {
+            const m = Math.floor(secs / 60);
+            const s = Math.floor(secs % 60);
+            return `${m}:${s < 10 ? '0' : ''}${s}`;
         }
 
         function muzikToggle() {
             const audio = document.getElementById('bgMusic');
             const statusText = document.getElementById('musicStatusText');
             const btn = document.getElementById('musicToggleBtn');
+            const disk = document.getElementById('vinylDisk');
             
             if (!audio.src) loadSong(currentSongIndex);
 
@@ -606,11 +787,13 @@
                 musicPlaying = false;
                 statusText.innerText = "Durduruldu";
                 btn.innerText = "🎵";
+                disk.classList.remove('spin-vinyl');
             } else {
                 audio.play().catch(e => console.log("Müzik çalma engellendi:", e));
                 musicPlaying = true;
                 statusText.innerText = "Çalıyor... 🎶";
                 btn.innerText = "⏸️";
+                disk.classList.add('spin-vinyl');
             }
         }
 
@@ -663,6 +846,7 @@
                 loadAllData();
                 loadSong(0);
                 loadFromCloud();
+                checkMedicinePrompt(); // Siteye girer girmez ilaç kontrolü
             } else {
                 document.getElementById('loginError').classList.remove('hidden');
             }
@@ -670,7 +854,7 @@
 
         // --- SEKME DEĞİŞİMİ ---
         function sekmeDegis(tabName) {
-            ['garden', 'ritual', 'vulnerable', 'bottles', 'dictionary', 'story', 'photos', 'bucket'].forEach(t => {
+            ['garden', 'ritual', 'vulnerable', 'medicine', 'bottles', 'dictionary', 'gallery', 'bucket'].forEach(t => {
                 const tab = document.getElementById('tab-' + t);
                 const btn = document.getElementById('btn-' + t);
                 if (tab) tab.classList.add('hidden');
@@ -809,7 +993,6 @@
             }
 
             renderLevelsCatalog();
-            drawCanvasGarden();
         }
 
         function sulamaYap() {
@@ -825,7 +1008,7 @@
 
             checkLevelUp();
             localStorage.setItem('nergis_tree_v20', JSON.stringify(treeData));
-            syncWithCloud({ treeData, qaStorage, vulnerableNotes, bottleMessages, dictionaryList, storyEvents, bucketList });
+            syncWithCloud({ treeData, qaStorage, vulnerableNotes, bottleMessages, dictionaryList, galleryList, bucketList });
             renderTree();
         }
 
@@ -838,7 +1021,7 @@
             treeData.coins += 25;
             checkLevelUp();
             localStorage.setItem('nergis_tree_v20', JSON.stringify(treeData));
-            syncWithCloud({ treeData, qaStorage, vulnerableNotes, bottleMessages, dictionaryList, storyEvents, bucketList });
+            syncWithCloud({ treeData, qaStorage, vulnerableNotes, bottleMessages, dictionaryList, galleryList, bucketList });
             renderTree();
         }
 
@@ -865,22 +1048,6 @@
                 `;
                 grid.appendChild(div);
             });
-        }
-
-        function drawCanvasGarden() {
-            const canvas = document.getElementById('gardenCanvas');
-            if (!canvas) return;
-            const ctx = canvas.getContext('2d');
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            ctx.fillStyle = 'rgba(255, 215, 0, 0.35)';
-            for (let i = 0; i < 25; i++) {
-                let x = (i * 33) % canvas.width;
-                let y = (i * 47) % canvas.height;
-                ctx.beginPath();
-                ctx.arc(x, y, 2, 0, Math.PI * 2);
-                ctx.fill();
-            }
         }
 
         // --- YAPRAK TOPLAMA MİNİ OYUNU ---
@@ -932,7 +1099,7 @@
                         treeData.coins += 20;
                         checkLevelUp();
                         localStorage.setItem('nergis_tree_v20', JSON.stringify(treeData));
-                        syncWithCloud({ treeData, qaStorage, vulnerableNotes, bottleMessages, dictionaryList, storyEvents, bucketList });
+                        syncWithCloud({ treeData, qaStorage, vulnerableNotes, bottleMessages, dictionaryList, galleryList, bucketList });
                         renderTree();
                     }
                 };
@@ -1013,7 +1180,7 @@
                     treeData.xp += 40;
                     checkLevelUp();
                     localStorage.setItem('nergis_tree_v20', JSON.stringify(treeData));
-                    syncWithCloud({ treeData, qaStorage, vulnerableNotes, bottleMessages, dictionaryList, storyEvents, bucketList });
+                    syncWithCloud({ treeData, qaStorage, vulnerableNotes, bottleMessages, dictionaryList, galleryList, bucketList });
                     renderTree();
                 }
             } else {
@@ -1029,7 +1196,7 @@
             }
         }
 
-        // --- 30 GÜNLÜK OTOMATİK SORULAR LİSTESİ ---
+        // --- 30 GÜNLÜK OTOMATİK SORULAR LİSTESİ & GEÇMİŞ ARŞİVİ ---
         const thirtyDaysQuestions = [
             "Bugün beni düşünürken aklına gelen ilk kelime ve duygu neydi?",
             "İkimizin geleceği hayal ettiğinde gözünün önüne gelen ilk manzara nedir?",
@@ -1146,9 +1313,46 @@
             else qaStorage[dayKey].turkay = val;
 
             localStorage.setItem('thirty_days_qa_v1', JSON.stringify(qaStorage));
-            syncWithCloud({ treeData, qaStorage, vulnerableNotes, bottleMessages, dictionaryList, storyEvents, bucketList });
+            syncWithCloud({ treeData, qaStorage, vulnerableNotes, bottleMessages, dictionaryList, galleryList, bucketList });
             document.getElementById('myAnswerInput').value = "";
             loadQA();
+        }
+
+        function openQaHistoryModal() {
+            const modal = document.getElementById('qaHistoryModal');
+            const listContainer = document.getElementById('qaHistoryList');
+            listContainer.innerHTML = "";
+
+            thirtyDaysQuestions.forEach((q, idx) => {
+                const dayKey = `day_${idx}`;
+                const data = qaStorage[dayKey] || { elif: "", turkay: "" };
+                
+                const div = document.createElement('div');
+                div.className = "glass-card p-4 rounded-2xl border border-white/10 space-y-2";
+                div.innerHTML = `
+                    <div class="flex items-center justify-between text-xs font-bold text-rose-300">
+                        <span>Gün ${idx + 1} Soru</span>
+                    </div>
+                    <p class="text-xs text-white font-semibold">"${q}"</p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1 text-[11px]">
+                        <div class="bg-black/30 p-2.5 rounded-xl border border-pink-500/20">
+                            <span class="font-bold text-pink-300 block mb-1">🌸 Elif:</span>
+                            <span class="text-pink-100 italic">${data.elif ? '"' + data.elif + '"' : 'Cevap yok'}</span>
+                        </div>
+                        <div class="bg-black/30 p-2.5 rounded-xl border border-cyan-500/20">
+                            <span class="font-bold text-cyan-300 block mb-1">💙 Türkay:</span>
+                            <span class="text-cyan-100 italic">${data.turkay ? '"' + data.turkay + '"' : 'Cevap yok'}</span>
+                        </div>
+                    </div>
+                `;
+                listContainer.appendChild(div);
+            });
+
+            modal.classList.remove('hidden');
+        }
+
+        function closeQaHistoryModal() {
+            document.getElementById('qaHistoryModal').classList.add('hidden');
         }
 
         // --- KENDİMİ AÇMA KUTUM ---
@@ -1162,7 +1366,7 @@
             const now = new Date().toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit' });
             vulnerableNotes.unshift({ id: Date.now(), author, text, date: now });
             localStorage.setItem('vulnerable_notes_v2', JSON.stringify(vulnerableNotes));
-            syncWithCloud({ treeData, qaStorage, vulnerableNotes, bottleMessages, dictionaryList, storyEvents, bucketList });
+            syncWithCloud({ treeData, qaStorage, vulnerableNotes, bottleMessages, dictionaryList, galleryList, bucketList });
             document.getElementById('vulnerableInput').value = "";
             loadVulnerableNotes();
         }
@@ -1170,7 +1374,7 @@
         function vulnerableSil(id) {
             vulnerableNotes = vulnerableNotes.filter(n => n.id !== id);
             localStorage.setItem('vulnerable_notes_v2', JSON.stringify(vulnerableNotes));
-            syncWithCloud({ treeData, qaStorage, vulnerableNotes, bottleMessages, dictionaryList, storyEvents, bucketList });
+            syncWithCloud({ treeData, qaStorage, vulnerableNotes, bottleMessages, dictionaryList, galleryList, bucketList });
             loadVulnerableNotes();
         }
 
@@ -1202,6 +1406,94 @@
             });
         }
 
+        // --- DEMİR İLACI TAKİP SİSTEMİ ---
+        let medicineLog = JSON.parse(localStorage.getItem('elif_medicine_log_v1')) || {};
+
+        function checkMedicinePrompt() {
+            const todayStr = new Date().toISOString().split('T')[0];
+            const isTaken = medicineLog[todayStr] || false;
+            if (!isTaken) {
+                // Eğer bugün içmediyse siteye girer girmez tatlı pop-up çıkar
+                setTimeout(() => {
+                    const modal = document.getElementById('medicineAlertModal');
+                    if (modal) modal.classList.remove('hidden');
+                }, 800);
+            }
+        }
+
+        function closeMedicineAlertModal() {
+            const modal = document.getElementById('medicineAlertModal');
+            if (modal) modal.classList.add('hidden');
+        }
+
+        function modalIlacIctim() {
+            const todayStr = new Date().toISOString().split('T')[0];
+            medicineLog[todayStr] = true;
+            localStorage.setItem('elif_medicine_log_v1', JSON.stringify(medicineLog));
+            syncWithCloud({ treeData, qaStorage, vulnerableNotes, medicineLog, bottleMessages, dictionaryList, galleryList, bucketList });
+            closeMedicineAlertModal();
+            loadMedicineTracker();
+        }
+
+        function demirIlaciIcildiToggle() {
+            const todayStr = new Date().toISOString().split('T')[0];
+            const currentStatus = medicineLog[todayStr] || false;
+            
+            medicineLog[todayStr] = !currentStatus;
+            localStorage.setItem('elif_medicine_log_v1', JSON.stringify(medicineLog));
+            syncWithCloud({ treeData, qaStorage, vulnerableNotes, medicineLog, bottleMessages, dictionaryList, galleryList, bucketList });
+            loadMedicineTracker();
+        }
+
+        function loadMedicineTracker() {
+            const todayStr = new Date().toISOString().split('T')[0];
+            const isTaken = medicineLog[todayStr] || false;
+
+            const statusBox = document.getElementById('medicineStatusBox');
+            const statusEmoji = document.getElementById('medStatusEmoji');
+            const statusText = document.getElementById('medStatusText');
+            const toggleBtn = document.getElementById('medToggleBtn');
+            const historyList = document.getElementById('medicineHistoryList');
+
+            if (isTaken) {
+                statusBox.className = "p-4 rounded-xl bg-emerald-950/30 border border-emerald-500/40 flex flex-col items-center justify-center space-y-2";
+                statusEmoji.innerText = "✨💊";
+                statusText.innerText = "Harika! Bugün demir ilacı içildi, Elif'in enerjisi yerinde 💖";
+                toggleBtn.className = "w-full py-3.5 bg-white/10 hover:bg-white/20 text-emerald-300 font-bold rounded-xl text-xs transition-all border border-emerald-500/30 flex items-center justify-center gap-2";
+                toggleBtn.innerHTML = "<span>İçildi Olarak İşaretlendi ✔ (Geri Al)</span>";
+            } else {
+                statusBox.className = "p-4 rounded-xl bg-black/40 border border-pink-500/30 flex flex-col items-center justify-center space-y-2";
+                statusEmoji.innerText = "⏳";
+                statusText.innerText = "Bugün henüz demir ilacı içilmedi sevgilim.";
+                toggleBtn.className = "w-full py-3.5 bg-gradient-to-r from-rose-600 to-pink-600 hover:opacity-90 text-white font-bold rounded-xl text-sm transition-all shadow-lg flex items-center justify-center gap-2";
+                toggleBtn.innerHTML = "<span>💊 İlacımı İçtim (İşaretle) ✨</span>";
+            }
+
+            // Geçmiş Listesi (Son 7 gün)
+            if (historyList) {
+                historyList.innerHTML = "";
+                for (let i = 0; i < 7; i++) {
+                    const d = new Date();
+                    d.setDate(d.getDate() - i);
+                    const dStr = d.toISOString().split('T')[0];
+                    const niceDate = d.toLocaleDateString('tr-TR', { day: 'numeric', month: 'long' });
+                    const taken = medicineLog[dStr] || false;
+
+                    const row = document.createElement('div');
+                    row.className = "flex items-center justify-between p-2.5 rounded-xl bg-black/30 border border-white/5 text-xs";
+                    row.innerHTML = `
+                        <span class="text-pink-200 font-mono">${niceDate}</span>
+                        <span class="${taken ? 'text-emerald-300 font-bold' : 'text-rose-400/70'}">${taken ? 'İçildi ✨💊' : 'İçilmedi ❌'}</span>
+                    `;
+                    historyList.appendChild(row);
+                }
+            }
+        }
+
+        function sevgiHatirlaticiGonder() {
+            alert("💖 Sevgi Sinyali Gönderildi!\n\n'Sevgilim, güzel kalbin ve enerjin için demir ilacını içmeyi unutma lütfen! Seni çok seviyorum.' ✨");
+        }
+
         // --- ZAMAN KAPSÜLÜ ŞİŞE MESAJLARI ---
         let bottleMessages = JSON.parse(localStorage.getItem('bottle_messages_v6')) || [];
 
@@ -1221,7 +1513,7 @@
 
             bottleMessages.push({ id: Date.now(), author, date, msg });
             localStorage.setItem('bottle_messages_v6', JSON.stringify(bottleMessages));
-            syncWithCloud({ treeData, qaStorage, vulnerableNotes, bottleMessages, dictionaryList, storyEvents, bucketList });
+            syncWithCloud({ treeData, qaStorage, vulnerableNotes, bottleMessages, dictionaryList, galleryList, bucketList });
             document.getElementById('bottleDate').value = "";
             document.getElementById('bottleMsg').value = "";
             toggleBottleModal(false);
@@ -1231,7 +1523,7 @@
         function bottleSil(id) {
             bottleMessages = bottleMessages.filter(b => b.id !== id);
             localStorage.setItem('bottle_messages_v6', JSON.stringify(bottleMessages));
-            syncWithCloud({ treeData, qaStorage, vulnerableNotes, bottleMessages, dictionaryList, storyEvents, bucketList });
+            syncWithCloud({ treeData, qaStorage, vulnerableNotes, bottleMessages, dictionaryList, galleryList, bucketList });
             loadBottles();
         }
 
@@ -1247,20 +1539,24 @@
             }
 
             bottleMessages.forEach(b => {
-                const isUnlocked = b.date <= todayStr;
                 const authorBadge = b.author === 'Elif' ? '🌸 Elif' : '💙 Türkay';
+                const isUnlocked = b.date <= todayStr;
                 const card = document.createElement('div');
-                card.className = "glass-card p-4 rounded-2xl border border-cyan-500/30 flex items-center justify-between";
+                card.className = `glass-card p-4 rounded-2xl border ${isUnlocked ? 'border-cyan-500/40' : 'border-white/10 opacity-80'} space-y-2 relative`;
+                
+                let contentHTML = "";
+                if (isUnlocked) {
+                    contentHTML = `<p class="text-sm text-white font-medium italic">"${b.msg}"</p>`;
+                } else {
+                    contentHTML = `<p class="text-xs text-cyan-300/80 font-mono">🔒 Bu şişe sadece ${b.date} tarihinde mühürden kurtulacak!</p>`;
+                }
+
                 card.innerHTML = `
-                    <div class="flex-1 pr-3">
-                        <div class="flex items-center gap-2 mb-1">
-                            <span class="text-xs font-bold text-pink-300">${authorBadge}</span>
-                            <span class="text-xs font-bold text-cyan-300">🍾 Açılış: ${b.date}</span>
-                            <span class="text-[10px] px-2 py-0.5 rounded-full ${isUnlocked ? 'bg-emerald-500/20 text-emerald-300 font-bold' : 'bg-cyan-500/20 text-cyan-300'}">${isUnlocked ? 'Mühür Açıldı ✨' : 'Mühürlü 🔒'}</span>
-                        </div>
-                        <p class="text-sm text-white font-medium">${isUnlocked ? b.msg : 'Bu mektup mühürlüdür, seçilen tarihte açılacaktır...'}</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-bold text-cyan-300">${authorBadge} (Açılış: ${b.date})</span>
+                        <button onclick="bottleSil(${b.id})" class="text-rose-400/60 hover:text-rose-300 text-xs transition-colors p-1" title="Şişeyi Sil">🗑️</button>
                     </div>
-                    <button onclick="bottleSil(${b.id})" class="text-cyan-400/60 hover:text-cyan-300 text-xs transition-colors p-2" title="Şişeyi Sil">🗑️</button>
+                    ${contentHTML}
                 `;
                 container.appendChild(card);
             });
@@ -1279,7 +1575,7 @@
 
             dictionaryList.unshift({ id: Date.now(), word, desc });
             localStorage.setItem('our_dictionary_v1', JSON.stringify(dictionaryList));
-            syncWithCloud({ treeData, qaStorage, vulnerableNotes, bottleMessages, dictionaryList, storyEvents, bucketList });
+            syncWithCloud({ treeData, qaStorage, vulnerableNotes, bottleMessages, dictionaryList, galleryList, bucketList });
             wordInput.value = "";
             descInput.value = "";
             loadDictionary();
@@ -1288,7 +1584,7 @@
         function dictionarySil(id) {
             dictionaryList = dictionaryList.filter(d => d.id !== id);
             localStorage.setItem('our_dictionary_v1', JSON.stringify(dictionaryList));
-            syncWithCloud({ treeData, qaStorage, vulnerableNotes, bottleMessages, dictionaryList, storyEvents, bucketList });
+            syncWithCloud({ treeData, qaStorage, vulnerableNotes, bottleMessages, dictionaryList, galleryList, bucketList });
             loadDictionary();
         }
 
@@ -1298,158 +1594,251 @@
             container.innerHTML = "";
 
             if (dictionaryList.length === 0) {
-                container.innerHTML = `<p class="text-xs text-purple-300/50 italic text-center py-4">Sözlükte henüz kelime yok, ilk özel kelimenizi siz ekleyin...</p>`;
+                container.innerHTML = `<p class="text-xs text-purple-300/50 italic text-center py-4">Sözlükte henüz kelime yok, ilk özel kelimenizi ekleyin...</p>`;
                 return;
             }
 
             dictionaryList.forEach(item => {
                 const card = document.createElement('div');
-                card.className = "glass-card p-4 rounded-2xl border border-purple-500/30 space-y-2 relative";
+                card.className = "glass-card p-4 rounded-2xl border border-purple-500/20 space-y-1 relative";
                 card.innerHTML = `
                     <div class="flex items-center justify-between">
-                        <h4 class="text-base font-bold text-purple-200">📌 ${item.word}</h4>
-                        <button onclick="dictionarySil(${item.id})" class="text-purple-400/60 hover:text-purple-300 text-xs transition-colors p-1" title="Kelimeyi Sil">🗑️</button>
+                        <span class="text-sm font-bold text-purple-200">✨ ${item.word}</span>
+                        <button onclick="dictionarySil(${item.id})" class="text-rose-400/60 hover:text-rose-300 text-xs transition-colors p-1" title="Kelimeyi Sil">🗑️</button>
                     </div>
-                    <p class="text-sm text-white/90 italic">"${item.desc}"</p>
+                    <p class="text-xs text-white/90">${item.desc}</p>
                 `;
                 container.appendChild(card);
             });
         }
 
-        // --- HİKAYEMİZ ---
-        let storyEvents = JSON.parse(localStorage.getItem('story_events_v6')) || [
-            { id: 1, title: "Hikayemizin İlk Kıvılcımı ✨", subtitle: "İlk Karşılaşma / Başlangıç", desc: "Gözlerinle karşılaştığım o an, dünyamın rengi tamamen değişti." }
+        // --- DİNAMİK BULUT GALERİ SİSTEMİ (iPhone Tarzı Akıcı Grid & Lightbox) ---
+        let galleryList = JSON.parse(localStorage.getItem('our_gallery_v1')) || [
+            {
+                id: 1718000001,
+                author: "Elif",
+                type: "image",
+                url: "https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=800&auto=format&fit=crop&q=60",
+                caption: "İlk kahve içtiğimiz o unutulmaz gün ✨",
+                date: "28.03.2026"
+            },
+            {
+                id: 1718000002,
+                author: "Türkay",
+                type: "image",
+                url: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=800&auto=format&fit=crop&q=60",
+                caption: "19 Nisan başlangıcımız...",
+                date: "19.04.2026"
+            },
+            {
+                id: 1718000003,
+                author: "Elif",
+                type: "image",
+                url: "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=800&auto=format&fit=crop&q=60",
+                caption: "Seramızda ilk nergisimiz açtı!",
+                date: "10.05.2026"
+            }
         ];
+        let currentGalleryFilter = 'all';
+        let currentMediaTypeFilter = 'all';
+        let currentLightboxIndex = 0;
+        let activeLightboxList = [];
 
-        function acHikayeModal(id) {
-            const modal = document.getElementById('storyModal');
-            const titleInput = document.getElementById('storyTitle');
-            const subtitleInput = document.getElementById('storySubtitle');
-            const descInput = document.getElementById('storyDesc');
-            const editIdInput = document.getElementById('storyEditId');
-            const modalTitle = document.getElementById('storyModalTitle');
-
-            if (modal.classList.contains('hidden')) {
-                modal.classList.remove('hidden');
-                if (id) {
-                    const ev = storyEvents.find(e => e.id === id);
-                    if (ev) {
-                        modalTitle.innerText = "Anıyı Düzenle ✍️";
-                        editIdInput.value = ev.id;
-                        titleInput.value = ev.title;
-                        subtitleInput.value = ev.subtitle;
-                        descInput.value = ev.desc;
+        function filterGallery(filter) {
+            currentGalleryFilter = filter;
+            ['all', 'Elif', 'Türkay'].forEach(f => {
+                const btn = document.getElementById('filterBtn-' + f);
+                if (btn) {
+                    if (f === filter) {
+                        btn.className = "px-3 py-1.5 rounded-xl text-xs font-bold transition-all bg-rose-600 text-white shadow";
+                    } else {
+                        btn.className = "px-3 py-1.5 rounded-xl text-xs font-bold transition-all text-pink-300 hover:text-white";
                     }
-                } else {
-                    modalTitle.innerText = "Hikayemize Anı Ekle ✨";
-                    editIdInput.value = "";
-                    titleInput.value = "";
-                    subtitleInput.value = "";
-                    descInput.value = "";
                 }
-            } else {
-                modal.classList.add('hidden');
-            }
+            });
+            loadGallery();
         }
 
-        function storyKaydet() {
-            const editId = document.getElementById('storyEditId').value;
-            const title = document.getElementById('storyTitle').value.trim();
-            const subtitle = document.getElementById('storySubtitle').value.trim();
-            const desc = document.getElementById('storyDesc').value.trim();
-
-            if (!title || !desc) return;
-
-            if (editId) {
-                storyEvents = storyEvents.map(ev => ev.id == editId ? { ...ev, title, subtitle: subtitle || "Özel Anımız", desc } : ev);
-            } else {
-                storyEvents.push({ id: Date.now(), title, subtitle: subtitle || "Özel Anımız", desc });
-            }
-
-            localStorage.setItem('story_events_v6', JSON.stringify(storyEvents));
-            syncWithCloud({ treeData, qaStorage, vulnerableNotes, bottleMessages, dictionaryList, storyEvents, bucketList });
-            acHikayeModal(null);
-            loadStoryEvents();
+        function filterMediaType(type) {
+            currentMediaTypeFilter = type;
+            ['all', 'image', 'video'].forEach(t => {
+                const btn = document.getElementById('mediaType-' + t);
+                if (btn) {
+                    if (t === type) {
+                        btn.className = "px-4 py-1.5 rounded-xl text-xs font-bold bg-rose-600 text-white transition-all shadow";
+                    } else {
+                        btn.className = "px-4 py-1.5 rounded-xl text-xs font-bold text-pink-300 hover:text-white transition-all";
+                    }
+                }
+            });
+            loadGallery();
         }
 
-        function loadStoryEvents() {
-            const container = document.getElementById('storyTimelineContainer');
-            if (!container) return;
-            container.innerHTML = "";
-            storyEvents.forEach(ev => {
-                const div = document.createElement('div');
-                div.className = "relative pl-6 cursor-pointer group";
-                div.innerHTML = `
-                    <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-rose-500 border-2 border-[#170817]"></div>
-                    <div onclick="acHikayeModal(${ev.id})" class="p-3 rounded-xl hover:bg-white/5 transition-all">
-                        <span class="text-xs font-mono text-rose-300">${ev.subtitle} (Düzenlemek için tıkla ✍️)</span>
-                        <h4 class="text-lg font-bold text-white">${ev.title}</h4>
-                        <p class="text-xs text-pink-200/70 mt-1">${ev.desc}</p>
-                    </div>
-                `;
-                container.appendChild(div);
+        function getFilteredGalleryItems() {
+            let list = galleryList;
+            if (currentGalleryFilter !== 'all') {
+                list = list.filter(m => m.author === currentGalleryFilter);
+            }
+            if (currentMediaTypeFilter !== 'all') {
+                list = list.filter(m => m.type === currentMediaTypeFilter);
+            }
+            return list;
+        }
+
+        function downloadFilteredGalleryZip() {
+            let targetList = getFilteredGalleryItems();
+            let zipName = "Bizim_Galeri_Anilarimiz.zip";
+
+            if (targetList.length === 0) {
+                alert("İndirilecek medya bulunamadı sevgilim! 🥺");
+                return;
+            }
+
+            const zip = new JSZip();
+            targetList.forEach((item, index) => {
+                const base64Data = item.url.split(',')[1];
+                const ext = item.type === 'video' ? 'mp4' : 'jpg';
+                zip.file(`${item.author}_ani_${index + 1}.${ext}`, base64Data, { base64: true });
+            });
+
+            zip.generateAsync({ type: "blob" }).then(content => {
+                saveAs(content, zipName);
             });
         }
 
-        // --- POLAROID ALBÜM (Yüklenen Eksiksiz 25 Görsel) ---
-        const polaroidPhotos = [
-            { id: 1, url: "WhatsApp Image 2026-10-12 at 21.25.32 (1).jpeg", caption: "Anı 1 ✨", note: "Adaya giderken güneşim manzaram ve bennn." },
-            { id: 2, url: "WhatsApp Image 2026-10-12 at 21.25.32 (2).jpeg", caption: "Anı 2 🌸", note: "İçmeye gittiğimiz o günü unutamıyoruummm." },
-            { id: 3, url: "WhatsApp Image 2026-10-12 at 21.25.32 (3).jpeg", caption: "Anı 3 💖", note: "Herkesten çok daha iyi bir çift olduğumuzun kanıtıı." },
-            { id: 4, url: "WhatsApp Image 2026-10-12 at 21.25.32.jpeg", caption: "Anı 4 ", note: "Yakın arkadaşlarına attığın ilk hikayemizzz." },
-            { id: 5, url: "WhatsApp Image 2026-10-12 at 21.25.33 (1).jpeg", caption: "Anı 5 🌟", note: "Garip pozlar verirken bile bu kadar güzel olmayı nasıl beceriyorsun??." },
-            { id: 6, url: "WhatsApp Image 2026-10-12 at 21.25.33 (2).jpeg", caption: "Anı 6 🤍", note: "Dünyadaki en huzurlu yer senin yanın aşk kadınn." },
-            { id: 7, url: "WhatsApp Image 2026-10-12 at 21.25.33 (3).jpeg", caption: "Anı 7 🍃", note: "Sen ben Üsküdarrr." },
-            { id: 8, url: "WhatsApp Image 2026-10-12 at 21.25.33 (4).jpeg", caption: "Anı 8 💫", note: "Çok yakışıyoruz çokkkk maşşallah deee." },
-            { id: 9, url: "WhatsApp Image 2026-10-12 at 21.25.33 (5).jpeg", caption: "Anı 9 🌸", note: "Aşkımın beni planlarına dahil ettiği evrenn." },
-            { id: 10, url: "WhatsApp Image 2026-10-12 at 21.25.33 (6).jpeg", caption: "Anı 10 ✨", note: "Unutulmaz Ortaköy anımızzzz." },
-            { id: 11, url: "WhatsApp Image 2026-10-12 at 21.25.33 (7).jpeg", caption: "Anı 11 💖", note: "Sonsuza kadar sürecek bu sevda." },
-            { id: 12, url: "WhatsApp Image 2026-10-12 at 21.25.33.jpeg", caption: "Anı 12 🌙", note: "Tekrarlamak istediğimmm gecelerden bir tanesiii" },
-            { id: 13, url: "WhatsApp Image 2026-10-12 at 21.26.40.jpeg", caption: "Anı 13 🌷", note: "GÜNEŞİMMMMMMMMM" },
-            { id: 14, url: "WhatsApp Image 2026-10-12 at 21.27.46.jpeg", caption: "Anı 14 🦋", note: "Birlikte nice senelere sevgilim." },
-            { id: 15, url: "WhatsApp Image 2026-10-12 at 21.28.10.jpeg", caption: "Anı 15 💫", note: "Seninle her manzara kusursuzzzzz." },
-            { id: 16, url: "WhatsApp Image 2026-10-12 at 21.30.10.jpeg", caption: "Anı 16 🎨", note: "Neşe kaynağımsınnn." },
-            { id: 17, url: "WhatsApp Image 2026-10-12 at 21.32.15 (1).jpeg", caption: "Anı 17 ✨", note: "Yüzündeki tebessüme kurban olurum aşkımmm." },
-            { id: 18, url: "WhatsApp Image 2026-10-12 at 21.32.15 (2).jpeg", caption: "Anı 18 🌸", note: "Gönlümün en güzel köşesi senin yanınnn." },
-            { id: 19, url: "WhatsApp Image 2026-10-12 at 21.32.15.jpeg", caption: "Anı 19 💖", note: "Aşkla bakışlarımız hiç solmasınnnn." },
-            { id: 20, url: "WhatsApp Image 2026-10-12 at 21.36.43 (1).jpeg", caption: "Anı 20 🌿", note: "İyi ki varsın hayatımmmm" },
-            { id: 21, url: "WhatsApp Image 2026-10-12 at 21.36.43 (2).jpeg", caption: "Anı 21 ☀️", note: "Yanında en utandığım günlerden 2.siii." },
-            { id: 22, url: "WhatsApp Image 2026-10-12 at 21.36.43 (3).jpeg", caption: "Anı 22 ☕", note: "Madrigal hayalimin prensesiii kahramanııı." },
-            { id: 23, url: "WhatsApp Image 2026-10-12 at 21.36.43 (4).jpeg", caption: "Anı 23 💐", note: "Dualarımın en güzel karşılığısın iyi ki varsın hayatımmm." },
-            { id: 24, url: "WhatsApp Image 2026-10-12 at 21.36.43 (5).jpeg", caption: "Anı 24 💕", note: "Kalbimdeki en derin sevgi seninle" },
-            { id: 25, url: "WhatsApp Image 2026-10-12 at 21.36.43.jpeg", caption: "Anı 25 👑", note: "Benim güzel kraliçem seni çokkkkk seviyorummmm" }
-        ];
+        function mediaYukle() {
+            const author = document.getElementById('mediaAuthor').value;
+            const caption = document.getElementById('mediaCaption').value.trim();
+            const fileInput = document.getElementById('mediaFileInput');
+            
+            if (fileInput.files.length === 0) {
+                alert("Lütfen bir fotoğraf veya video seç sevgilim! 🥺");
+                return;
+            }
 
-        function loadPolaroidPhotos() {
-            const container = document.getElementById('photoGridContainer');
+            const file = fileInput.files[0];
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                const base64Data = e.target.result;
+                const isVideo = file.type.startsWith('video');
+
+                galleryList.unshift({
+                    id: Date.now(),
+                    author: author,
+                    type: isVideo ? 'video' : 'image',
+                    url: base64Data,
+                    caption: caption || "Güzel bir anımız ✨",
+                    date: new Date().toLocaleDateString('tr-TR')
+                });
+
+                localStorage.setItem('our_gallery_v1', JSON.stringify(galleryList));
+                syncWithCloud({ treeData, qaStorage, vulnerableNotes, bottleMessages, dictionaryList, galleryList, bucketList });
+                
+                fileInput.value = "";
+                document.getElementById('mediaCaption').value = "";
+                loadGallery();
+            };
+
+            reader.readAsDataURL(file);
+        }
+
+        function mediaSil(id) {
+            galleryList = galleryList.filter(m => m.id !== id);
+            localStorage.setItem('our_gallery_v1', JSON.stringify(galleryList));
+            syncWithCloud({ treeData, qaStorage, vulnerableNotes, bottleMessages, dictionaryList, galleryList, bucketList });
+            closeLightbox();
+            loadGallery();
+        }
+
+        function openLightbox(id) {
+            activeLightboxList = getFilteredGalleryItems();
+            currentLightboxIndex = activeLightboxList.findIndex(m => m.id === id);
+            if (currentLightboxIndex === -1) currentLightboxIndex = 0;
+            renderLightboxItem();
+            document.getElementById('lightboxModal').classList.remove('hidden');
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightboxModal').classList.add('hidden');
+        }
+
+        function prevLightboxItem() {
+            if (activeLightboxList.length === 0) return;
+            currentLightboxIndex = (currentLightboxIndex - 1 + activeLightboxList.length) % activeLightboxList.length;
+            renderLightboxItem();
+        }
+
+        function nextLightboxItem() {
+            if (activeLightboxList.length === 0) return;
+            currentLightboxIndex = (currentLightboxIndex + 1) % activeLightboxList.length;
+            renderLightboxItem();
+        }
+
+        function deleteCurrentLightboxItem() {
+            const item = activeLightboxList[currentLightboxIndex];
+            if (item) {
+                mediaSil(item.id);
+            }
+        }
+
+        function renderLightboxItem() {
+            const item = activeLightboxList[currentLightboxIndex];
+            if (!item) return;
+
+            const container = document.getElementById('lightboxContentContainer');
+            const authorBadge = item.author === 'Elif' ? '🌸 Elif' : '💙 Türkay';
+            
+            document.getElementById('lightboxAuthor').innerText = authorBadge;
+            document.getElementById('lightboxDate').innerText = `📅 ${item.date}`;
+            document.getElementById('lightboxCaption').innerText = `"${item.caption}"`;
+
+            if (item.type === 'video') {
+                container.innerHTML = `<video src="${item.url}" controls autoplay class="max-h-[72vh] max-w-full rounded-2xl shadow-2xl object-contain"></video>`;
+            } else {
+                container.innerHTML = `<img src="${item.url}" alt="Anı" class="max-h-[72vh] max-w-full rounded-2xl shadow-2xl object-contain">`;
+            }
+        }
+
+        function loadGallery() {
+            const container = document.getElementById('galleryContainer');
+            const countText = document.getElementById('galleryCountText');
             if (!container) return;
             container.innerHTML = "";
-            polaroidPhotos.forEach(p => {
+
+            let filteredList = getFilteredGalleryItems();
+            if (countText) countText.innerText = `${filteredList.length} Medya`;
+
+            if (filteredList.length === 0) {
+                container.innerHTML = `<p class="text-xs text-pink-300/50 italic col-span-full text-center py-12">Bu kategoride henüz medya yok. İlk anıyı sen yükle sevgilim! 📸</p>`;
+                return;
+            }
+
+            filteredList.forEach(item => {
+                const authorBadge = item.author === 'Elif' ? '🌸 Elif' : '💙 Türkay';
                 const card = document.createElement('div');
-                card.className = "perspective-1000 h-80 cursor-pointer group";
+                card.className = "relative group rounded-2xl overflow-hidden bg-black/40 border border-white/10 aspect-square cursor-pointer shadow-md hover:border-rose-500/50 transition-all transform hover:scale-[1.02]";
+                card.onclick = () => openLightbox(item.id);
+
+                let previewInner = "";
+                if (item.type === 'video') {
+                    previewInner = `
+                        <video src="${item.url}" class="w-full h-full object-cover"></video>
+                        <div class="absolute inset-0 bg-black/20 flex items-center justify-center">
+                            <span class="w-10 h-10 rounded-full bg-black/60 text-white flex items-center justify-center text-sm shadow">▶️</span>
+                        </div>
+                    `;
+                } else {
+                    previewInner = `<img src="${item.url}" alt="Anı" class="w-full h-full object-cover">`;
+                }
+
                 card.innerHTML = `
-                    <div class="relative w-full h-full duration-700 transform-style-3d group-hover:rotate-y-180" id="polaroid-${p.id}">
-                        <div class="absolute inset-0 bg-white/95 p-3 pb-6 rounded-2xl shadow-xl flex flex-col justify-between backface-hidden text-zinc-800 border border-white/40">
-                            <div class="w-full h-56 rounded-xl overflow-hidden bg-zinc-200">
-                                <img src="${p.url}" alt="${p.caption}" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/400x400/e0a899/ffffff?text=Elif+Turkay'">
-                            </div>
-                            <div class="text-center pt-2">
-                                <p class="handwriting-font text-xl font-bold text-zinc-800">${p.caption}</p>
-                                <span class="text-[10px] text-zinc-400 font-mono">Çevirmek için tıkla 🔄</span>
-                            </div>
-                        </div>
-                        <div class="absolute inset-0 bg-gradient-to-br from-rose-900/90 to-pink-950/95 p-6 rounded-2xl shadow-xl flex flex-col items-center justify-center text-center backface-hidden rotate-y-180 border border-rose-500/40 text-pink-100">
-                            <span class="text-3xl mb-2">💖</span>
-                            <h4 class="romantic-font text-lg font-bold text-rose-200 mb-2">${p.caption}</h4>
-                            <p class="text-xs italic leading-relaxed">"${p.note}"</p>
-                            <span class="text-[10px] text-pink-300/60 font-mono mt-4">Ön yüze dön</span>
-                        </div>
+                    ${previewInner}
+                    <div class="absolute top-2 left-2 px-2 py-0.5 bg-black/60 backdrop-blur-md text-[9px] font-bold text-white rounded-full border border-white/20 shadow">
+                        ${authorBadge}
                     </div>
+                    ${item.type === 'video' ? '<span class="absolute bottom-2 right-2 px-1.5 py-0.5 bg-black/70 text-[9px] text-cyan-300 font-mono rounded">VİDEO</span>' : ''}
                 `;
-                card.onclick = () => {
-                    const el = document.getElementById(`polaroid-${p.id}`);
-                    el.style.transform = el.style.transform === 'rotateY(180deg)' ? 'rotateY(0deg)' : 'rotateY(180deg)';
-                };
                 container.appendChild(card);
             });
         }
@@ -1464,7 +1853,7 @@
             if (!val) return;
             bucketList.push({ id: Date.now(), text: val, done: false });
             localStorage.setItem('bucket_list_v6', JSON.stringify(bucketList));
-            syncWithCloud({ treeData, qaStorage, vulnerableNotes, bottleMessages, dictionaryList, storyEvents, bucketList });
+            syncWithCloud({ treeData, qaStorage, vulnerableNotes, bottleMessages, dictionaryList, galleryList, bucketList });
             input.value = "";
             loadBucketList();
         }
@@ -1472,7 +1861,14 @@
         function bucketToggle(id) {
             bucketList = bucketList.map(b => b.id === id ? { ...b, done: !b.done } : b);
             localStorage.setItem('bucket_list_v6', JSON.stringify(bucketList));
-            syncWithCloud({ treeData, qaStorage, vulnerableNotes, bottleMessages, dictionaryList, storyEvents, bucketList });
+            syncWithCloud({ treeData, qaStorage, vulnerableNotes, bottleMessages, dictionaryList, galleryList, bucketList });
+            loadBucketList();
+        }
+
+        function bucketSil(id) {
+            bucketList = bucketList.filter(b => b.id !== id);
+            localStorage.setItem('bucket_list_v6', JSON.stringify(bucketList));
+            syncWithCloud({ treeData, qaStorage, vulnerableNotes, bottleMessages, dictionaryList, galleryList, bucketList });
             loadBucketList();
         }
 
@@ -1489,9 +1885,12 @@
                 card.className = `p-4 rounded-2xl border transition-all flex items-center justify-between ${b.done ? 'bg-purple-950/20 border-purple-500/30 opacity-75 line-through' : 'glass-card border-white/10'}`;
                 card.innerHTML = `
                     <span class="text-sm font-medium text-white">${b.text}</span>
-                    <button onclick="bucketToggle(${b.id})" class="px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${b.done ? 'bg-purple-500/20 text-purple-300' : 'bg-white/10 hover:bg-white/20 text-white'}">
-                        ${b.done ? 'Tamamlandı ✨' : 'Yapıldı ✔'}
-                    </button>
+                    <div class="flex items-center gap-2">
+                        <button onclick="bucketToggle(${b.id})" class="px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${b.done ? 'bg-purple-500/20 text-purple-300' : 'bg-white/10 hover:bg-white/20 text-white'}">
+                            ${b.done ? 'Tamamlandı ✨' : 'Yapıldı ✔'}
+                        </button>
+                        <button onclick="bucketSil(${b.id})" class="text-rose-400/60 hover:text-rose-300 text-xs transition-colors p-1" title="Hayali Sil">🗑️</button>
+                    </div>
                 `;
                 container.appendChild(card);
             });
@@ -1501,11 +1900,12 @@
             renderTree();
             loadQA();
             loadVulnerableNotes();
+            loadMedicineTracker();
             loadBottles();
             loadDictionary();
-            loadStoryEvents();
-            loadPolaroidPhotos();
+            loadGallery();
             loadBucketList();
+            renderPlaylistMenu();
         }
     </script>
 </body>
