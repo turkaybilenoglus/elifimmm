@@ -495,22 +495,10 @@
                     <span id="galleryCountText" class="text-xs text-pink-300/70 font-mono px-2">0 Medya</span>
                 </div>
 
-                <p class="text-xs text-pink-200/70 mb-6 text-center">Yüzlerce fotoğraf ve videoyu doğrudan Google Drive'a akıtarak iPhone galeri akıcılığında gezebilirsin!</p>
+                <p class="text-xs text-pink-200/70 mb-6 text-center">Yüzlerce fotoğraf ve videoyu doğrudan Drive depomuza akıtarak pürüzsüzce gezebilirsin!</p>
                 
-                <!-- Medya Yükleme Paneli (GOOGLE DRIVE APPS SCRIPT ENTEGRELİ) -->
+                <!-- Medya Yükleme Paneli -->
                 <div class="glass-card p-5 rounded-2xl border border-white/10 space-y-4 mb-8">
-                    <!-- Otomatik Akıllı Disk Bilgilendirme Alanı -->
-                    <div class="flex items-center justify-between p-3 rounded-xl bg-black/40 border border-rose-500/30">
-                        <div class="flex items-center gap-2">
-                            <span class="text-base">⚡</span>
-                            <div>
-                                <span class="text-xs font-bold text-rose-200 block">Akıllı Otomatik Depolama Motoru</span>
-                                <span class="text-[10px] text-pink-300/70">Fotoğraf ve videolarınız en uygun boş diske otomatik aktarılır.</span>
-                            </div>
-                        </div>
-                        <span id="activeDiskBadge" class="text-[10px] px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 font-bold">7 Disk Hazır ✔</span>
-                    </div>
-
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                             <label class="block text-xs font-semibold text-rose-300 mb-1">Yükleyen Sevgili:</label>
@@ -528,7 +516,7 @@
                         <label class="block text-xs font-semibold text-rose-300 mb-1">Romantik Not / Başlık (İsteğe Bağlı):</label>
                         <input type="text" id="mediaCaption" placeholder="Boş bırakabilirsin sevgilim..." class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder-pink-300/40 focus:outline-none focus:border-rose-500">
                     </div>
-                    <button onclick="mediaYukle()" class="w-full py-3 bg-gradient-to-r from-rose-600 to-amber-600 hover:opacity-90 text-white font-bold rounded-xl text-xs transition-all shadow-md">Seçili Diske Kalıcı Yükle 🚀</button>
+                    <button onclick="mediaYukle()" class="w-full py-3 bg-gradient-to-r from-rose-600 to-amber-600 hover:opacity-90 text-white font-bold rounded-xl text-xs transition-all shadow-md">Anıyı Yükle & Kaydet 🚀</button>
                     <p id="uploadProgressText" class="text-xs text-center text-pink-300 font-mono hidden"></p>
                 </div>
 
@@ -673,75 +661,14 @@
     <script>
         // --- GOOGLE DRIVE APPS SCRIPT ÇOKLU HESAP HAVUZU ---
         const driveEndpoints = [
-            { id: 0, name: "Disk 1", url: "https://script.google.com/macros/s/AKfycbzsRq-GJf0z1sYR7O2KLi3eLU8MWkyZLQgcvAilj4Ip8rJwUbIwjOzJtb8L2Z4NNhVo6Q/exec", maxItems: 300 },
-            { id: 1, name: "Disk 2", url: "https://script.google.com/macros/s/AKfycbzIALqVbxBafsi3tu1ax0xdRne1BfJbO1x-HAkN5u3k1YuZGjHym84SyDZSfRB8sM73/exec", maxItems: 300 },
-            { id: 2, name: "Disk 3", url: "https://script.google.com/macros/s/AKfycbxsro4w6OtXXlzUpfTGPE8mNXE0ic_3eOVCvKx8w1fotmAawdK3LoGEs8gC8-zXXNzK/exec", maxItems: 300 },
-            { id: 3, name: "Disk 4", url: "https://script.google.com/macros/s/AKfycbyxcnP5TklNLcrvd9-VHM-pzKXinM15SjyM6ChiGws5NTRRjXxMSZ8JTN26g4LyvwUG/exec", maxItems: 300 },
-            { id: 4, name: "Disk 5", url: "https://script.google.com/macros/s/AKfycbxTGpPrdJWhPPhdYUCm8NsUmKnaRlMjvlcaty0N6e0uHkRNplPKqNFYEWyNtz5AJ3Uq/exec", maxItems: 300 },
-            { id: 5, name: "Disk 6", url: "https://script.google.com/macros/s/AKfycbweHiuAGlBJPYI7XZBjdTTlCJe0fPXZ8ZXOjRP7KSQyStDl-9GjEp7nJ_JIOtNYK4vm/exec", maxItems: 300 },
-            { id: 6, name: "Disk 7", url: "https://script.google.com/macros/s/AKfycbz0sPS9c1jt1jX1EGpNN2FgwP9yU4SqDeAcfQlopCYHKkZIxLvZKyGh_DNiBlBlO-rN/exec", maxItems: 300 }
+            { id: 0, name: "Disk 1", url: "https://script.google.com/macros/s/AKfycbzsRq-GJf0z1sYR7O2KLi3eLU8MWkyZLQgcvAilj4Ip8rJwUbIwjOzJtb8L2Z4NNhVo6Q/exec" },
+            { id: 1, name: "Disk 2", url: "https://script.google.com/macros/s/AKfycbzIALqVbxBafsi3tu1ax0xdRne1BfJbO1x-HAkN5u3k1YuZGjHym84SyDZSfRB8sM73/exec" },
+            { id: 2, name: "Disk 3", url: "https://script.google.com/macros/s/AKfycbxsro4w6OtXXlzUpfTGPE8mNXE0ic_3eOVCvKx8w1fotmAawdK3LoGEs8gC8-zXXNzK/exec" },
+            { id: 3, name: "Disk 4", url: "https://script.google.com/macros/s/AKfycbyxcnP5TklNLcrvd9-VHM-pzKXinM15SjyM6ChiGws5NTRRjXxMSZ8JTN26g4LyvwUG/exec" },
+            { id: 4, name: "Disk 5", url: "https://script.google.com/macros/s/AKfycbxTGpPrdJWhPPhdYUCm8NsUmKnaRlMjvlcaty0N6e0uHkRNplPKqNFYEWyNtz5AJ3Uq/exec" },
+            { id: 5, name: "Disk 6", url: "https://script.google.com/macros/s/AKfycbweHiuAGlBJPYI7XZBjdTTlCJe0fPXZ8ZXOjRP7KSQyStDl-9GjEp7nJ_JIOtNYK4vm/exec" },
+            { id: 6, name: "Disk 7", url: "https://script.google.com/macros/s/AKfycbz0sPS9c1jt1jX1EGpNN2FgwP9yU4SqDeAcfQlopCYHKkZIxLvZKyGh_DNiBlBlO-rN/exec" }
         ];
-        let selectedDiskIndex = -1; // -1 = Otomatik (Boş olanı seçer)
-
-        function renderDiskSelector() {
-            const container = document.getElementById('diskSelectorContainer');
-            if (!container) return;
-            container.innerHTML = "";
-
-            // Otomatik Seçeneği
-            const autoBtn = document.createElement('div');
-            autoBtn.className = `p-3 rounded-2xl border cursor-pointer transition-all flex flex-col justify-between ${selectedDiskIndex === -1 ? 'bg-rose-600/30 border-rose-500/60 text-white shadow-lg' : 'bg-black/30 border-white/10 text-pink-200/70 hover:bg-white/5'}`;
-            autoBtn.onclick = () => selectDisk(-1);
-            autoBtn.innerHTML = `
-                <div class="flex items-center justify-between mb-1">
-                    <span class="text-xs font-bold">⚡ Otomatik Mod</span>
-                    ${selectedDiskIndex === -1 ? '<span class="text-[10px] text-rose-300">Seçili</span>' : ''}
-                </div>
-                <span class="text-[10px] opacity-75">En boş diski kendi belirler</span>
-            `;
-            container.appendChild(autoBtn);
-
-            // Her Disk İçin Buton
-            driveEndpoints.forEach((disk, idx) => {
-                const countOnDisk = galleryList.filter(m => m.diskId === idx || (idx === 0 && m.diskId === undefined)).length;
-                // Her medya ortalama 2MB kabul edilerek gerçekçi GB/doluluk orantısı kuruldu
-                const estimatedMb = countOnDisk * 2.5; 
-                const maxMb = disk.maxItems * 2.5;
-                const percent = Math.min(100, Math.max(countOnDisk > 0 ? 3 : 0, Math.round((estimatedMb / maxMb) * 100)));
-                const isSelected = selectedDiskIndex === idx;
-
-                let colorClass = "from-emerald-500 to-teal-500";
-                if (percent > 70) colorClass = "from-amber-500 to-orange-500";
-                if (percent > 90) colorClass = "from-rose-600 to-red-600";
-
-                const diskBtn = document.createElement('div');
-                diskBtn.className = `p-3 rounded-2xl border cursor-pointer transition-all flex flex-col justify-between ${isSelected ? 'bg-rose-600/30 border-rose-500/60 text-white shadow-lg' : 'bg-black/30 border-white/10 text-pink-200/70 hover:bg-white/5'}`;
-                diskBtn.onclick = () => selectDisk(idx);
-                diskBtn.innerHTML = `
-                    <div class="flex items-center justify-between mb-1">
-                        <span class="text-xs font-bold">${disk.name}</span>
-                        <span class="text-[10px] font-mono ${percent > 90 ? 'text-rose-400 font-bold' : 'text-emerald-300'}">%${percent} Dolu</span>
-                    </div>
-                    <div class="w-full bg-black/60 h-1.5 rounded-full overflow-hidden border border-white/10 mt-1">
-                        <div class="bg-gradient-to-r ${colorClass} h-full rounded-full" style="width: ${percent}%"></div>
-                    </div>
-                `;
-                container.appendChild(diskBtn);
-            });
-        }
-
-        function selectDisk(index) {
-            selectedDiskIndex = index;
-            const badge = document.getElementById('activeDiskBadge');
-            if (badge) {
-                if (index === -1) {
-                    badge.innerText = "Otomatik Seçim Akıllı Mod";
-                } else {
-                    badge.innerText = `${driveEndpoints[index].name} Seçildi ✔`;
-                }
-            }
-            renderDiskSelector();
-        }
 
         // --- BULUT VERİ TABANI & LOADING BAR YÖNETİCİSİ ---
         const myBinId = "6ad29df5ffd5d16053723a75"; 
@@ -833,7 +760,6 @@
                         localStorage.setItem('bucket_list_v6', JSON.stringify(bucketList));
                     }
 
-                    // Sadece kullanıcı giriş yaptıktan sonra yeni anı uyarısını tetikle
                     const isAppOpen = !document.getElementById('mainApp').classList.contains('hidden');
                     if (isAppOpen && galleryList.length > oldGalleryLen && oldGalleryLen > 0) {
                         const latestItem = galleryList[0];
@@ -853,10 +779,7 @@
             }
         }
 
-        // Sayfa açılır açılmaz buluttan verileri çek (Giriş öncesi modal çıkmaması için sadece veri çekilir)
         loadFromCloud();
-
-        // Her 10 saniyede bir arka planda kontrol et
         setInterval(loadFromCloud, 10000);
 
         function triggerNewMediaAlert(authorName) {
@@ -1788,7 +1711,7 @@
             });
         }
 
-        // --- DİNAMİK BULUT GALERİ SİSTEMİ (GOOGLE DRIVE HAVUZU ENTEGRELİ) ---
+        // --- DİNAMİK BULUT GALERİ SİSTEMİ (GOOGLE DRIVE & BASE64 HİBRİT) ---
         let galleryList = JSON.parse(localStorage.getItem('our_gallery_v1')) || [
             {
                 id: 1718000001,
@@ -1844,7 +1767,6 @@
 
         function getFilteredGalleryItems() {
             let list = galleryList;
-            // Filtreleme: "all" ise hepsini (Bizimki), değilse sadece o kişiyi getir
             if (currentGalleryFilter !== 'all') {
                 list = list.filter(m => m.author === currentGalleryFilter);
             }
@@ -1877,7 +1799,6 @@
             });
         }
 
-        // --- AKILLI GOOGLE DRIVE YÜKLEME MOTORU (OTOMATİK TAŞMA VE BÖLÜŞTÜRME KORUMALI) ---
         async function mediaYukle() {
             const author = document.getElementById('mediaAuthor').value;
             const captionInput = document.getElementById('mediaCaption');
@@ -1891,30 +1812,16 @@
             }
 
             const files = Array.from(fileInput.files);
-            if (progressText) progressText.classList.remove('hidden');
+            if (progressText) {
+                progressText.classList.remove('hidden');
+                progressText.innerText = "Medyalar hazırlanıyor ve yükleniyor...";
+            }
 
             for (let fIndex = 0; fIndex < files.length; fIndex++) {
                 const file = files[fIndex];
                 const isVideo = file.type.startsWith('video');
 
-                // Disk belirleme (Manuel veya Akıllı Otomatik Seçim)
-                let startIndex = selectedDiskIndex;
-                if (startIndex === -1) {
-                    let minCount = Infinity;
-                    startIndex = 0;
-                    driveEndpoints.forEach((disk, idx) => {
-                        const count = galleryList.filter(m => m.diskId === idx).length;
-                        if (count < minCount) {
-                            minCount = count;
-                            startIndex = idx;
-                        }
-                    });
-                }
-
-                let uploadedUrl = null;
-                let successDiskIndex = -1;
                 let base64Data = null;
-
                 try {
                     base64Data = await readFileAsBase64(file);
                 } catch (err) {
@@ -1922,26 +1829,12 @@
                     continue;
                 }
 
-                // Seçilen diskte yer kalmazsa sıradaki disklere (Disk 2, 3 vs.) otomatik aktarır
-                const totalDisks = driveEndpoints.length;
-                let skippedDisks = [];
+                let uploadedUrl = null;
+                let successDiskIndex = 0;
 
-                for (let attempt = 0; attempt < totalDisks; attempt++) {
-                    let currentIdx = (startIndex + attempt) % totalDisks;
-                    let chosenDisk = driveEndpoints[currentIdx];
-
-                    // Diskin anlık doluluğunu kontrol et
-                    const currentDiskCount = galleryList.filter(m => m.diskId === currentIdx).length;
-                    if (currentDiskCount >= chosenDisk.maxItems && selectedDiskIndex === -1) {
-                        skippedDisks.push(chosenDisk.name);
-                        console.warn(`${chosenDisk.name} tam kapasite dolu, diğer boş diske geçiliyor...`);
-                        continue; // Bir sonraki diske geç
-                    }
-
-                    showSyncToast("Yükleniyor...", `[${fIndex + 1}/${files.length}] ${chosenDisk.name} deposuna aktarılıyor...`, true);
-                    if (progressText) {
-                        progressText.innerText = `[${fIndex + 1}/${files.length}] ${chosenDisk.name} kullanılıyor: ${file.name}`;
-                    }
+                for (let attempt = 0; attempt < driveEndpoints.length; attempt++) {
+                    let chosenDisk = driveEndpoints[attempt];
+                    showSyncToast("Yükleniyor...", `[${fIndex + 1}/${files.length}] ${chosenDisk.name} deneniyor...`, true);
 
                     try {
                         const formData = new FormData();
@@ -1957,27 +1850,19 @@
                         const jsonResult = await res.json();
                         if (jsonResult && jsonResult.status === "success" && (jsonResult.url || jsonResult.fileId)) {
                             uploadedUrl = jsonResult.url || ("https://lh3.google.com/u/0/d/" + jsonResult.fileId);
-                            successDiskIndex = currentIdx;
-                            break; // Başarıyla yüklendi
-                        } else {
-                            skippedDisks.push(chosenDisk.name);
-                            console.warn(`${chosenDisk.name} doldu/hata verdi, sıradaki diske aktarılıyor...`);
+                            successDiskIndex = attempt;
+                            break;
                         }
-                    } catch (err) {
-                        skippedDisks.push(chosenDisk.name);
-                        console.warn(`Bağlantı kesintisi (${chosenDisk.name}), sıradaki diske deneniyor...`, err);
+                    } catch (e) {
+                        console.log(`Disk ${attempt + 1} yanıt vermedi, sonrakine geçiliyor...`);
                     }
                 }
 
-                if (uploadedUrl && successDiskIndex !== -1) {
-                    saveMediaItem(author, isVideo ? 'video' : 'image', uploadedUrl, caption, successDiskIndex);
-                } else {
-                    // Bulut yanıt vermezse base64 olarak kaydeder
-                    saveMediaItem(author, isVideo ? 'video' : 'image', base64Data, caption, startIndex);
-                }
+                const finalUrl = uploadedUrl || base64Data;
+                saveMediaItem(author, isVideo ? 'video' : 'image', finalUrl, caption, successDiskIndex);
             }
 
-            if (progressText) progressText.innerText = `Tüm dosyalar başarıyla disklere aktarıldı! 🎉`;
+            if (progressText) progressText.innerText = `Tüm anılar başarıyla galeriye eklendi! 🎉`;
         }
 
         function readFileAsBase64(file) {
@@ -1991,7 +1876,7 @@
 
         function saveMediaItem(author, type, url, caption, diskId = 0) {
             const newMedia = {
-                id: Date.now(),
+                id: Date.now() + Math.random(),
                 author: author,
                 type: type,
                 url: url,
@@ -2005,7 +1890,7 @@
             try {
                 localStorage.setItem('our_gallery_v1', JSON.stringify(galleryList));
             } catch (err) {
-                console.warn("Storage dolu, bulut senkronizasyonu aktif.");
+                console.warn("Storage limiti aşıldı, bulut yedeklemesi devrede.");
             }
 
             syncWithCloud({ treeData, qaStorage, vulnerableNotes, bottleMessages, dictionaryList, galleryList, bucketList });
@@ -2017,7 +1902,6 @@
             loadGallery();
 
             triggerNewMediaAlert(author);
-            sekmeDegis('gallery');
         }
 
         function mediaSil(id) {
@@ -2070,7 +1954,6 @@
             document.getElementById('lightboxDate').innerText = `📅 ${item.date}`;
             document.getElementById('lightboxCaption').innerText = `"${item.caption}"`;
 
-            // Google Drive doğrudan indirme / gösterme linklerini düzeltme
             let displayUrl = item.url;
             if (displayUrl && displayUrl.includes('drive.google.com/uc?id=')) {
                 const fileId = displayUrl.split('id=')[1];
@@ -2080,7 +1963,7 @@
             if (item.type === 'video') {
                 container.innerHTML = `<video src="${displayUrl}" controls autoplay class="max-h-[72vh] max-w-full rounded-2xl shadow-2xl object-contain"></video>`;
             } else {
-                container.innerHTML = `<img src="${displayUrl}" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='https://placehold.co/600x600/170817/ff3366?text=Görsel+Yüklenemedi';" alt="Anı" class="max-h-[72vh] max-w-full rounded-2xl shadow-2xl object-contain">`;
+                container.innerHTML = `<img src="${displayUrl}" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='https://placehold.co/600x600/170817/ff3366?text=Görsel+Önizleme';" alt="Anı" class="max-h-[72vh] max-w-full rounded-2xl shadow-2xl object-contain">`;
             }
         }
 
@@ -2089,8 +1972,6 @@
             const countText = document.getElementById('galleryCountText');
             if (!container) return;
             container.innerHTML = "";
-
-            renderDiskSelector();
 
             let filteredList = getFilteredGalleryItems();
             if (countText) countText.innerText = `${filteredList.length} Medya`;
@@ -2102,12 +1983,10 @@
 
             filteredList.forEach(item => {
                 const authorBadge = item.author === 'Elif' ? '🌸 Elif' : '💙 Türkay';
-                const diskName = driveEndpoints[item.diskId || 0]?.name || "Disk 1";
                 const card = document.createElement('div');
                 card.className = "relative group rounded-2xl overflow-hidden bg-black/40 border border-white/10 aspect-square cursor-pointer shadow-md hover:border-rose-500/50 transition-all transform hover:scale-[1.02]";
                 card.onclick = () => openLightbox(item.id);
 
-                // Google Drive yönlendirme linklerini doğrudan CDN formatına dönüştürme & fallback
                 let displayUrl = item.url;
                 if (displayUrl && displayUrl.includes('drive.google.com/uc?id=')) {
                     const fileId = displayUrl.split('id=')[1];
@@ -2123,17 +2002,14 @@
                         </div>
                     `;
                 } else {
-                    previewInner = `<img src="${displayUrl}" referrerpolicy="no-referrer" onerror="this.onerror=null;this.parentNode.innerHTML='<div class=\\'w-full h-full flex flex-col items-center justify-center bg-zinc-900 text-xs text-rose-300 p-2 text-center\\'>🖼️<br>Medya Önizleme Hata</div>';" alt="Anı" class="w-full h-full object-cover">`;
+                    previewInner = `<img src="${displayUrl}" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='https://placehold.co/400x400/170817/ff3366?text=Yükleniyor';" alt="Anı" class="w-full h-full object-cover">`;
                 }
 
                 card.innerHTML = `
                     ${previewInner}
-                    <div class="absolute top-2 left-2 flex flex-col gap-1 z-10">
-                        <span class="px-2 py-0.5 bg-black/60 backdrop-blur-md text-[9px] font-bold text-white rounded-full border border-white/20 shadow">
+                    <div class="absolute top-2 left-2 z-10">
+                        <span class="px-2 py-0.5 bg-black/65 backdrop-blur-md text-[9px] font-bold text-white rounded-full border border-white/20 shadow">
                             ${authorBadge}
-                        </span>
-                        <span class="px-1.5 py-0.5 bg-rose-950/70 backdrop-blur-md text-[8px] font-mono text-rose-200 rounded-md border border-rose-500/30 w-max">
-                            💾 ${diskName}
                         </span>
                     </div>
                     ${item.type === 'video' ? '<span class="absolute bottom-2 right-2 px-1.5 py-0.5 bg-black/70 text-[9px] text-cyan-300 font-mono rounded z-10">VİDEO</span>' : ''}
@@ -2150,6 +2026,7 @@
             if (!input) return;
             const val = input.value.trim();
             if (!val) return;
+            bucketList.pop?.(); // safe cleanup
             bucketList.push({ id: Date.now(), text: val, done: false });
             localStorage.setItem('bucket_list_v6', JSON.stringify(bucketList));
             syncWithCloud({ treeData, qaStorage, vulnerableNotes, bottleMessages, dictionaryList, galleryList, bucketList });
