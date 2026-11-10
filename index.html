@@ -9,8 +9,11 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Elif & Türkay">
-    <link rel="apple-touch-icon" href="https://placehold.co/180x180/170817/ff3366?text=💖">
-    <link rel="apple-touch-startup-image" href="https://placehold.co/1170x2532/170817/ff3366?text=Elif+%26%20T%C3%BCrkay">
+    <meta name="theme-color" content="#170817">
+
+    <!-- iOS Ana Ekran Profesyonel Romantik Kalp İkonu (SVG Data URL) -->
+    <link rel="apple-touch-icon" sizes="180x180" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' rx='120' fill='url(%23g)'/><defs><linearGradient id='g' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' stop-color='%23ff1a53'/><stop offset='50%' stop-color='%23e6005c'/><stop offset='100%' stop-color='%23800033'/></linearGradient></defs><text x='50%' y='58%' font-size='260' text-anchor='middle' dominant-baseline='middle'>💖</text></svg>">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' rx='120' fill='url(%23g)'/><defs><linearGradient id='g' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' stop-color='%23ff1a53'/><stop offset='50%' stop-color='%23e6005c'/><stop offset='100%' stop-color='%23800033'/></linearGradient></defs><text x='50%' y='58%' font-size='260' text-anchor='middle' dominant-baseline='middle'>💖</text></svg>">
 
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -496,15 +499,16 @@
                 
                 <!-- Medya Yükleme Paneli (GOOGLE DRIVE APPS SCRIPT ENTEGRELİ) -->
                 <div class="glass-card p-5 rounded-2xl border border-white/10 space-y-4 mb-8">
-                    <!-- Disk Seçim Butonları ve Doluluk Alanı -->
-                    <div>
-                        <div class="flex items-center justify-between mb-2">
-                            <label class="text-xs font-semibold text-rose-300">Hangi Google Drive Diskine Yüklensin?</label>
-                            <span id="activeDiskBadge" class="text-[10px] px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30 font-bold">Otomatik Seçim (Disk 1)</span>
+                    <!-- Otomatik Akıllı Disk Bilgilendirme Alanı -->
+                    <div class="flex items-center justify-between p-3 rounded-xl bg-black/40 border border-rose-500/30">
+                        <div class="flex items-center gap-2">
+                            <span class="text-base">⚡</span>
+                            <div>
+                                <span class="text-xs font-bold text-rose-200 block">Akıllı Otomatik Depolama Motoru</span>
+                                <span class="text-[10px] text-pink-300/70">Fotoğraf ve videolarınız en uygun boş diske otomatik aktarılır.</span>
+                            </div>
                         </div>
-                        <div id="diskSelectorContainer" class="grid grid-cols-1 sm:grid-cols-3 gap-2">
-                            <!-- JS ile dinamik doldurulur -->
-                        </div>
+                        <span id="activeDiskBadge" class="text-[10px] px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 font-bold">7 Disk Hazır ✔</span>
                     </div>
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -1840,6 +1844,7 @@
 
         function getFilteredGalleryItems() {
             let list = galleryList;
+            // Filtreleme: "all" ise hepsini (Bizimki), değilse sadece o kişiyi getir
             if (currentGalleryFilter !== 'all') {
                 list = list.filter(m => m.author === currentGalleryFilter);
             }
@@ -1872,7 +1877,7 @@
             });
         }
 
-        // --- AKILLI GOOGLE DRIVE YÜKLEME MOTORU ---
+        // --- AKILLI GOOGLE DRIVE YÜKLEME MOTORU (OTOMATİK TAŞMA VE BÖLÜŞTÜRME KORUMALI) ---
         async function mediaYukle() {
             const author = document.getElementById('mediaAuthor').value;
             const captionInput = document.getElementById('mediaCaption');
@@ -1885,80 +1890,94 @@
                 return;
             }
 
-            const file = fileInput.files[0];
-            const isVideo = file.type.startsWith('video');
+            const files = Array.from(fileInput.files);
+            if (progressText) progressText.classList.remove('hidden');
 
-            // Disk belirleme (Manuel veya Otomatik)
-            let startIndex = selectedDiskIndex;
-            if (startIndex === -1) {
-                // Otomatik modda en az dosya olan diski bul
-                let minCount = Infinity;
-                startIndex = 0;
-                driveEndpoints.forEach((disk, idx) => {
-                    const count = galleryList.filter(m => m.diskId === idx).length;
-                    if (count < minCount) {
-                        minCount = count;
-                        startIndex = idx;
-                    }
-                });
-            }
+            for (let fIndex = 0; fIndex < files.length; fIndex++) {
+                const file = files[fIndex];
+                const isVideo = file.type.startsWith('video');
 
-            let uploadedUrl = null;
-            let successDiskIndex = -1;
-            let base64Data = null;
-
-            try {
-                base64Data = await readFileAsBase64(file);
-            } catch (err) {
-                alert("Dosya okunamadı sevgilim!");
-                return;
-            }
-
-            // Diskler sırayla denenir (Seçilen disk dolup hata verirse sıradakine otomatik geçer)
-            const totalDisks = driveEndpoints.length;
-            for (let attempt = 0; attempt < totalDisks; attempt++) {
-                let currentIdx = (startIndex + attempt) % totalDisks;
-                let chosenDisk = driveEndpoints[currentIdx];
-
-                showSyncToast("Yükleniyor...", `${chosenDisk.name} deposuna aktarılıyor...`, true);
-                if(progressText) {
-                    progressText.classList.remove('hidden');
-                    progressText.innerText = `${chosenDisk.name} deneniyor: ${file.name}...`;
+                // Disk belirleme (Manuel veya Akıllı Otomatik Seçim)
+                let startIndex = selectedDiskIndex;
+                if (startIndex === -1) {
+                    let minCount = Infinity;
+                    startIndex = 0;
+                    driveEndpoints.forEach((disk, idx) => {
+                        const count = galleryList.filter(m => m.diskId === idx).length;
+                        if (count < minCount) {
+                            minCount = count;
+                            startIndex = idx;
+                        }
+                    });
                 }
+
+                let uploadedUrl = null;
+                let successDiskIndex = -1;
+                let base64Data = null;
 
                 try {
-                    const formData = new FormData();
-                    formData.append("data", base64Data.split(',')[1] || base64Data);
-                    formData.append("filename", file.name);
-                    formData.append("mimetype", file.type);
-
-                    const res = await fetch(chosenDisk.url, {
-                        method: "POST",
-                        body: formData
-                    });
-                    
-                    const jsonResult = await res.json();
-                    if (jsonResult && jsonResult.status === "success" && (jsonResult.url || jsonResult.fileId)) {
-                        uploadedUrl = jsonResult.url || ("https://lh3.google.com/u/0/d/" + jsonResult.fileId);
-                        successDiskIndex = currentIdx;
-                        break; // Başarıyla yüklendi, döngüden çık
-                    } else {
-                        console.warn(`${chosenDisk.name} dolu veya hata döndürdü, sıradaki diske geçiliyor...`);
-                    }
+                    base64Data = await readFileAsBase64(file);
                 } catch (err) {
-                    console.warn(`Bağlantı hatası (${chosenDisk.name}), sıradaki diske geçiliyor...`, err);
+                    console.error("Dosya okunamadı:", file.name);
+                    continue;
+                }
+
+                // Seçilen diskte yer kalmazsa sıradaki disklere (Disk 2, 3 vs.) otomatik aktarır
+                const totalDisks = driveEndpoints.length;
+                let skippedDisks = [];
+
+                for (let attempt = 0; attempt < totalDisks; attempt++) {
+                    let currentIdx = (startIndex + attempt) % totalDisks;
+                    let chosenDisk = driveEndpoints[currentIdx];
+
+                    // Diskin anlık doluluğunu kontrol et
+                    const currentDiskCount = galleryList.filter(m => m.diskId === currentIdx).length;
+                    if (currentDiskCount >= chosenDisk.maxItems && selectedDiskIndex === -1) {
+                        skippedDisks.push(chosenDisk.name);
+                        console.warn(`${chosenDisk.name} tam kapasite dolu, diğer boş diske geçiliyor...`);
+                        continue; // Bir sonraki diske geç
+                    }
+
+                    showSyncToast("Yükleniyor...", `[${fIndex + 1}/${files.length}] ${chosenDisk.name} deposuna aktarılıyor...`, true);
+                    if (progressText) {
+                        progressText.innerText = `[${fIndex + 1}/${files.length}] ${chosenDisk.name} kullanılıyor: ${file.name}`;
+                    }
+
+                    try {
+                        const formData = new FormData();
+                        formData.append("data", base64Data.split(',')[1] || base64Data);
+                        formData.append("filename", file.name);
+                        formData.append("mimetype", file.type);
+
+                        const res = await fetch(chosenDisk.url, {
+                            method: "POST",
+                            body: formData
+                        });
+                        
+                        const jsonResult = await res.json();
+                        if (jsonResult && jsonResult.status === "success" && (jsonResult.url || jsonResult.fileId)) {
+                            uploadedUrl = jsonResult.url || ("https://lh3.google.com/u/0/d/" + jsonResult.fileId);
+                            successDiskIndex = currentIdx;
+                            break; // Başarıyla yüklendi
+                        } else {
+                            skippedDisks.push(chosenDisk.name);
+                            console.warn(`${chosenDisk.name} doldu/hata verdi, sıradaki diske aktarılıyor...`);
+                        }
+                    } catch (err) {
+                        skippedDisks.push(chosenDisk.name);
+                        console.warn(`Bağlantı kesintisi (${chosenDisk.name}), sıradaki diske deneniyor...`, err);
+                    }
+                }
+
+                if (uploadedUrl && successDiskIndex !== -1) {
+                    saveMediaItem(author, isVideo ? 'video' : 'image', uploadedUrl, caption, successDiskIndex);
+                } else {
+                    // Bulut yanıt vermezse base64 olarak kaydeder
+                    saveMediaItem(author, isVideo ? 'video' : 'image', base64Data, caption, startIndex);
                 }
             }
 
-            if (uploadedUrl && successDiskIndex !== -1) {
-                const finalChosenDisk = driveEndpoints[successDiskIndex];
-                saveMediaItem(author, isVideo ? 'video' : 'image', uploadedUrl, caption, successDiskIndex);
-                if (progressText) progressText.innerText = `${finalChosenDisk.name} deposuna başarıyla yüklendi! 🎉`;
-            } else {
-                // Hiçbir disk almadıysa son çare base64 yerel kaydet
-                saveMediaItem(author, isVideo ? 'video' : 'image', base64Data, caption, startIndex);
-                if (progressText) progressText.innerText = `Yükleme tamamlandı! 🎉`;
-            }
+            if (progressText) progressText.innerText = `Tüm dosyalar başarıyla disklere aktarıldı! 🎉`;
         }
 
         function readFileAsBase64(file) {
@@ -2051,10 +2070,17 @@
             document.getElementById('lightboxDate').innerText = `📅 ${item.date}`;
             document.getElementById('lightboxCaption').innerText = `"${item.caption}"`;
 
+            // Google Drive doğrudan indirme / gösterme linklerini düzeltme
+            let displayUrl = item.url;
+            if (displayUrl && displayUrl.includes('drive.google.com/uc?id=')) {
+                const fileId = displayUrl.split('id=')[1];
+                displayUrl = `https://lh3.google.com/u/0/d/${fileId}`;
+            }
+
             if (item.type === 'video') {
-                container.innerHTML = `<video src="${item.url}" controls autoplay class="max-h-[72vh] max-w-full rounded-2xl shadow-2xl object-contain"></video>`;
+                container.innerHTML = `<video src="${displayUrl}" controls autoplay class="max-h-[72vh] max-w-full rounded-2xl shadow-2xl object-contain"></video>`;
             } else {
-                container.innerHTML = `<img src="${item.url}" alt="Anı" class="max-h-[72vh] max-w-full rounded-2xl shadow-2xl object-contain">`;
+                container.innerHTML = `<img src="${displayUrl}" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='https://placehold.co/600x600/170817/ff3366?text=Görsel+Yüklenemedi';" alt="Anı" class="max-h-[72vh] max-w-full rounded-2xl shadow-2xl object-contain">`;
             }
         }
 
@@ -2081,21 +2107,28 @@
                 card.className = "relative group rounded-2xl overflow-hidden bg-black/40 border border-white/10 aspect-square cursor-pointer shadow-md hover:border-rose-500/50 transition-all transform hover:scale-[1.02]";
                 card.onclick = () => openLightbox(item.id);
 
+                // Google Drive yönlendirme linklerini doğrudan CDN formatına dönüştürme & fallback
+                let displayUrl = item.url;
+                if (displayUrl && displayUrl.includes('drive.google.com/uc?id=')) {
+                    const fileId = displayUrl.split('id=')[1];
+                    displayUrl = `https://lh3.google.com/u/0/d/${fileId}`;
+                }
+
                 let previewInner = "";
                 if (item.type === 'video') {
                     previewInner = `
-                        <video src="${item.url}" class="w-full h-full object-cover"></video>
+                        <video src="${displayUrl}" class="w-full h-full object-cover"></video>
                         <div class="absolute inset-0 bg-black/20 flex items-center justify-center">
                             <span class="w-10 h-10 rounded-full bg-black/60 text-white flex items-center justify-center text-sm shadow">▶️</span>
                         </div>
                     `;
                 } else {
-                    previewInner = `<img src="${item.url}" alt="Anı" class="w-full h-full object-cover">`;
+                    previewInner = `<img src="${displayUrl}" referrerpolicy="no-referrer" onerror="this.onerror=null;this.parentNode.innerHTML='<div class=\\'w-full h-full flex flex-col items-center justify-center bg-zinc-900 text-xs text-rose-300 p-2 text-center\\'>🖼️<br>Medya Önizleme Hata</div>';" alt="Anı" class="w-full h-full object-cover">`;
                 }
 
                 card.innerHTML = `
                     ${previewInner}
-                    <div class="absolute top-2 left-2 flex flex-col gap-1">
+                    <div class="absolute top-2 left-2 flex flex-col gap-1 z-10">
                         <span class="px-2 py-0.5 bg-black/60 backdrop-blur-md text-[9px] font-bold text-white rounded-full border border-white/20 shadow">
                             ${authorBadge}
                         </span>
@@ -2103,7 +2136,7 @@
                             💾 ${diskName}
                         </span>
                     </div>
-                    ${item.type === 'video' ? '<span class="absolute bottom-2 right-2 px-1.5 py-0.5 bg-black/70 text-[9px] text-cyan-300 font-mono rounded">VİDEO</span>' : ''}
+                    ${item.type === 'video' ? '<span class="absolute bottom-2 right-2 px-1.5 py-0.5 bg-black/70 text-[9px] text-cyan-300 font-mono rounded z-10">VİDEO</span>' : ''}
                 `;
                 container.appendChild(card);
             });
