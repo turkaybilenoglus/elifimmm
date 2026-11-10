@@ -541,6 +541,15 @@
 
     </div>
 
+    <!-- ARKAPLAN SENKRONİZASYON & YÜKLEME STATUS BAR (MODERN TOAST) -->
+    <div id="syncStatusToast" class="fixed bottom-4 left-4 z-50 glass-panel px-4 py-2.5 rounded-2xl border border-rose-500/40 shadow-2xl flex items-center gap-3 transition-all duration-300 transform translate-y-20 opacity-0">
+        <div id="syncStatusSpinner" class="w-4 h-4 border-2 border-rose-400 border-t-transparent rounded-full animate-spin"></div>
+        <div class="text-xs">
+            <span id="syncStatusTitle" class="font-bold text-rose-200 block">Bulut Senkronizasyonu</span>
+            <span id="syncStatusDesc" class="text-pink-300/80">Veriler buluta kaydediliyor...</span>
+        </div>
+    </div>
+
     <!-- Modals -->
     <div id="miniGameModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md hidden">
         <div class="glass-panel p-6 md:p-8 rounded-3xl max-w-md w-full relative border border-rose-500/30 text-center">
@@ -646,14 +655,39 @@
     </div>
 
     <script>
-        // --- BULUT VERİ TABANI (JSONBIN SENKRONİZASYON API) ---
+        // --- BULUT VERİ TABANI & LOADING BAR YÖNETİCİSİ ---
         const myBinId = "6ad29df5ffd5d16053723a75"; 
         const masterKey = "$2a$10$n0.eCw.MQrLCf49GVFjV.eKlBlHD7KafhPBTcH7kiSYXNrU3uq2Hi"; 
 
+        function showSyncToast(title, desc, isLoading = true) {
+            const toast = document.getElementById('syncStatusToast');
+            const titleEl = document.getElementById('syncStatusTitle');
+            const descEl = document.getElementById('syncStatusDesc');
+            const spinner = document.getElementById('syncStatusSpinner');
+
+            if (toast && titleEl && descEl && spinner) {
+                titleEl.innerText = title;
+                descEl.innerText = desc;
+                if (isLoading) {
+                    spinner.style.display = "block";
+                } else {
+                    spinner.style.display = "none";
+                }
+                toast.classList.remove('translate-y-20', 'opacity-0');
+                
+                if (!isLoading) {
+                    setTimeout(() => {
+                        toast.classList.add('translate-y-20', 'opacity-0');
+                    }, 3500);
+                }
+            }
+        }
+
         async function syncWithCloud(dataObject) {
             if (!myBinId || myBinId === "OUR_SHARED_BIN_ID") return;
+            showSyncToast("Buluta Yükleniyor...", "Fotoğraflar ve veriler senkronize ediliyor 🚀", true);
             try {
-                await fetch(`https://api.jsonbin.io/v3/b/${myBinId}`, {
+                const response = await fetch(`https://api.jsonbin.io/v3/b/${myBinId}`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
@@ -661,8 +695,14 @@
                     },
                     body: JSON.stringify(dataObject)
                 });
+                if (response.ok) {
+                    showSyncToast("Senkronize Edildi ✔", "Tüm anılar bulutta güvenle saklanıyor 💖", false);
+                } else {
+                    showSyncToast("Yükleme Başarısız ❌", "Bağlantı hatası, tekrar deneniyor...", false);
+                }
             } catch (err) {
                 console.log("Cloud sync hatası:", err);
+                showSyncToast("Bağlantı Hatası ⚠️", "İnternet bağlantınızı kontrol edin sevgilim.", false);
             }
         }
 
@@ -674,7 +714,6 @@
                 });
                 const json = await res.json();
                 if (json.record) {
-                    // Galeri güncellendi mi kontrolü için eski uzunluk
                     const oldGalleryLen = galleryList.length;
 
                     if (json.record.treeData) {
@@ -706,7 +745,6 @@
                         localStorage.setItem('bucket_list_v6', JSON.stringify(bucketList));
                     }
 
-                    // Eğer bulutta bizdekinden daha fazla medya varsa bildirim patlat!
                     if (galleryList.length > oldGalleryLen && oldGalleryLen > 0) {
                         const latestItem = galleryList[0];
                         triggerNewMediaAlert(latestItem.author);
@@ -725,7 +763,10 @@
             }
         }
 
-        // Düzenli aralıklarla (her 10 saniyede bir) bulutu kontrol et ve bildirim gönder
+        // Sayfa açılır açılmaz buluttan verileri çek
+        loadFromCloud();
+
+        // Her 10 saniyede bir arka planda kontrol et
         setInterval(loadFromCloud, 10000);
 
         function triggerNewMediaAlert(authorName) {
@@ -860,7 +901,7 @@
             }
         }
 
-        // --- CANLI SAYAC (19 Nisan 2026 Sevgili Olma Tarihi) ---
+        // --- CANLI SAYAC ---
         function updateCounter() {
             const startDate = new Date("2026-04-19T00:00:00");
             const now = new Date();
@@ -893,7 +934,7 @@
                 loadAllData();
                 loadSong(0);
                 loadFromCloud();
-                checkMedicinePrompt(); // Siteye girer girmez ilaç kontrolü
+                checkMedicinePrompt();
             } else {
                 document.getElementById('loginError').classList.remove('hidden');
             }
@@ -1243,7 +1284,7 @@
             }
         }
 
-        // --- 30 GÜNLÜK OTOMATİK SORULAR LİSTESİ & GEÇMİŞ ARŞİVİ ---
+        // --- 30 GÜNLÜK OTOMATİK SORULAR ---
         const thirtyDaysQuestions = [
             "Bugün beni düşünürken aklına gelen ilk kelime ve duygu neydi?",
             "İkimizin geleceği hayal ettiğinde gözünün önüne gelen ilk manzara nedir?",
@@ -1460,7 +1501,6 @@
             const todayStr = new Date().toISOString().split('T')[0];
             const isTaken = medicineLog[todayStr] || false;
             if (!isTaken) {
-                // Eğer bugün içmediyse siteye girer girmez tatlı pop-up çıkar
                 setTimeout(() => {
                     const modal = document.getElementById('medicineAlertModal');
                     if (modal) modal.classList.remove('hidden');
@@ -1516,7 +1556,6 @@
                 toggleBtn.innerHTML = "<span>💊 İlacımı İçtim (İşaretle) ✨</span>";
             }
 
-            // Geçmiş Listesi (Son 7 gün)
             if (historyList) {
                 historyList.innerHTML = "";
                 for (let i = 0; i < 7; i++) {
@@ -1659,7 +1698,7 @@
             });
         }
 
-        // --- DİNAMİK BULUT GALERİ SİSTEMİ (iPhone Tarzı Akıcı Grid & Lightbox) ---
+        // --- DİNAMİK BULUT GALERİ SİSTEMİ ---
         let galleryList = JSON.parse(localStorage.getItem('our_gallery_v1')) || [
             {
                 id: 1718000001,
@@ -1767,6 +1806,8 @@
             const file = fileInput.files[0];
             const isVideo = file.type.startsWith('video');
 
+            showSyncToast("Medya Hazırlanıyor...", "Fotoğraf sıkıştırılıyor ve yükleniyor...", true);
+
             if (isVideo) {
                 const reader = new FileReader();
                 reader.onload = function(e) {
@@ -1774,7 +1815,6 @@
                 };
                 reader.readAsDataURL(file);
             } else {
-                // iPhone devasa fotoğraflarını %100 kusursuz sıkıştıran Canvas Motoru
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     const img = new Image();
@@ -1823,7 +1863,6 @@
 
             galleryList.unshift(newMedia);
             
-            // Güvenli LocalStorage Kaydı
             try {
                 localStorage.setItem('our_gallery_v1', JSON.stringify(galleryList));
             } catch (err) {
@@ -1840,7 +1879,6 @@
 
             triggerNewMediaAlert(author);
             sekmeDegis('gallery');
-            alert("Harika! Fotoğrafın başarıyla eklendi ve kalıcı olarak kaydedildi sevgilim! 💖");
         }
 
         function mediaSil(id) {
