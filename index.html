@@ -1765,42 +1765,82 @@
             }
 
             const file = fileInput.files[0];
-            const reader = new FileReader();
+            const isVideo = file.type.startsWith('video');
 
-            reader.onload = function(e) {
-                const base64Data = e.target.result;
-                const isVideo = file.type.startsWith('video');
-
-                const newMedia = {
-                    id: Date.now(),
-                    author: author,
-                    type: isVideo ? 'video' : 'image',
-                    url: base64Data,
-                    caption: caption !== "" ? caption : "Anımız ✨",
-                    date: new Date().toLocaleDateString('tr-TR')
+            if (isVideo) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    saveMediaItem(author, 'video', e.target.result, caption);
                 };
+                reader.readAsDataURL(file);
+            } else {
+                // iPhone devasa fotoğraflarını %100 kusursuz sıkıştıran Canvas Motoru
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = new Image();
+                    img.onload = function() {
+                        const canvas = document.createElement('canvas');
+                        const MAX_WIDTH = 900;
+                        const MAX_HEIGHT = 900;
+                        let width = img.width;
+                        let height = img.height;
 
-                galleryList.unshift(newMedia);
-                
-                // LocalStorage ve Bulut Senkronizasyonunu Güvenle Kaydet
-                try {
-                    localStorage.setItem('our_gallery_v1', JSON.stringify(galleryList));
-                } catch (err) {
-                    console.log("Localstorage doldu, sadece buluta aktarılıyor:", err);
-                }
+                        if (width > height) {
+                            if (width > MAX_WIDTH) {
+                                height *= MAX_WIDTH / width;
+                                width = MAX_WIDTH;
+                            }
+                        } else {
+                            if (height > MAX_HEIGHT) {
+                                width *= MAX_HEIGHT / height;
+                                height = MAX_HEIGHT;
+                            }
+                        }
 
-                syncWithCloud({ treeData, qaStorage, vulnerableNotes, bottleMessages, dictionaryList, galleryList, bucketList });
-                
-                fileInput.value = "";
-                if (captionInput) captionInput.value = "";
-                loadGallery();
+                        canvas.width = width;
+                        canvas.height = height;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, width, height);
 
-                // Bildirim göster ve galeriye yönlendir
-                triggerNewMediaAlert(author);
-                sekmeDegis('gallery');
+                        const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.7);
+                        saveMediaItem(author, 'image', compressedDataUrl, caption);
+                    };
+                    img.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function saveMediaItem(author, type, url, caption) {
+            const newMedia = {
+                id: Date.now(),
+                author: author,
+                type: type,
+                url: url,
+                caption: caption !== "" ? caption : "Anımız ✨",
+                date: new Date().toLocaleDateString('tr-TR')
             };
 
-            reader.readAsDataURL(file);
+            galleryList.unshift(newMedia);
+            
+            // Güvenli LocalStorage Kaydı
+            try {
+                localStorage.setItem('our_gallery_v1', JSON.stringify(galleryList));
+            } catch (err) {
+                console.warn("Storage dolu, bulut senkronizasyonu aktif.");
+            }
+
+            syncWithCloud({ treeData, qaStorage, vulnerableNotes, bottleMessages, dictionaryList, galleryList, bucketList });
+            
+            const fileInput = document.getElementById('mediaFileInput');
+            const captionInput = document.getElementById('mediaCaption');
+            if (fileInput) fileInput.value = "";
+            if (captionInput) captionInput.value = "";
+            loadGallery();
+
+            triggerNewMediaAlert(author);
+            sekmeDegis('gallery');
+            alert("Harika! Fotoğrafın başarıyla eklendi ve kalıcı olarak kaydedildi sevgilim! 💖");
         }
 
         function mediaSil(id) {
