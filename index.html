@@ -510,8 +510,8 @@
                         </div>
                     </div>
                     <div>
-                        <label class="block text-xs font-semibold text-rose-300 mb-1">Romantik Not / Başlık:</label>
-                        <input type="text" id="mediaCaption" placeholder="Bu anı hakkında kısa bir not..." class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder-pink-300/40 focus:outline-none focus:border-rose-500">
+                        <label class="block text-xs font-semibold text-rose-300 mb-1">Romantik Not / Başlık (İsteğe Bağlı):</label>
+                        <input type="text" id="mediaCaption" placeholder="Boş bırakabilirsin sevgilim..." class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder-pink-300/40 focus:outline-none focus:border-rose-500">
                     </div>
                     <button onclick="mediaYukle()" class="w-full py-3 bg-gradient-to-r from-rose-600 to-amber-600 hover:opacity-90 text-white font-bold rounded-xl text-xs transition-all shadow-md">Buluta Kalıcı Olarak Yükle 🚀</button>
                 </div>
@@ -632,6 +632,19 @@
         </div>
     </div>
 
+    <!-- Yeni Medya Bildirim Pop-up Modalı -->
+    <div id="newMediaAlertModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md hidden">
+        <div class="glass-panel p-8 rounded-3xl max-w-sm w-full text-center relative border border-rose-500/40 shadow-[0_0_50px_rgba(244,63,94,0.4)] animate-bounce">
+            <div class="text-5xl mb-3">📸💖</div>
+            <h3 class="romantic-font text-2xl font-bold text-white mb-2">Yeni Anı Eklendi!</h3>
+            <p id="newMediaAlertText" class="text-xs text-pink-200/90 mb-6">Sevgilin galeriye yeni bir fotoğraf/video yükledi, hemen bakabilirsin!</p>
+            <div class="space-y-2">
+                <button onclick="goToGalleryAndCloseAlert()" class="w-full py-3 bg-gradient-to-r from-rose-600 to-pink-600 text-white font-bold rounded-xl text-xs shadow-lg">Galerige Git & İncele ✨</button>
+                <button onclick="closeNewMediaAlert()" class="w-full py-2.5 bg-white/10 text-pink-200 hover:text-white font-bold rounded-xl text-xs">Kapat</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         // --- BULUT VERİ TABANI (JSONBIN SENKRONİZASYON API) ---
         const myBinId = "6ad29df5ffd5d16053723a75"; 
@@ -661,6 +674,9 @@
                 });
                 const json = await res.json();
                 if (json.record) {
+                    // Galeri güncellendi mi kontrolü için eski uzunluk
+                    const oldGalleryLen = galleryList.length;
+
                     if (json.record.treeData) {
                         treeData = json.record.treeData;
                         localStorage.setItem('nergis_tree_v20', JSON.stringify(treeData));
@@ -689,6 +705,13 @@
                         bucketList = json.record.bucketList;
                         localStorage.setItem('bucket_list_v6', JSON.stringify(bucketList));
                     }
+
+                    // Eğer bulutta bizdekinden daha fazla medya varsa bildirim patlat!
+                    if (galleryList.length > oldGalleryLen && oldGalleryLen > 0) {
+                        const latestItem = galleryList[0];
+                        triggerNewMediaAlert(latestItem.author);
+                    }
+
                     renderTree();
                     loadQA();
                     loadVulnerableNotes();
@@ -700,6 +723,30 @@
             } catch (err) {
                 console.log("Cloud load hatası:", err);
             }
+        }
+
+        // Düzenli aralıklarla (her 10 saniyede bir) bulutu kontrol et ve bildirim gönder
+        setInterval(loadFromCloud, 10000);
+
+        function triggerNewMediaAlert(authorName) {
+            const modal = document.getElementById('newMediaAlertModal');
+            const textEl = document.getElementById('newMediaAlertText');
+            if (textEl) {
+                textEl.innerText = `${authorName} galeriye yeni bir anı yükledi sevgilim, hemen bakabilirsin! 📸✨`;
+            }
+            if (modal) {
+                modal.classList.remove('hidden');
+            }
+        }
+
+        function closeNewMediaAlert() {
+            const modal = document.getElementById('newMediaAlertModal');
+            if (modal) modal.classList.add('hidden');
+        }
+
+        function goToGalleryAndCloseAlert() {
+            closeNewMediaAlert();
+            sekmeDegis('gallery');
         }
 
         // --- Gelişmiş Spotify Tarzı Müzik Çalar ---
@@ -1708,10 +1755,11 @@
 
         function mediaYukle() {
             const author = document.getElementById('mediaAuthor').value;
-            const caption = document.getElementById('mediaCaption').value.trim();
+            const captionInput = document.getElementById('mediaCaption');
+            const caption = captionInput ? captionInput.value.trim() : "";
             const fileInput = document.getElementById('mediaFileInput');
             
-            if (fileInput.files.length === 0) {
+            if (!fileInput || fileInput.files.length === 0) {
                 alert("Lütfen bir fotoğraf veya video seç sevgilim! 🥺");
                 return;
             }
@@ -1723,21 +1771,33 @@
                 const base64Data = e.target.result;
                 const isVideo = file.type.startsWith('video');
 
-                galleryList.unshift({
+                const newMedia = {
                     id: Date.now(),
                     author: author,
                     type: isVideo ? 'video' : 'image',
                     url: base64Data,
-                    caption: caption || "Güzel bir anımız ✨",
+                    caption: caption !== "" ? caption : "Anımız ✨",
                     date: new Date().toLocaleDateString('tr-TR')
-                });
+                };
 
-                localStorage.setItem('our_gallery_v1', JSON.stringify(galleryList));
+                galleryList.unshift(newMedia);
+                
+                // LocalStorage ve Bulut Senkronizasyonunu Güvenle Kaydet
+                try {
+                    localStorage.setItem('our_gallery_v1', JSON.stringify(galleryList));
+                } catch (err) {
+                    console.log("Localstorage doldu, sadece buluta aktarılıyor:", err);
+                }
+
                 syncWithCloud({ treeData, qaStorage, vulnerableNotes, bottleMessages, dictionaryList, galleryList, bucketList });
                 
                 fileInput.value = "";
-                document.getElementById('mediaCaption').value = "";
+                if (captionInput) captionInput.value = "";
                 loadGallery();
+
+                // Bildirim göster ve galeriye yönlendir
+                triggerNewMediaAlert(author);
+                sekmeDegis('gallery');
             };
 
             reader.readAsDataURL(file);
